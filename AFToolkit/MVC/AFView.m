@@ -130,7 +130,7 @@
 	self.autoresizingMask = view.autoresizingMask;
 	
 	// Always transfer this view's width and height values to the subview.
-	CGRect frame = view.frame;
+	CGRect frame = self.frame;
 	frame.size.width = view.frame.size.width;
 	frame.size.height = view.frame.size.height;
 	self.frame = frame;
