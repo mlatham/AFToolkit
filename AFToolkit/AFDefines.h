@@ -6,7 +6,6 @@
 
 /* Logging */
 #ifndef AFLog
-
 	#import "AFLogHelper.h"
 
 	#ifdef DEBUG
@@ -14,7 +13,6 @@
 	#else
 		#define AFLog(level, format, ...) do { } while (0)
 	#endif
-	
 #endif
 
 #include <assert.h>
