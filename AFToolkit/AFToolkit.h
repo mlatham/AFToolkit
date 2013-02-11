@@ -2,9 +2,7 @@
 // Toolkit header to include the main headers of the 'AFToolkit' library.
 //
 
-
-#pragma mark - Common Import
-
+#import "AFDefines.h"
 #import "AFLogHelper.h"
 #import "AFFileHelper.h"
 #import "AFPlatformHelper.h"
