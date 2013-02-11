@@ -39,11 +39,9 @@
 	return self;
 }
 
-- (id)initWithFrame: (CGRect)frame
-	universalNibName: (NSString *)nibName
+- (id)initWithUniversalNibName: (NSString *)nibName
 {
-	// Load the composite view.
-	if ((self = [super initWithFrame: frame]) == nil)
+	if ((self = [super initWithFrame: CGRectZero]) == nil)
 	{
 		return nil;
 	}
@@ -51,7 +49,7 @@
 	// Load the composite view.
 	[self AF_loadViewWithUniversalNibName: nibName 
 		bundle: nil];
-		
+	
 	return self;
 }
 
@@ -129,13 +127,13 @@
 	self.backgroundColor = [UIColor clearColor];
 	
 	// Align the view's autoresize mask with this view.
-	view.autoresizingMask = self.autoresizingMask;
+	self.autoresizingMask = view.autoresizingMask;
 	
 	// Always transfer this view's width and height values to the subview.
 	CGRect frame = view.frame;
-	frame.size.width = self.frame.size.width;
-	frame.size.height = self.frame.size.height;
-	view.frame = frame;
+	frame.size.width = view.frame.size.width;
+	frame.size.height = view.frame.size.height;
+	self.frame = frame;
 }
 
 
