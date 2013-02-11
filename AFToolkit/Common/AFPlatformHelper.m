@@ -208,22 +208,24 @@ static CGFloat _keyboardHeightLandscape = 0.f;
 
 + (CGFloat)contentHeightForOrientation: (Orientation)orientation
 {
-	Orientation screenOrientation = self.orientation;
 	UIScreen *mainScreen = [UIScreen mainScreen];
+	CGRect frame = mainScreen.bounds;
+	CGFloat contentHeight = orientation == OrientationLandscape
+		? frame.size.width
+		: frame.size.height;
 	
-	return orientation != screenOrientation
-		? mainScreen.applicationFrame.size.width
-		: mainScreen.applicationFrame.size.height;
+	return contentHeight;
 }
 
 + (CGFloat)contentWidthForOrientation: (Orientation)orientation
 {
-	Orientation screenOrientation = self.orientation;
 	UIScreen *mainScreen = [UIScreen mainScreen];
+	CGRect frame = mainScreen.bounds;
+	CGFloat contentWidth = orientation == OrientationLandscape
+		? frame.size.height
+		: frame.size.width;
 	
-	return orientation != screenOrientation
-		? mainScreen.applicationFrame.size.height
-		: mainScreen.applicationFrame.size.width;
+	return contentWidth;
 }
 
 
