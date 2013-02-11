@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'AFToolkit' target in the 'AFToolkit' project
+//
+
+#import <Foundation/Foundation.h>
+#import <UIKIt/UIKit.h>
+#import "AFDefines.h"
