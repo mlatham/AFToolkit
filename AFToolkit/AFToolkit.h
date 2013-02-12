@@ -9,6 +9,7 @@
 #import "AFKVO.h"
 #import "AFArray.h"
 #import "AFMutableArray.h"
+#import "NSBundle+Universal.h"
 #import "UITableViewCell+Universal.h"
 #import "AFDBClient.h"
 #import "AFView.h"
