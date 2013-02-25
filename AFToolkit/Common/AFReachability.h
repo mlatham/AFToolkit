@@ -7,8 +7,8 @@
 typedef enum
 {
     AFReachabilityStateOffline = 0,
-    AFReachabilityStateWiFi,
-    AFReachabilityStateWWAN
+    AFReachabilityStateOnline
+	
 } AFReachabilityState;
 
 
@@ -25,9 +25,7 @@ typedef enum
 #pragma mark - Static Methods
 
 + (AFReachability *)connectivityWithHostName: (NSString *)hostName; 
-+ (AFReachability *)reachabilityWithAddress: (const struct sockaddr_in *) hostAddress;
 + (AFReachability *)reachabilityForInternetConnection;
-+ (AFReachability *)reachabilityForLocalWiFi;
 
 
 #pragma mark - Instance Methods

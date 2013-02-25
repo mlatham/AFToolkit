@@ -12,8 +12,7 @@
 
 @interface AFReachability ()
 {
-	@private BOOL _localWiFiRef;
-    @private SCNetworkReachabilityRef _reachabilityRef;
+	@private SCNetworkReachabilityRef _reachabilityRef;
 }
 
 @end // @interface AFReachability ()
@@ -29,60 +28,22 @@
 
 #pragma mark - Class Methods
 
-static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReachabilityFlags flags, void* info)
+static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReachabilityFlags flags, void *info)
 {
+	AFReachability *reachability = (__bridge AFReachability *)info;
+	[reachability updateStateForFlags: flags];
 }
 
 
 #pragma mark - Properties
 
-- (AFReachabilityState)state
+- (void)setState: (AFReachabilityState)state
 {
-    NSAssert(_reachabilityRef != NULL, @"currentNetworkStatus called with NULL _reachabilityRef");
-	
-    AFReachabilityState result = AFReachabilityStateOffline;
-    SCNetworkReachabilityFlags flags;
-    if (SCNetworkReachabilityGetFlags(_reachabilityRef, &flags))
-    {
-        if(_localWiFiRef)
-        {
-            result = [self localWiFiStatusForFlags: flags];
-        }
-        else
-        {
-            result = [self networkStatusForFlags: flags];
-        }
-    }
-	
-    return result;
+	_state = state;
 }
 
 
 #pragma mark - Constructors
- 
-- (BOOL)start
-{
-    BOOL result = NO;
-	
-    SCNetworkReachabilityContext context = { 0, (__bridge void *)self, NULL, NULL, NULL };
-    if(SCNetworkReachabilitySetCallback(_reachabilityRef, ReachabilityCallback, &context))
-    {
-        if(SCNetworkReachabilityScheduleWithRunLoop(_reachabilityRef, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode))
-        {
-            result = YES;
-        }
-    }
-	
-    return result;
-}
- 
-- (void)stop
-{
-    if(_reachabilityRef!= NULL)
-    {
-        SCNetworkReachabilityUnscheduleFromRunLoop(_reachabilityRef, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
-    }
-}
 
 + (AFReachability *)reachabilityWithHostName: (NSString *)hostName;
 {
@@ -95,7 +56,6 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
         if(result != NULL)
         {
             result->_reachabilityRef = reachability;
-            result->_localWiFiRef = NO;
         }
     }
 	
@@ -113,7 +73,6 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
         if(result != NULL)
         {
             result->_reachabilityRef = reachability;
-            result->_localWiFiRef = NO;
         }
     }
 	
@@ -128,24 +87,6 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
     zeroAddress.sin_family = AF_INET;
 	
     return [self reachabilityWithAddress: &zeroAddress];
-}
- 
-+ (AFReachability *)reachabilityForLocalWiFi;
-{
-    struct sockaddr_in localWifiAddress;
-    bzero(&localWifiAddress, sizeof(localWifiAddress));
-    localWifiAddress.sin_len = sizeof(localWifiAddress);
-    localWifiAddress.sin_family = AF_INET;
-	
-    // IN_LINKLOCALNETNUM is defined in <netinet/in.h> as 169.254.0.0
-    localWifiAddress.sin_addr.s_addr = htonl(IN_LINKLOCALNETNUM);
-    AFReachability *result = [self reachabilityWithAddress: &localWifiAddress];
-    if(result!= NULL)
-    {
-        result->_localWiFiRef = YES;
-    }
-	
-    return result;
 }
 
 - (id)init
@@ -176,71 +117,60 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 }
 
 
+#pragma mark - Public Methods
+
+- (BOOL)start
+{
+    BOOL result = NO;
+	
+    SCNetworkReachabilityContext context = { 0, (__bridge void *)self, NULL, NULL, NULL };
+    if(SCNetworkReachabilitySetCallback(_reachabilityRef, ReachabilityCallback, &context))
+    {
+        if(SCNetworkReachabilityScheduleWithRunLoop(_reachabilityRef, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode))
+        {
+            result = YES;
+        }
+    }
+	
+    return result;
+}
+ 
+- (void)stop
+{
+    if(_reachabilityRef != NULL)
+    {
+        SCNetworkReachabilityUnscheduleFromRunLoop(_reachabilityRef, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
+    }
+}
+
+
 #pragma mark - Private Methods
 
-- (AFReachabilityState)localWiFiStatusForFlags: (SCNetworkReachabilityFlags)flags
+- (void)updateStateForFlags: (SCNetworkReachabilityFlags)flags
 {
-    BOOL result = AFReachabilityStateOffline;
+	AFReachabilityState state = AFReachabilityStateOffline;
 	
-    if((flags & kSCNetworkReachabilityFlagsReachable) && (flags & kSCNetworkReachabilityFlagsIsDirect))
+	// Determine state.
+    if (SCNetworkReachabilityGetFlags(_reachabilityRef, &flags)
+		&& (flags & kSCNetworkReachabilityFlagsReachable) == 1)
     {
-        result = AFReachabilityStateWiFi;
+        // Target host is reachable.
+        state = AFReachabilityStateOnline;
     }
-	
-    return result;
-}
- 
-- (AFReachabilityState)networkStatusForFlags: (SCNetworkReachabilityFlags)flags
-{
-    if ((flags & kSCNetworkReachabilityFlagsReachable) == 0)
-    {
-        // If target host is not reachable.
-        return AFReachabilityStateOffline;
-    }
- 
-    BOOL result = AFReachabilityStateOffline;
-    
-    if ((flags & kSCNetworkReachabilityFlagsConnectionRequired) == 0)
-    {
-        // If target host is reachable and no connection is required
-        // then we'll assume (for now) that your on Wi-Fi.
-        result = AFReachabilityStateWiFi;
-    }
-    
-    if ((((flags & kSCNetworkReachabilityFlagsConnectionOnDemand ) != 0) ||
-        (flags & kSCNetworkReachabilityFlagsConnectionOnTraffic) != 0))
-    {
-		// The connection is on-demand (or on-traffic) if the
-		// calling application is using the CFSocketStream or higher APIs
-
-		if ((flags & kSCNetworkReachabilityFlagsInterventionRequired) == 0)
-		{
-			// No [user] intervention is needed
-			result = AFReachabilityStateWiFi;
-		}
+	else
+	{
+		// Target host is not reachable.
+		state = AFReachabilityStateOffline;
 	}
-    
-    if ((flags & kSCNetworkReachabilityFlagsIsWWAN) == kSCNetworkReachabilityFlagsIsWWAN)
-    {
-        // WWAN connections are OK if the calling application
-        // is using the CFNetwork (CFSocketStream?) APIs.
-        result = AFReachabilityStateWWAN;
-    }
 	
-    return result;
-}
- 
-- (BOOL)connectionRequired;
-{
-    NSAssert(_reachabilityRef != NULL, @"connectionRequired called with NULL _reachabilityRef");
-	
-    SCNetworkReachabilityFlags flags;
-    if (SCNetworkReachabilityGetFlags(_reachabilityRef, &flags))
-    {
-        return (flags & kSCNetworkReachabilityFlagsConnectionRequired);
-    }
-	
-    return NO;
+	// Set state, if required.
+	if (self.state != state)
+	{
+		AFLog(AFLogLevelDebug, @"Reachability: %@", state == AFReachabilityStateOnline
+			? @"ONLINE"
+			: @"OFFLINE");
+		self.state = state;
+	}
 }
 
 
