@@ -48,6 +48,8 @@
 		97DE938216C88D390059199D /* AFView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 97DE935816C88CA60059199D /* AFView.h */; };
 		97DE938316C88D390059199D /* AFViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 97DE935A16C88CA60059199D /* AFViewController.h */; };
 		97DE938416C88D500059199D /* AFToolkit-Prefix.pch in CopyFiles */ = {isa = PBXBuildFile; fileRef = 97987ADB16C88C47001AE0C1 /* AFToolkit-Prefix.pch */; };
+		97E8502416DB0D7000F64F70 /* AFReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 97E8502216DB0D7000F64F70 /* AFReachability.h */; };
+		97E8502516DB0D7000F64F70 /* AFReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 97E8502316DB0D7000F64F70 /* AFReachability.m */; };
 		97FA172B1610DF5100A6756A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FA172A1610DF5100A6756A /* Foundation.framework */; };
 		97FA17731610E2D800A6756A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FA17721610E2D800A6756A /* UIKit.framework */; };
 		97FA17751610E2E300A6756A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FA17741610E2E300A6756A /* SystemConfiguration.framework */; };
@@ -108,6 +110,8 @@
 		97DE935916C88CA60059199D /* AFView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFView.m; sourceTree = "<group>"; };
 		97DE935A16C88CA60059199D /* AFViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFViewController.h; sourceTree = "<group>"; };
 		97DE935B16C88CA60059199D /* AFViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFViewController.m; sourceTree = "<group>"; };
+		97E8502216DB0D7000F64F70 /* AFReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFReachability.h; sourceTree = "<group>"; };
+		97E8502316DB0D7000F64F70 /* AFReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFReachability.m; sourceTree = "<group>"; };
 		97FA17271610DF5100A6756A /* libAFToolkit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAFToolkit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		97FA172A1610DF5100A6756A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		97FA17721610E2D800A6756A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -186,6 +190,8 @@
 				97DE934F16C88CA60059199D /* AFMutableArray.m */,
 				97DE935016C88CA60059199D /* AFPlatformHelper.h */,
 				97DE935116C88CA60059199D /* AFPlatformHelper.m */,
+				97E8502216DB0D7000F64F70 /* AFReachability.h */,
+				97E8502316DB0D7000F64F70 /* AFReachability.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -262,6 +268,7 @@
 				97DE936F16C88CA60059199D /* AFDBOperation.h in Headers */,
 				97DE937116C88CA60059199D /* AFView.h in Headers */,
 				97DE937316C88CA60059199D /* AFViewController.h in Headers */,
+				97E8502416DB0D7000F64F70 /* AFReachability.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +335,7 @@
 				97DE937016C88CA60059199D /* AFDBOperation.m in Sources */,
 				97DE937216C88CA60059199D /* AFView.m in Sources */,
 				97DE937416C88CA60059199D /* AFViewController.m in Sources */,
+				97E8502516DB0D7000F64F70 /* AFReachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
