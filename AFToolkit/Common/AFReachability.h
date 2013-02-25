@@ -24,7 +24,7 @@ typedef enum
 
 #pragma mark - Static Methods
 
-+ (AFReachability *)connectivityWithHostName: (NSString *)hostName; 
++ (AFReachability *)reachabilityWithHostName: (NSString *)hostName; 
 + (AFReachability *)reachabilityForInternetConnection;
 
 
