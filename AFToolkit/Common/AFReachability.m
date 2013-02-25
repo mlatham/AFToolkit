@@ -47,8 +47,10 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 
 + (AFReachability *)reachabilityWithHostName: (NSString *)hostName;
 {
+	const char *hostNameCString = [hostName cStringUsingEncoding: NSASCIIStringEncoding];
+
     AFReachability *result = NULL;
-    SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(NULL, [hostName UTF8String]);
+    SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(NULL, hostNameCString);
     if(reachability != NULL)
     {
         result = [[self alloc]
@@ -150,9 +152,13 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 {
 	AFReachabilityState state = AFReachabilityStateOffline;
 	
+	SCNetworkReachabilityFlags updateFlags;
+	BOOL success = SCNetworkReachabilityGetFlags(_reachabilityRef, &updateFlags);
+	
 	// Determine state.
-    if (SCNetworkReachabilityGetFlags(_reachabilityRef, &flags)
-		&& (flags & kSCNetworkReachabilityFlagsReachable) == 1)
+    if (success == YES
+		&& (updateFlags & kSCNetworkFlagsReachable)
+		&& !(updateFlags & kSCNetworkFlagsConnectionRequired))
     {
         // Target host is reachable.
         state = AFReachabilityStateOnline;
