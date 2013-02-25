@@ -50,6 +50,7 @@
 		97DE938416C88D500059199D /* AFToolkit-Prefix.pch in CopyFiles */ = {isa = PBXBuildFile; fileRef = 97987ADB16C88C47001AE0C1 /* AFToolkit-Prefix.pch */; };
 		97E8502416DB0D7000F64F70 /* AFReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 97E8502216DB0D7000F64F70 /* AFReachability.h */; };
 		97E8502516DB0D7000F64F70 /* AFReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 97E8502316DB0D7000F64F70 /* AFReachability.m */; };
+		97E8502616DB25BB00F64F70 /* AFReachability.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 97E8502216DB0D7000F64F70 /* AFReachability.h */; };
 		97FA172B1610DF5100A6756A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FA172A1610DF5100A6756A /* Foundation.framework */; };
 		97FA17731610E2D800A6756A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FA17721610E2D800A6756A /* UIKit.framework */; };
 		97FA17751610E2E300A6756A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FA17741610E2E300A6756A /* SystemConfiguration.framework */; };
@@ -76,6 +77,7 @@
 				97DE937F16C88D390059199D /* AFPlatformHelper.h in CopyFiles */,
 				97DE938016C88D390059199D /* AFDBClient.h in CopyFiles */,
 				97DE938116C88D390059199D /* AFDBOperation.h in CopyFiles */,
+				97E8502616DB25BB00F64F70 /* AFReachability.h in CopyFiles */,
 				97DE938216C88D390059199D /* AFView.h in CopyFiles */,
 				97DE938316C88D390059199D /* AFViewController.h in CopyFiles */,
 			);
