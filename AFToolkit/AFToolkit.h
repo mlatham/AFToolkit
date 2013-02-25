@@ -6,6 +6,7 @@
 #import "AFLogHelper.h"
 #import "AFFileHelper.h"
 #import "AFPlatformHelper.h"
+#import "AFReachability.h"
 #import "AFKVO.h"
 #import "AFArray.h"
 #import "AFMutableArray.h"
