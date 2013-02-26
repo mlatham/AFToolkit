@@ -8,7 +8,12 @@
 #import <netdb.h>
 
 
-#pragma mark Class Extension
+#pragma mark Constants
+
+NSString * const AFReachability_StateKeyPath = @"state";
+
+
+#pragma mark - Class Extension
 
 @interface AFReachability ()
 {

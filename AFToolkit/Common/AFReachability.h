@@ -12,6 +12,11 @@ typedef enum
 } AFReachabilityState;
 
 
+#pragma mark - Constants
+
+extern NSString * const AFReachability_StateKeyPath;
+
+
 #pragma mark - Class Interface
 
 @interface AFReachability : NSObject
