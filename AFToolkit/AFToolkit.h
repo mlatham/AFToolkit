@@ -12,6 +12,7 @@
 #import "AFMutableArray.h"
 #import "NSBundle+Universal.h"
 #import "UITableViewCell+Universal.h"
+#import "UIView+Render.h"
 #import "AFDBClient.h"
 #import "AFView.h"
 #import "AFViewController.h"
