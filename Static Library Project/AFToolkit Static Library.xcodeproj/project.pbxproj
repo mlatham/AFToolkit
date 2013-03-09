@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9765D3D116EBD2EB0032FC23 /* UIView+Render.h in Headers */ = {isa = PBXBuildFile; fileRef = 9765D3CF16EBD2EB0032FC23 /* UIView+Render.h */; };
 		9765D3D216EBD2EB0032FC23 /* UIView+Render.m in Sources */ = {isa = PBXBuildFile; fileRef = 9765D3D016EBD2EB0032FC23 /* UIView+Render.m */; };
+		9765D3D316EBD4B50032FC23 /* UIView+Render.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9765D3CF16EBD2EB0032FC23 /* UIView+Render.h */; };
 		97987ADC16C88C47001AE0C1 /* AFToolkit-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 97987ADB16C88C47001AE0C1 /* AFToolkit-Prefix.pch */; };
 		97DE935C16C88CA60059199D /* AFDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 97DE933F16C88CA60059199D /* AFDefines.h */; };
 		97DE935D16C88CA60059199D /* AFToolkit.h in Headers */ = {isa = PBXBuildFile; fileRef = 97DE934016C88CA60059199D /* AFToolkit.h */; };
@@ -66,6 +67,7 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				9765D3D316EBD4B50032FC23 /* UIView+Render.h in CopyFiles */,
 				97DE938416C88D500059199D /* AFToolkit-Prefix.pch in CopyFiles */,
 				97DE937616C88D390059199D /* AFDefines.h in CopyFiles */,
 				97DE937716C88D390059199D /* AFToolkit.h in CopyFiles */,
