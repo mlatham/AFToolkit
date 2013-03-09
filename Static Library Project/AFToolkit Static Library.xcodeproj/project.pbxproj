@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9765D3D116EBD2EB0032FC23 /* UIView+Render.h in Headers */ = {isa = PBXBuildFile; fileRef = 9765D3CF16EBD2EB0032FC23 /* UIView+Render.h */; };
+		9765D3D216EBD2EB0032FC23 /* UIView+Render.m in Sources */ = {isa = PBXBuildFile; fileRef = 9765D3D016EBD2EB0032FC23 /* UIView+Render.m */; };
 		97987ADC16C88C47001AE0C1 /* AFToolkit-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 97987ADB16C88C47001AE0C1 /* AFToolkit-Prefix.pch */; };
 		97DE935C16C88CA60059199D /* AFDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 97DE933F16C88CA60059199D /* AFDefines.h */; };
 		97DE935D16C88CA60059199D /* AFToolkit.h in Headers */ = {isa = PBXBuildFile; fileRef = 97DE934016C88CA60059199D /* AFToolkit.h */; };
@@ -86,6 +88,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9765D3CF16EBD2EB0032FC23 /* UIView+Render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Render.h"; sourceTree = "<group>"; };
+		9765D3D016EBD2EB0032FC23 /* UIView+Render.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Render.m"; sourceTree = "<group>"; };
 		97987ADB16C88C47001AE0C1 /* AFToolkit-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFToolkit-Prefix.pch"; sourceTree = "<group>"; };
 		97DE933F16C88CA60059199D /* AFDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFDefines.h; sourceTree = "<group>"; };
 		97DE934016C88CA60059199D /* AFToolkit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFToolkit.h; sourceTree = "<group>"; };
@@ -174,6 +178,8 @@
 				97DE934316C88CA60059199D /* NSBundle+Universal.m */,
 				97DE934416C88CA60059199D /* UITableViewCell+Universal.h */,
 				97DE934516C88CA60059199D /* UITableViewCell+Universal.m */,
+				9765D3CF16EBD2EB0032FC23 /* UIView+Render.h */,
+				9765D3D016EBD2EB0032FC23 /* UIView+Render.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -271,6 +277,7 @@
 				97DE937116C88CA60059199D /* AFView.h in Headers */,
 				97DE937316C88CA60059199D /* AFViewController.h in Headers */,
 				97E8502416DB0D7000F64F70 /* AFReachability.h in Headers */,
+				9765D3D116EBD2EB0032FC23 /* UIView+Render.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,6 +345,7 @@
 				97DE937216C88CA60059199D /* AFView.m in Sources */,
 				97DE937416C88CA60059199D /* AFViewController.m in Sources */,
 				97E8502516DB0D7000F64F70 /* AFReachability.m in Sources */,
+				9765D3D216EBD2EB0032FC23 /* UIView+Render.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
