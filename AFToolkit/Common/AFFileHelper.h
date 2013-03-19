@@ -9,7 +9,7 @@
 
 + (BOOL)mainBundleFileExists: (NSString *)file;
 + (NSURL *)mainBundleURLForFile: (NSString *)file;
-	
+
 + (BOOL)documentsDirectoryExists: (NSString *)directory;
 + (BOOL)documentsFileExists: (NSString *)file;
 + (NSURL *)documentsURL;
@@ -30,6 +30,9 @@
 	error: (NSError **)error;
 
 + (BOOL)deleteFile: (NSURL *)targetURL;
+
++ (BOOL)directoryExists: (NSURL *)url;
++ (BOOL)fileExists: (NSURL *)url;
 
 
 @end  // @interface AFFileHelper

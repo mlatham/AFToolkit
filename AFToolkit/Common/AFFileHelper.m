@@ -213,5 +213,19 @@ AF_INLINE NSURL *mainBundleURLForFile(NSString *file)
 	return YES;
 }
 
++ (BOOL)directoryExists: (NSURL *)url
+{
+	BOOL isDirectory = NO;
+	BOOL exists = [_fileManager fileExistsAtPath: [url path]
+		isDirectory: &isDirectory];
+	return exists && isDirectory;
+}
+
++ (BOOL)fileExists: (NSURL *)url
+{
+	BOOL exists = [_fileManager fileExistsAtPath: [url path]];
+	return exists;
+}
+
 
 @end  // @interface AFFileHelper
