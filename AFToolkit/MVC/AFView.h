@@ -9,7 +9,8 @@
 
 - (id)initWithCoder: (NSCoder *)coder
 	universalNibName: (NSString *)nibName;
-- (id)initWithUniversalNibName: (NSString *)nibName;
+- (id)initWithFrame: (CGRect)frame
+	universalNibName: (NSString *)nibName;
 
 
 @end  // @interface AFView

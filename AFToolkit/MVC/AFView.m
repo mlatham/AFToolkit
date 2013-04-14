@@ -52,10 +52,11 @@
 	return self;
 }
 
-- (id)initWithUniversalNibName: (NSString *)nibName
+- (id)initWithFrame: (CGRect)frame
+	universalNibName: (NSString *)nibName
 {
 	// Load the composite view.
-	if ((self = [super initWithFrame: CGRectZero]) == nil)
+	if ((self = [super initWithFrame: frame]) == nil)
 	{
 		return nil;
 	}
