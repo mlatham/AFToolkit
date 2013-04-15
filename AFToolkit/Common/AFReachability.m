@@ -105,6 +105,7 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 	}
 	
 	// Initialize instance variables.
+	_state = AFReachabilityStateUnknown;
 	
 	// Return initialized instance.
 	return self;

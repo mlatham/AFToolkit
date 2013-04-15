@@ -6,7 +6,8 @@
 
 typedef enum
 {
-    AFReachabilityStateOffline = 0,
+	AFReachabilityStateUnknown = 0,
+    AFReachabilityStateOffline,
     AFReachabilityStateOnline
 	
 } AFReachabilityState;
