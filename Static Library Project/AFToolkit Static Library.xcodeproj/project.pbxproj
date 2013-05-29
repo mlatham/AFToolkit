@@ -58,6 +58,14 @@
 		97FA17731610E2D800A6756A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FA17721610E2D800A6756A /* UIKit.framework */; };
 		97FA17751610E2E300A6756A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FA17741610E2E300A6756A /* SystemConfiguration.framework */; };
 		97FA17771610E2EB00A6756A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FA17761610E2EB00A6756A /* QuartzCore.framework */; };
+		C963C2351756839800D54B86 /* UITableView+Universal.h in Headers */ = {isa = PBXBuildFile; fileRef = C963C2331756839800D54B86 /* UITableView+Universal.h */; };
+		C963C2361756839800D54B86 /* UITableView+Universal.m in Sources */ = {isa = PBXBuildFile; fileRef = C963C2341756839800D54B86 /* UITableView+Universal.m */; };
+		C97217281753DC9A0051A403 /* AFArrayView.h in Headers */ = {isa = PBXBuildFile; fileRef = C97217261753DC9A0051A403 /* AFArrayView.h */; };
+		C97217291753DC9A0051A403 /* AFArrayView.m in Sources */ = {isa = PBXBuildFile; fileRef = C97217271753DC9A0051A403 /* AFArrayView.m */; };
+		C972173C17552D5F0051A403 /* AFTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = C972173A17552D5F0051A403 /* AFTableView.h */; };
+		C972173D17552D5F0051A403 /* AFTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C972173B17552D5F0051A403 /* AFTableView.m */; };
+		C9721740175532F70051A403 /* UIView+Universal.h in Headers */ = {isa = PBXBuildFile; fileRef = C972173E175532F70051A403 /* UIView+Universal.h */; };
+		C9721741175532F70051A403 /* UIView+Universal.m in Sources */ = {isa = PBXBuildFile; fileRef = C972173F175532F70051A403 /* UIView+Universal.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -125,6 +133,14 @@
 		97FA17721610E2D800A6756A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		97FA17741610E2E300A6756A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		97FA17761610E2EB00A6756A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C963C2331756839800D54B86 /* UITableView+Universal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+Universal.h"; sourceTree = "<group>"; };
+		C963C2341756839800D54B86 /* UITableView+Universal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Universal.m"; sourceTree = "<group>"; };
+		C97217261753DC9A0051A403 /* AFArrayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFArrayView.h; sourceTree = "<group>"; };
+		C97217271753DC9A0051A403 /* AFArrayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFArrayView.m; sourceTree = "<group>"; };
+		C972173A17552D5F0051A403 /* AFTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFTableView.h; sourceTree = "<group>"; };
+		C972173B17552D5F0051A403 /* AFTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFTableView.m; sourceTree = "<group>"; };
+		C972173E175532F70051A403 /* UIView+Universal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Universal.h"; sourceTree = "<group>"; };
+		C972173F175532F70051A403 /* UIView+Universal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Universal.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,10 +194,14 @@
 			children = (
 				97DE934216C88CA60059199D /* NSBundle+Universal.h */,
 				97DE934316C88CA60059199D /* NSBundle+Universal.m */,
+				C963C2331756839800D54B86 /* UITableView+Universal.h */,
+				C963C2341756839800D54B86 /* UITableView+Universal.m */,
 				97DE934416C88CA60059199D /* UITableViewCell+Universal.h */,
 				97DE934516C88CA60059199D /* UITableViewCell+Universal.m */,
 				9765D3CF16EBD2EB0032FC23 /* UIView+Render.h */,
 				9765D3D016EBD2EB0032FC23 /* UIView+Render.m */,
+				C972173E175532F70051A403 /* UIView+Universal.h */,
+				C972173F175532F70051A403 /* UIView+Universal.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -191,6 +211,8 @@
 			children = (
 				97DE934716C88CA60059199D /* AFArray.h */,
 				97DE934816C88CA60059199D /* AFArray.m */,
+				C97217261753DC9A0051A403 /* AFArrayView.h */,
+				C97217271753DC9A0051A403 /* AFArrayView.m */,
 				97DE934916C88CA60059199D /* AFFileHelper.h */,
 				97DE934A16C88CA60059199D /* AFFileHelper.m */,
 				97DE934B16C88CA60059199D /* AFKVO.h */,
@@ -222,6 +244,8 @@
 			children = (
 				97DE935816C88CA60059199D /* AFView.h */,
 				97DE935916C88CA60059199D /* AFView.m */,
+				C972173A17552D5F0051A403 /* AFTableView.h */,
+				C972173B17552D5F0051A403 /* AFTableView.m */,
 				97DE935A16C88CA60059199D /* AFViewController.h */,
 				97DE935B16C88CA60059199D /* AFViewController.m */,
 			);
@@ -280,6 +304,10 @@
 				97DE937316C88CA60059199D /* AFViewController.h in Headers */,
 				97E8502416DB0D7000F64F70 /* AFReachability.h in Headers */,
 				9765D3D116EBD2EB0032FC23 /* UIView+Render.h in Headers */,
+				C97217281753DC9A0051A403 /* AFArrayView.h in Headers */,
+				C972173C17552D5F0051A403 /* AFTableView.h in Headers */,
+				C9721740175532F70051A403 /* UIView+Universal.h in Headers */,
+				C963C2351756839800D54B86 /* UITableView+Universal.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,7 +338,7 @@
 		97FA171E1610DF5100A6756A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0440;
+				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Matt Latham";
 			};
 			buildConfigurationList = 97FA17211610DF5100A6756A /* Build configuration list for PBXProject "AFToolkit Static Library" */;
@@ -348,6 +376,10 @@
 				97DE937416C88CA60059199D /* AFViewController.m in Sources */,
 				97E8502516DB0D7000F64F70 /* AFReachability.m in Sources */,
 				9765D3D216EBD2EB0032FC23 /* UIView+Render.m in Sources */,
+				C97217291753DC9A0051A403 /* AFArrayView.m in Sources */,
+				C972173D17552D5F0051A403 /* AFTableView.m in Sources */,
+				C9721741175532F70051A403 /* UIView+Universal.m in Sources */,
+				C963C2361756839800D54B86 /* UITableView+Universal.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,6 +391,9 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -384,6 +419,9 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;

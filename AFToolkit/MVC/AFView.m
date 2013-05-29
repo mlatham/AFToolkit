@@ -1,25 +1,9 @@
 #import "AFView.h"
 #import "AFPlatformHelper.h"
-#import "NSBundle+Universal.h"
+#import "UIView+Universal.h"
 
 
-#pragma mark Constants
-
-#define IB_DEFAULT_AUTORESIZINGMASK (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth)
-#define IB_DEFAULT_CONTENTMODE UIViewContentModeScaleToFill
-#define IB_DEFAULT_TAG 0
-#define IB_DEFAULT_USERINTERACTIONENABLED YES
-#define IB_DEFAULT_MULTIPLETOUCHENABLED YES
-#define IB_DEFAULT_ALPHA 1.f
-#define IB_DEFAULT_BACKGROUNDCOLOR [UIColor whiteColor]
-#define IB_DEFAULT_OPAQUE YES
-#define IB_DEFAULT_HIDDEN NO
-#define IB_DEFAULT_CLEARSCONTEXTBEFOREDRAWING YES
-#define IB_DEFAULT_CLIPSTOBOUNDS NO
-#define IB_DEFAULT_AUTORESIZESSUBVIEWS YES
-
-
-#pragma mark - Class Extensions
+#pragma mark Class Extensions
 
 @interface AFView ()
 
@@ -109,31 +93,9 @@
 - (void)AF_loadViewWithUniversalNibName: (NSString *)nibName
 	bundle: (NSBundle *)nibBundleOrNil
 {
-	// This method allows resolution of nib names according to certain
-	// naming conventions. nibs are resolved using naming in the following order:
-	// 1) nibName_platformName (eg: MyView_iPhone)
-	// 2) nibName (eg: MyView)
-	// 3) nibName_iPhone (eg: MyView_iPhone)
-	// the purpose of 3) is to account for iPhone-only nibs being run on an iPad.
-    
-	NSBundle *bundle = nibBundleOrNil == nil 
-		? [NSBundle mainBundle] 
-		: nibBundleOrNil;
-	
-	// Resolve platform-specific nib name.
-	NSString *deviceNibName = [bundle universalNibNameForNibName: nibName];
-	
-	// Load the nib, with this view as it's owner.
-	NSArray *nibContents = [bundle loadNibNamed: deviceNibName 
-		owner: self 
-		options: nil];
-		
-	// Validate that the nib contains a view.
-	AFAssert(nibContents.count == 1 
-		&& [[nibContents objectAtIndex: 0] class] == [UIView class]);
-
-	// Get the decoded view.
-	UIView *view = [nibContents objectAtIndex: 0];
+	// Load the universal nib for the view.
+	UIView *view = [UIView viewWithUniversalNibName: nibName
+		bundle: nibBundleOrNil];
 	
 	// Always transfer the view's background color.
 	self.backgroundColor = view.backgroundColor;

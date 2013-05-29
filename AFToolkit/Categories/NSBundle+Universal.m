@@ -19,17 +19,16 @@ static NSString * const NibExtension = @"nib";
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	
 	// resolve nib name and path
-	NSString *deviceNibName = [NSString stringWithFormat: @"%@_%@", nibName, 
-		[AFPlatformHelper platformName]];	
+	NSString *deviceNibName = [NSString stringWithFormat: @"%@_%@", nibName,
+		[AFPlatformHelper platformName]];
 	
 	// get device-specific nib path
-	NSString *path = [self pathForResource: deviceNibName 
+	NSString *path = [self pathForResource: deviceNibName
 		ofType: NibExtension];
 	
 	// if device-specific nib doesn't exist, fall back to shared nib
 	if ([fileManager fileExistsAtPath: path] == NO)
 	{
-		
 		AFLog(AFLogLevelDebug, @"Device-specific nib not found: %@", deviceNibName);
 	
 		// fall back to shared nib

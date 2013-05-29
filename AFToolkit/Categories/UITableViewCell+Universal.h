@@ -5,7 +5,7 @@
 @interface UITableViewCell (Universal)
 
 
-#pragma mark - Methods
+#pragma mark - Instance Methods
 
 + (UITableViewCell *)cellWithUniversalNibName: (NSString *)nibName;
 + (UITableViewCell *)cellWithUniversalNibName: (NSString *)nibName

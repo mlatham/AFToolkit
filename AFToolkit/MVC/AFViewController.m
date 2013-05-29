@@ -19,9 +19,6 @@
 @implementation AFViewController
 
 
-#pragma mark - Properties
-
-
 #pragma mark - Constructors
 
 - (id)initWithUniversalNibName: (NSString *)nibName

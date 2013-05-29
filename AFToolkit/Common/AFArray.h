@@ -1,5 +1,10 @@
 
 
+#pragma mark Constants
+
+extern NSString * const AFArray_ObjectsKeyPath;
+
+
 #pragma mark - Class Interface
 
 @interface AFArray : NSObject<

@@ -1,20 +1,23 @@
-#import "UITableViewCell+Universal.h"
+#import "UIView+Universal.h"
 #import "NSBundle+Universal.h"
 
 
 #pragma mark Class Definition
 
-@implementation UITableViewCell (Universal)
+@implementation UIView (Universal)
 
-+ (UITableViewCell *)cellWithUniversalNibName: (NSString *)nibName
+
+#pragma mark - Public Methods
+
++ (UIView *)viewWithUniversalNibName: (NSString *)nibName
 {
-	return [self cellWithUniversalNibName: nibName
+	return [self viewWithUniversalNibName: nibName
 		bundle: nil];
 }
 
-+ (UITableViewCell *)cellWithUniversalNibName: (NSString *)nibName
++ (UIView *)viewWithUniversalNibName: (NSString *)nibName
 	bundle: (NSBundle *)nibBundleOrNil
-{	
+{
 	// This method allows resolution of nib names according to certain
 	// naming conventions. nibs are resolved using naming in the following order:
 	// 1) nibName_platformName (eg: MyView_iPhone)
@@ -34,14 +37,15 @@
 		owner: self 
 		options: nil];
 	
+	// Validate that the nib contains a view.
+	AFAssert(nibContents.count == 1 
+		&& [[nibContents objectAtIndex: 0] class] == [UIView class]);
+	
 	// Return first object in nib.
 	id nibRoot = [nibContents objectAtIndex: 0];
 	
-	// Validate nib contained a cell.
-	AFAssert([nibRoot isKindOfClass: [UITableViewCell class]]);
-	
-	// Call cellDidLoad, if defined.
-	SEL selector = @selector(cellDidLoad);
+	// Call viewDidLoad, if defined.
+	SEL selector = @selector(viewDidLoad);
 	if ([nibRoot respondsToSelector: selector])
 	{
 #pragma clang diagnostic push
@@ -54,4 +58,4 @@
 }
 
 
-@end // @implementation UITableViewCell (Universal)
+@end // @implementation UIView (Universal)

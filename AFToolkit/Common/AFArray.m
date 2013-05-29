@@ -1,7 +1,12 @@
 #import "AFArray.h"
 
 
-#pragma mark Class Extension
+#pragma mark Constants
+
+NSString * const AFArray_ObjectsKeyPath = @"objects";
+
+
+#pragma mark - Class Extension
 
 @interface AFArray ()
 {
