@@ -10,13 +10,16 @@
 #pragma mark - Public Methods
 
 + (UIView *)viewWithUniversalNibName: (NSString *)nibName
+	owner: (id)owner
 {
 	return [self viewWithUniversalNibName: nibName
-		bundle: nil];
+		bundle: nil
+		owner: owner];
 }
 
 + (UIView *)viewWithUniversalNibName: (NSString *)nibName
 	bundle: (NSBundle *)nibBundleOrNil
+	owner: (id)owner
 {
 	// This method allows resolution of nib names according to certain
 	// naming conventions. nibs are resolved using naming in the following order:
@@ -34,7 +37,7 @@
 
 	NSArray *nibContents = [[NSBundle mainBundle] 
 		loadNibNamed: deviceNibName 
-		owner: self 
+		owner: owner
 		options: nil];
 	
 	// Validate that the nib contains a view.

@@ -8,9 +8,11 @@
 
 #pragma mark - Instance Methods
 
-+ (UIView *)viewWithUniversalNibName: (NSString *)nibName;
 + (UIView *)viewWithUniversalNibName: (NSString *)nibName
-	bundle: (NSBundle *)nibBundleOrNil;
+	owner: (id)owner;
++ (UIView *)viewWithUniversalNibName: (NSString *)nibName
+	bundle: (NSBundle *)nibBundleOrNil
+	owner: (id)owner;
 
 
 @end // @interface UIView (Universal)

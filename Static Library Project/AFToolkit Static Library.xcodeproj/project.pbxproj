@@ -49,26 +49,6 @@
 		C9E7006A175CFB3E00CB137F /* UIView+Universal.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C972173E175532F70051A403 /* UIView+Universal.h */; };
 		C9E7006B175CFB3E00CB137F /* AFArrayView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C97217261753DC9A0051A403 /* AFArrayView.h */; };
 		C9E7006C175CFB3E00CB137F /* AFTableView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C972173A17552D5F0051A403 /* AFTableView.h */; };
-		C9E7006E175D01A800CB137F /* AFDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 97DE933F16C88CA60059199D /* AFDefines.h */; };
-		C9E7006F175D01A800CB137F /* AFToolkit.h in Headers */ = {isa = PBXBuildFile; fileRef = 97DE934016C88CA60059199D /* AFToolkit.h */; };
-		C9E70070175D01A800CB137F /* NSBundle+Universal.h in Headers */ = {isa = PBXBuildFile; fileRef = 97DE934216C88CA60059199D /* NSBundle+Universal.h */; };
-		C9E70071175D01A800CB137F /* UITableView+Universal.h in Headers */ = {isa = PBXBuildFile; fileRef = C963C2331756839800D54B86 /* UITableView+Universal.h */; };
-		C9E70072175D01A800CB137F /* UITableViewCell+Universal.h in Headers */ = {isa = PBXBuildFile; fileRef = 97DE934416C88CA60059199D /* UITableViewCell+Universal.h */; };
-		C9E70073175D01A800CB137F /* UIView+Render.h in Headers */ = {isa = PBXBuildFile; fileRef = 9765D3CF16EBD2EB0032FC23 /* UIView+Render.h */; };
-		C9E70074175D01A800CB137F /* UIView+Universal.h in Headers */ = {isa = PBXBuildFile; fileRef = C972173E175532F70051A403 /* UIView+Universal.h */; };
-		C9E70075175D01A800CB137F /* AFArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 97DE934716C88CA60059199D /* AFArray.h */; };
-		C9E70076175D01A800CB137F /* AFArrayView.h in Headers */ = {isa = PBXBuildFile; fileRef = C97217261753DC9A0051A403 /* AFArrayView.h */; };
-		C9E70077175D01A800CB137F /* AFFileHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 97DE934916C88CA60059199D /* AFFileHelper.h */; };
-		C9E70078175D01A800CB137F /* AFKVO.h in Headers */ = {isa = PBXBuildFile; fileRef = 97DE934B16C88CA60059199D /* AFKVO.h */; };
-		C9E70079175D01A800CB137F /* AFLogHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 97DE934D16C88CA60059199D /* AFLogHelper.h */; };
-		C9E7007A175D01A800CB137F /* AFMutableArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 97DE934E16C88CA60059199D /* AFMutableArray.h */; };
-		C9E7007B175D01A800CB137F /* AFPlatformHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 97DE935016C88CA60059199D /* AFPlatformHelper.h */; };
-		C9E7007C175D01A800CB137F /* AFReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 97E8502216DB0D7000F64F70 /* AFReachability.h */; };
-		C9E7007D175D01A800CB137F /* AFDBClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 97DE935316C88CA60059199D /* AFDBClient.h */; };
-		C9E7007E175D01A800CB137F /* AFDBOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 97DE935516C88CA60059199D /* AFDBOperation.h */; };
-		C9E7007F175D01A800CB137F /* AFView.h in Headers */ = {isa = PBXBuildFile; fileRef = 97DE935816C88CA60059199D /* AFView.h */; };
-		C9E70080175D01A800CB137F /* AFTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = C972173A17552D5F0051A403 /* AFTableView.h */; };
-		C9E70081175D01A800CB137F /* AFViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 97DE935A16C88CA60059199D /* AFViewController.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -289,36 +269,6 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		C9E7006D175D018B00CB137F /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C9E7006E175D01A800CB137F /* AFDefines.h in Headers */,
-				C9E7006F175D01A800CB137F /* AFToolkit.h in Headers */,
-				C9E70070175D01A800CB137F /* NSBundle+Universal.h in Headers */,
-				C9E70071175D01A800CB137F /* UITableView+Universal.h in Headers */,
-				C9E70072175D01A800CB137F /* UITableViewCell+Universal.h in Headers */,
-				C9E70073175D01A800CB137F /* UIView+Render.h in Headers */,
-				C9E70074175D01A800CB137F /* UIView+Universal.h in Headers */,
-				C9E70075175D01A800CB137F /* AFArray.h in Headers */,
-				C9E70076175D01A800CB137F /* AFArrayView.h in Headers */,
-				C9E70077175D01A800CB137F /* AFFileHelper.h in Headers */,
-				C9E70078175D01A800CB137F /* AFKVO.h in Headers */,
-				C9E70079175D01A800CB137F /* AFLogHelper.h in Headers */,
-				C9E7007A175D01A800CB137F /* AFMutableArray.h in Headers */,
-				C9E7007B175D01A800CB137F /* AFPlatformHelper.h in Headers */,
-				C9E7007C175D01A800CB137F /* AFReachability.h in Headers */,
-				C9E7007D175D01A800CB137F /* AFDBClient.h in Headers */,
-				C9E7007E175D01A800CB137F /* AFDBOperation.h in Headers */,
-				C9E7007F175D01A800CB137F /* AFView.h in Headers */,
-				C9E70080175D01A800CB137F /* AFTableView.h in Headers */,
-				C9E70081175D01A800CB137F /* AFViewController.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
 		97FA17261610DF5100A6756A /* AFToolkit */ = {
 			isa = PBXNativeTarget;
@@ -327,7 +277,6 @@
 				97FA17231610DF5100A6756A /* Sources */,
 				97FA17241610DF5100A6756A /* Frameworks */,
 				97FA17251610DF5100A6756A /* CopyFiles */,
-				C9E7006D175D018B00CB137F /* Headers */,
 			);
 			buildRules = (
 			);

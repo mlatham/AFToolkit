@@ -29,7 +29,8 @@
 	UIView *view = [self dequeueReusableHeaderFooterViewWithIdentifier: universalNibName];
 	if (view == nil)
 	{
-		view = [UIView viewWithUniversalNibName: universalNibName];
+		view = [UIView viewWithUniversalNibName: universalNibName
+			owner: nil];
 	}
 	
 	// Return view.

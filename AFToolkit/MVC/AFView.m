@@ -95,7 +95,8 @@
 {
 	// Load the universal nib for the view.
 	UIView *view = [UIView viewWithUniversalNibName: nibName
-		bundle: nibBundleOrNil];
+		bundle: nibBundleOrNil
+		owner: self];
 	
 	// Always transfer the view's background color.
 	self.backgroundColor = view.backgroundColor;
