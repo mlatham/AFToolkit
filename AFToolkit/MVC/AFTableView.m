@@ -44,13 +44,6 @@
 	}
 }
 
-- (void)setEmptyViewHidden: (BOOL)emptyViewHidden
-{
-	[self setEmptyViewHidden: emptyViewHidden
-		animated: NO
-		completion: nil];
-}
-
 
 #pragma mark - Constructors
 
