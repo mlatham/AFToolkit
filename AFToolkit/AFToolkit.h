@@ -7,6 +7,7 @@
 // Categories
 #import "NSBundle+Universal.h"
 #import "UITableViewCell+Universal.h"
+#import "UITableView+Universal.h"
 #import "UIView+Render.h"
 
 // Common
