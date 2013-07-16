@@ -50,9 +50,6 @@
 {
 	// NOTE: copy properties will copy objects as immutable.
 	_objects = [objects mutableCopy];
-	
-	// Refresh objects.
-	[self _refreshObjects];
 }
 
 - (void)setSource: (AFArray *)source
