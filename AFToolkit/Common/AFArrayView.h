@@ -34,4 +34,9 @@ typedef enum
 @property (nonatomic, strong) AFArray *source;
 
 
+#pragma mark - Public Methods
+
+- (void)refresh;
+
+
 @end // @interface AFArrayView

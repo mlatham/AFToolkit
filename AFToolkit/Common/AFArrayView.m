@@ -187,6 +187,15 @@
 }
 
 
+#pragma mark - Public Methods
+
+- (void)refresh
+{
+	// Refresh objects.
+	[self _refreshObjects];
+}
+
+
 #pragma mark - Private Methods
 
 - (void)_sourceDidChange: (NSDictionary *)change
