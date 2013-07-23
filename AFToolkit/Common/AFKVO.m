@@ -210,7 +210,8 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
 	[_target performSelector: binding->selector
-		withObject: change];
+		withObject: change
+		withObject: observable];
 #pragma clang diagnostic pop
 }
 
