@@ -26,12 +26,27 @@ typedef enum
 #pragma mark - Properties
 
 @property (nonatomic, copy) AFArrayViewComparator comparator;
-
 @property (nonatomic, copy) AFArrayViewFilter filter;
 
 @property (nonatomic, assign) AFArrayViewSortOrder sortOrder;
-
 @property (nonatomic, strong) AFArray *source;
+
+
+#pragma mark - Constructors
+
+- (id)initWithSource: (AFArray *)source
+	comparator: (AFArrayViewComparator)comparator
+	filter: (AFArrayViewFilter)filter
+	sortOrder: (AFArrayViewSortOrder)sortOrder;
+- (id)initWithSource: (AFArray *)source;
+- (id)init;
+
++ (AFArrayView *)arrayViewWithSource: (AFArray *)source
+	comparator: (AFArrayViewComparator)comparator
+	filter: (AFArrayViewFilter)filter
+	sortOrder: (AFArrayViewSortOrder)sortOrder;
++ (AFArrayView *)arrayViewWithSource: (AFArray *)source;
++ (AFArrayView *)arrayView;
 
 
 #pragma mark - Public Methods

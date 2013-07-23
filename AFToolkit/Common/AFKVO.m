@@ -72,6 +72,12 @@
 	return self;
 }
 
++ (AFKVO *)kvoWithTarget: (NSObject *)target
+{
+	return [[AFKVO alloc]
+		initWithTarget: target];
+}
+
 
 #pragma mark - Destructors
 

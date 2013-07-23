@@ -134,6 +134,30 @@
 	return self;
 }
 
++ (AFArrayView *)arrayViewWithSource: (AFArray *)source
+	comparator: (AFArrayViewComparator)comparator
+	filter: (AFArrayViewFilter)filter
+	sortOrder: (AFArrayViewSortOrder)sortOrder
+{
+	return [[AFArrayView alloc]
+		initWithSource: source
+		comparator: comparator
+		filter: filter
+		sortOrder: sortOrder];
+}
+
++ (AFArrayView *)arrayViewWithSource: (AFArray *)source
+{
+	return [[AFArrayView alloc]
+		initWithSource: source];
+}
+
++ (AFArrayView *)arrayView
+{
+	return [[AFArrayView alloc]
+		init];
+}
+
 
 #pragma mark - Array KVO Methods
 
@@ -320,7 +344,7 @@
 	{
 		NSUInteger midIndex = (index + topIndex) / 2;
 		id testObject = objectAtIndexImp(array, @selector(objectAtIndex:), midIndex);
-		if (_comparator(object, testObject) > 0)
+		if (_comparator == nil || _comparator(object, testObject) > 0)
 		{
 			index = midIndex + 1;
 		}

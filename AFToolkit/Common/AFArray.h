@@ -26,6 +26,10 @@ extern NSString * const AFArray_ObjectsKeyPath;
 - (id)initWithCapacity: (NSUInteger)numItems;
 - (id)initWithArray: (NSArray *)array;
 
++ (AFArray *)array;
++ (AFArray *)arrayWithCapacity: (NSUInteger)numItems;
++ (AFArray *)arrayWithArray: (NSArray *)array;
+
 
 #pragma mark - Array KVO Methods
 

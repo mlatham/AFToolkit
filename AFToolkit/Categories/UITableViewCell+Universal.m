@@ -40,16 +40,6 @@
 	// Validate nib contained a cell.
 	AFAssert([nibRoot isKindOfClass: [UITableViewCell class]]);
 	
-	// Call cellDidLoad, if defined.
-	SEL selector = @selector(cellDidLoad);
-	if ([nibRoot respondsToSelector: selector])
-	{
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-		[nibRoot performSelector: selector];
-#pragma clang diagnostic pop
-	}
-	
 	return nibRoot;
 }
 

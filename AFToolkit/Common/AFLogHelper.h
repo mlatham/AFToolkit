@@ -21,7 +21,7 @@ static AFLogLevel AFApplicationLogLevel = AFLogLevelDebug;
 
 #pragma mark - Methods
 
-AF_INLINE void AF_log(AFLogLevel level, NSString *format, ...)
+static inline void AF_log(AFLogLevel level, NSString *format, ...)
 {
 	// get a reference to the arguments that follow the format parameter
 	va_list argList;

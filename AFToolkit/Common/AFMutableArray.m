@@ -25,6 +25,27 @@
 }
 
 
+#pragma mark - Constructors
+
++ (AFMutableArray *)mutableArray
+{
+	return [[AFMutableArray alloc]
+		init];
+}
+
++ (AFMutableArray *)mutableArrayWithCapacity: (NSUInteger)numItems
+{
+	return [[AFMutableArray alloc]
+		initWithCapacity: numItems];
+}
+
++ (AFMutableArray *)mutableArrayWithArray: (NSArray *)array
+{
+	return [[AFMutableArray alloc]
+		initWithArray: array];
+}
+
+
 #pragma mark - Array KVO Methods
 
 - (void)insertObject: (id)object

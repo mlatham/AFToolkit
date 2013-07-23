@@ -18,7 +18,7 @@ static NSURL *_cacheURL;
 
 #pragma mark - Helper Methods
 
-AF_INLINE NSURL *mainBundleURLForFile(NSString *file)
+static inline NSURL *mainBundleURLForFile(NSString *file)
 {	
 	NSString *fileName = [[file lastPathComponent] stringByDeletingPathExtension];
 	NSString *extension = [file pathExtension];

@@ -10,7 +10,7 @@ typedef id DBExecutionToken;
 
 #pragma mark - Helper Functions
     
-AF_INLINE void AFBindColumnString(sqlite3_stmt *statement, int column, NSString *string)
+static inline void AFBindColumnString(sqlite3_stmt *statement, int column, NSString *string)
 {
 	if (AFIsNull(string) == YES)
 	{
@@ -22,7 +22,7 @@ AF_INLINE void AFBindColumnString(sqlite3_stmt *statement, int column, NSString 
 	}
 }
 
-AF_INLINE void AFBindColumnUrl(sqlite3_stmt *statement, int column, NSURL *url)
+static inline void AFBindColumnUrl(sqlite3_stmt *statement, int column, NSURL *url)
 {
 	if (AFIsNull(url) == YES)
 	{
@@ -35,7 +35,7 @@ AF_INLINE void AFBindColumnUrl(sqlite3_stmt *statement, int column, NSURL *url)
 	}
 }
 
-AF_INLINE void AFBindColumnDate(sqlite3_stmt *statement, int column, NSDate *date)
+static inline void AFBindColumnDate(sqlite3_stmt *statement, int column, NSDate *date)
 {
 	if (AFIsNull(date) == YES)
 	{
@@ -48,7 +48,7 @@ AF_INLINE void AFBindColumnDate(sqlite3_stmt *statement, int column, NSDate *dat
 	}
 }
 
-AF_INLINE NSString *AFColumnText(sqlite3_stmt *statement, int column)
+static inline NSString *AFColumnText(sqlite3_stmt *statement, int column)
 {
 	char *text = (char *)sqlite3_column_text(statement, column);
 	if (text == NULL)
@@ -61,7 +61,7 @@ AF_INLINE NSString *AFColumnText(sqlite3_stmt *statement, int column)
 	}
 }
 
-AF_INLINE NSURL *AFColumnUrl(sqlite3_stmt *statement, int column)
+static inline NSURL *AFColumnUrl(sqlite3_stmt *statement, int column)
 {
 	char *text = (char *)sqlite3_column_text(statement, column);
 	if (text == NULL)
@@ -74,7 +74,7 @@ AF_INLINE NSURL *AFColumnUrl(sqlite3_stmt *statement, int column)
 	}
 }
 
-AF_INLINE NSDate *AFColumnDate(sqlite3_stmt *statement, int column)
+static inline NSDate *AFColumnDate(sqlite3_stmt *statement, int column)
 {
 	if (sqlite3_column_type(statement, column) == SQLITE_NULL)
 	{
@@ -87,13 +87,13 @@ AF_INLINE NSDate *AFColumnDate(sqlite3_stmt *statement, int column)
 	}
 }
 
-AF_INLINE BOOL AFColumnIsNullOrFalse(sqlite3_stmt *statement, int column)
+static inline BOOL AFColumnIsNullOrFalse(sqlite3_stmt *statement, int column)
 {
 	return sqlite3_column_type(statement, column) == SQLITE_NULL
 		|| sqlite3_column_int(statement, column) == 0;
 }
 
-AF_INLINE void AFBeginTransaction(sqlite3 *database)
+static inline void AFBeginTransaction(sqlite3 *database)
 {
 	// begin transaction
 	if (sqlite3_exec(database, "BEGIN TRANSACTION", NULL, NULL, NULL) 
@@ -105,7 +105,7 @@ AF_INLINE void AFBeginTransaction(sqlite3 *database)
 	}
 }
 
-AF_INLINE void AFCommitTransaction(sqlite3 *database)
+static inline void AFCommitTransaction(sqlite3 *database)
 {
 	// begin transaction
 	if (sqlite3_exec(database, "COMMIT TRANSACTION", NULL, NULL, NULL) 
@@ -117,7 +117,7 @@ AF_INLINE void AFCommitTransaction(sqlite3 *database)
 	}
 }
 
-AF_INLINE void AFRollbackTransaction(sqlite3 *database)
+static inline void AFRollbackTransaction(sqlite3 *database)
 {
 	// begin transaction
 	if (sqlite3_exec(database, "ROLLBACK TRANSACTION", NULL, NULL, NULL) 

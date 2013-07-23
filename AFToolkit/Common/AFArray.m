@@ -61,6 +61,24 @@ NSString * const AFArray_ObjectsKeyPath = @"objects";
 	return self;
 }
 
++ (AFArray *)array
+{
+	return [[AFArray alloc]
+		init];
+}
+
++ (AFArray *)arrayWithCapacity: (NSUInteger)numItems
+{
+	return [[AFArray alloc]
+		initWithCapacity: numItems];
+}
+
++ (AFArray *)arrayWithArray: (NSArray *)array
+{
+	return [[AFArray alloc]
+		initWithArray: array];
+}
+
 
 #pragma mark - NSCoding Protocol Methods
 
