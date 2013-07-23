@@ -27,19 +27,19 @@
 
 #pragma mark - Constructors
 
-+ (AFMutableArray *)mutableArray
++ (AFMutableArray *)array
 {
 	return [[AFMutableArray alloc]
 		init];
 }
 
-+ (AFMutableArray *)mutableArrayWithCapacity: (NSUInteger)numItems
++ (AFMutableArray *)arrayWithCapacity: (NSUInteger)numItems
 {
 	return [[AFMutableArray alloc]
 		initWithCapacity: numItems];
 }
 
-+ (AFMutableArray *)mutableArrayWithArray: (NSArray *)array
++ (AFMutableArray *)arrayWithArray: (NSArray *)array
 {
 	return [[AFMutableArray alloc]
 		initWithArray: array];

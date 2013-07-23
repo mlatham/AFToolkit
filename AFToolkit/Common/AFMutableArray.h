@@ -13,9 +13,9 @@
 
 #pragma mark - Constructors
 
-+ (AFMutableArray *)mutableArray;
-+ (AFMutableArray *)mutableArrayWithCapacity: (NSUInteger)numItems;
-+ (AFMutableArray *)mutableArrayWithArray: (NSArray *)array;
++ (AFMutableArray *)array;
++ (AFMutableArray *)arrayWithCapacity: (NSUInteger)numItems;
++ (AFMutableArray *)arrayWithArray: (NSArray *)array;
 
 
 #pragma mark - Mutable Array KVO Methods
