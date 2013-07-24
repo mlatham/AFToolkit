@@ -111,6 +111,14 @@
 	// Initialize instance variables.
 	_source = source;
 	
+	if (_source != nil)
+	{
+		[_kvo startObserving: _source
+			forKeyPath: AFArray_ObjectsKeyPath
+			options: NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
+			selector: @selector(_sourceDidChange:)];
+	}
+	
 	// Refresh the objects.
 	[self _refreshObjects];
 	
@@ -127,8 +135,7 @@
 	}
 	
 	// Initialize instance variables.
-	_kvo = [[AFKVO alloc]
-		initWithTarget: self];
+	_kvo = [AFKVO kvoWithTarget: self];
 	
 	// Return initialized instance.
 	return self;
