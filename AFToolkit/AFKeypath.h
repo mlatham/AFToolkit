@@ -9,7 +9,7 @@
 //  Source file from: https://github.com/jspahrsummers/libextobjc
 
 #import <Foundation/Foundation.h>
-#import "metamacros.h"
+#import "AFMetamacros.h"
 
 /**
  * \@keypath allows compile-time verification of key paths. Given a real object
