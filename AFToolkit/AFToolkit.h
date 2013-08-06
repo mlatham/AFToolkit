@@ -22,6 +22,9 @@
 #import "AFPlatformHelper.h"
 #import "AFReachability.h"
 
+// Object provider
+#import "AFObjectProvider.h"
+
 // Database
 #import "AFDBClient.h"
 

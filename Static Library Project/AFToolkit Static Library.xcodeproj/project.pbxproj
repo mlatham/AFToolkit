@@ -47,6 +47,11 @@
 		C9721741175532F70051A403 /* UIView+Universal.m in Sources */ = {isa = PBXBuildFile; fileRef = C972173F175532F70051A403 /* UIView+Universal.m */; };
 		C9B7C34017B139C50027ECFF /* AFMetamacros.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C9B7C33F17B1397F0027ECFF /* AFMetamacros.h */; };
 		C9B7C34117B139C50027ECFF /* AFKeypath.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C9B7C33E17B139570027ECFF /* AFKeypath.h */; };
+		C9B7C35817B18E2D0027ECFF /* AFObjectProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B7C35717B18E2D0027ECFF /* AFObjectProvider.m */; };
+		C9B7C35B17B191560027ECFF /* AFObjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B7C35A17B191560027ECFF /* AFObjectModel.m */; };
+		C9B7C35D17B198680027ECFF /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9B7C35C17B198670027ECFF /* CoreData.framework */; };
+		C9B7C36117B19E4C0027ECFF /* AFObjectProvider.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C9B7C35617B18E2D0027ECFF /* AFObjectProvider.h */; };
+		C9B7C36217B19E4C0027ECFF /* AFObjectModel.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C9B7C35917B191560027ECFF /* AFObjectModel.h */; };
 		C9E70069175CFB3E00CB137F /* UITableView+Universal.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C963C2331756839800D54B86 /* UITableView+Universal.h */; };
 		C9E7006A175CFB3E00CB137F /* UIView+Universal.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C972173E175532F70051A403 /* UIView+Universal.h */; };
 		C9E7006B175CFB3E00CB137F /* AFArrayView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C97217261753DC9A0051A403 /* AFArrayView.h */; };
@@ -60,6 +65,8 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				C9B7C36117B19E4C0027ECFF /* AFObjectProvider.h in CopyFiles */,
+				C9B7C36217B19E4C0027ECFF /* AFObjectModel.h in CopyFiles */,
 				C9B7C34017B139C50027ECFF /* AFMetamacros.h in CopyFiles */,
 				C9B7C34117B139C50027ECFF /* AFKeypath.h in CopyFiles */,
 				C9E70069175CFB3E00CB137F /* UITableView+Universal.h in CopyFiles */,
@@ -134,6 +141,11 @@
 		C972173F175532F70051A403 /* UIView+Universal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Universal.m"; sourceTree = "<group>"; };
 		C9B7C33E17B139570027ECFF /* AFKeypath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AFKeypath.h; sourceTree = "<group>"; };
 		C9B7C33F17B1397F0027ECFF /* AFMetamacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AFMetamacros.h; sourceTree = "<group>"; };
+		C9B7C35617B18E2D0027ECFF /* AFObjectProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFObjectProvider.h; sourceTree = "<group>"; };
+		C9B7C35717B18E2D0027ECFF /* AFObjectProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFObjectProvider.m; sourceTree = "<group>"; };
+		C9B7C35917B191560027ECFF /* AFObjectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFObjectModel.h; sourceTree = "<group>"; };
+		C9B7C35A17B191560027ECFF /* AFObjectModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFObjectModel.m; sourceTree = "<group>"; };
+		C9B7C35C17B198670027ECFF /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +153,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9B7C35D17B198680027ECFF /* CoreData.framework in Frameworks */,
 				97FA17771610E2EB00A6756A /* QuartzCore.framework in Frameworks */,
 				97FA17751610E2E300A6756A /* SystemConfiguration.framework in Frameworks */,
 				97FA17731610E2D800A6756A /* UIKit.framework in Frameworks */,
@@ -175,6 +188,7 @@
 				C9B7C33F17B1397F0027ECFF /* AFMetamacros.h */,
 				C9B7C33E17B139570027ECFF /* AFKeypath.h */,
 				97DE934016C88CA60059199D /* AFToolkit.h */,
+				C9B7C35517B18E150027ECFF /* ObjectProvider */,
 				97DE934116C88CA60059199D /* Categories */,
 				97DE934616C88CA60059199D /* Common */,
 				97DE935216C88CA60059199D /* Database */,
@@ -267,12 +281,24 @@
 		97FA17291610DF5100A6756A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C9B7C35C17B198670027ECFF /* CoreData.framework */,
 				97FA17761610E2EB00A6756A /* QuartzCore.framework */,
 				97FA17741610E2E300A6756A /* SystemConfiguration.framework */,
 				97FA17721610E2D800A6756A /* UIKit.framework */,
 				97FA172A1610DF5100A6756A /* Foundation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C9B7C35517B18E150027ECFF /* ObjectProvider */ = {
+			isa = PBXGroup;
+			children = (
+				C9B7C35617B18E2D0027ECFF /* AFObjectProvider.h */,
+				C9B7C35717B18E2D0027ECFF /* AFObjectProvider.m */,
+				C9B7C35917B191560027ECFF /* AFObjectModel.h */,
+				C9B7C35A17B191560027ECFF /* AFObjectModel.m */,
+			);
+			path = ObjectProvider;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -343,6 +369,8 @@
 				C972173D17552D5F0051A403 /* AFTableView.m in Sources */,
 				C9721741175532F70051A403 /* UIView+Universal.m in Sources */,
 				C963C2361756839800D54B86 /* UITableView+Universal.m in Sources */,
+				C9B7C35817B18E2D0027ECFF /* AFObjectProvider.m in Sources */,
+				C9B7C35B17B191560027ECFF /* AFObjectModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
