@@ -35,10 +35,10 @@ static __strong NSMutableDictionary *_objectModels;
 		forKey: (id <NSCopying>)objectModel.class];
 }
 
-- (id)createInstanceOf: (Class)class
+- (id)createInstanceOf: (Class)instanceClass
 	withValues: (NSDictionary *)values
 {
-	AFObjectModel *objectModel = [self _objectModelForClass: class];
+	AFObjectModel *objectModel = [self _objectModelForClass: instanceClass];
 	
 	id instance = nil;
 	
@@ -61,9 +61,9 @@ static __strong NSMutableDictionary *_objectModels;
 - (void)updateObject: (id)object
 	withValues: (NSDictionary *)values
 {
-	Class class = [object class];
+	Class instanceClass = [object class];
 
-	AFObjectModel *objectModel = [self _objectModelForClass: class];
+	AFObjectModel *objectModel = [self _objectModelForClass: instanceClass];
 	
 	// Apply the mapped values, if present.
 	if (AFIsNull(objectModel.propertyKeyMap) == NO)
@@ -108,9 +108,9 @@ static __strong NSMutableDictionary *_objectModels;
 
 #pragma mark - Private Methods
 
-- (AFObjectModel *)_objectModelForClass: (Class)class
+- (AFObjectModel *)_objectModelForClass: (Class)instanceClass
 {
-	return [_objectModels objectForKey: class];
+	return [_objectModels objectForKey: instanceClass];
 }
 
 

@@ -13,7 +13,7 @@
 
 #pragma mark - Instance Methods
 
-- (id)createInstanceOf: (Class)class
+- (id)createInstanceOf: (Class)instanceClass
 	withValues: (NSDictionary *)values;
 
 - (void)updateObject: (id)object

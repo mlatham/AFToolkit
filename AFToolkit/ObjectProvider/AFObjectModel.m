@@ -8,7 +8,7 @@
 
 #pragma mark - Constructors
 
-- (id)initWithClass: (Class)class
+- (id)initWithClass: (Class)instanceClass
 	idProperties: (NSArray *)idProperties
 	propertyKeyMap: (NSDictionary *)propertyKeyMap
 	collectionTypeMap: (NSDictionary *)collectionTypeMap
@@ -22,7 +22,7 @@
 	}
 	
 	// Initialize instance variables.
-	_class = class;
+	_instanceClass = instanceClass;
 	_idProperties = [idProperties copy];
 	_propertyKeyMap = [propertyKeyMap copy];
 	_collectionTypeMap = [collectionTypeMap copy];
@@ -36,7 +36,7 @@
 
 #pragma mark - Public Methods
 
-+ (id)objectModelWithClass: (Class)class
++ (id)objectModelWithClass: (Class)instanceClass
 	idProperties: (NSArray *)idProperties
 	propertyKeyMap: (NSDictionary *)propertyKeyMap
 	collectionTypeMap: (NSDictionary *)collectionTypeMap
@@ -44,7 +44,7 @@
 	createBlock: (AFObjectCreateBlock)createBlock
 {
 	return [[AFObjectModel alloc]
-		initWithClass: class
+		initWithClass: instanceClass
 		idProperties: idProperties
 		propertyKeyMap: propertyKeyMap
 		collectionTypeMap: collectionTypeMap
