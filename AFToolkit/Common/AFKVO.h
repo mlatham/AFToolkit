@@ -19,6 +19,11 @@
     options: (NSKeyValueObservingOptions)options
     selector: (SEL)selector;
 
+// Observes the object's keypath, using "initial" and "new" options.
+- (void)startObserving: (NSObject *)observable
+	forKeyPath: (NSString *)keyPath
+	selector: (SEL)selector;
+
 - (void)stopObserving: (NSObject *)observable
     forKeyPath: (NSString *)keyPath;
 

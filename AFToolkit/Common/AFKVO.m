@@ -31,26 +31,13 @@
 @end // @implementation AFKVOBinding
 
 
-#pragma mark - Class Extension
+#pragma mark - Class Definition
 
-@interface AFKVO ()
+@implementation AFKVO
 {
 	@private __strong NSMutableArray *_contexts;
 	@private __weak NSObject *_target;
 }
-
-
-#pragma mark - Methods
-
-- (AFKVOContext *)PT_contextForObservable: (NSObject *)observable;
-
-
-@end // @interface AFKVO ()
-
-
-#pragma mark - Class Definition
-
-@implementation AFKVO
 
 
 #pragma mark - Constructors
@@ -109,7 +96,7 @@
     selector: (SEL)selector
 {    
     // Get context structure (or create one).
-	AFKVOContext *context = [self PT_contextForObservable: observable];
+	AFKVOContext *context = [self _contextForObservable: observable];
     if (context == nil)
     {
         // Create new context.
@@ -149,11 +136,21 @@
 		context: (__bridge void *)context];
 }
 
+- (void)startObserving: (NSObject *)observable
+	forKeyPath: (NSString *)keyPath
+	selector: (SEL)selector
+{
+	[self startObserving: observable
+		forKeyPath: keyPath
+		options: NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial
+		selector: selector];
+}
+
 - (void)stopObserving: (NSObject *)observable
     forKeyPath: (NSString *)keyPath
 {
     // Get context structure.
-	AFKVOContext *context = [self PT_contextForObservable: observable];
+	AFKVOContext *context = [self _contextForObservable: observable];
     if (context == nil)
     {
         return;
@@ -184,7 +181,7 @@
     context: (void *)unused
 {
     // Get context structure.
-	AFKVOContext *context = [self PT_contextForObservable: observable];
+	AFKVOContext *context = [self _contextForObservable: observable];
     if (context == nil)
     {
         AFAssert(NO);
@@ -218,7 +215,7 @@
 
 #pragma mark - Private Methods
 
-- (AFKVOContext *)PT_contextForObservable: (NSObject *)observable
+- (AFKVOContext *)_contextForObservable: (NSObject *)observable
 {
 	// Find the context.
 	for (AFKVOContext *context in _contexts)
