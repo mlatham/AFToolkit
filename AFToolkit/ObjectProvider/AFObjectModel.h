@@ -7,9 +7,9 @@
 
 #pragma mark Type Definitions
 
-typedef void (^AFObjectUpdateBlock)(AFObjectProvider *provider, id object, NSDictionary *values);
+typedef void (^AFObjectUpdateBlock)(id provider, id object, NSDictionary *values);
 
-typedef id (^AFObjectCreateBlock)(AFObjectProvider *provider, NSDictionary *values);
+typedef id (^AFObjectCreateBlock)(id provider, NSDictionary *values);
 
 
 #pragma mark - Class Interface
