@@ -10,10 +10,12 @@
 
 + (void)registerObjectModel: (AFObjectModel *)objectModel;
 
++ (AFObjectModel *)objectModelForClass: (Class)myClass;
+
 
 #pragma mark - Instance Methods
 
-- (id)createInstanceOf: (Class)instanceClass
+- (id)createInstanceOf: (Class)myClass
 	withValues: (NSDictionary *)values;
 
 - (void)updateObject: (id)object

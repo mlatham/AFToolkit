@@ -19,7 +19,7 @@ typedef id (^AFObjectCreateBlock)(AFObjectProvider *provider, NSDictionary *valu
 
 #pragma mark - Properties
 
-@property (nonatomic, strong) Class instanceClass;
+@property (nonatomic, strong) Class myClass;
 @property (nonatomic, copy) NSArray *idProperties;
 
 @property (nonatomic, copy) NSDictionary *propertyKeyMap;
@@ -31,7 +31,7 @@ typedef id (^AFObjectCreateBlock)(AFObjectProvider *provider, NSDictionary *valu
 
 #pragma mark - Constructors
 
-- (id)initWithClass: (Class)instanceClass
+- (id)initWithClass: (Class)myClass
 	idProperties: (NSArray *)idProperties
 	propertyKeyMap: (NSDictionary *)propertyKeyMap
 	collectionTypeMap: (NSDictionary *)collectionTypeMap
@@ -41,7 +41,7 @@ typedef id (^AFObjectCreateBlock)(AFObjectProvider *provider, NSDictionary *valu
 
 #pragma mark - Static Methods
 
-+ (id)objectModelWithClass: (Class)instanceClass
++ (id)objectModelWithClass: (Class)myClass
 	idProperties: (NSArray *)idProperties
 	propertyKeyMap: (NSDictionary *)propertyKeyMap
 	collectionTypeMap: (NSDictionary *)collectionTypeMap
