@@ -45,6 +45,8 @@
 		C97217291753DC9A0051A403 /* AFArrayView.m in Sources */ = {isa = PBXBuildFile; fileRef = C97217271753DC9A0051A403 /* AFArrayView.m */; };
 		C972173D17552D5F0051A403 /* AFTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C972173B17552D5F0051A403 /* AFTableView.m */; };
 		C9721741175532F70051A403 /* UIView+Universal.m in Sources */ = {isa = PBXBuildFile; fileRef = C972173F175532F70051A403 /* UIView+Universal.m */; };
+		C9B7C34017B139C50027ECFF /* AFMetamacros.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C9B7C33F17B1397F0027ECFF /* AFMetamacros.h */; };
+		C9B7C34117B139C50027ECFF /* AFKeypath.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C9B7C33E17B139570027ECFF /* AFKeypath.h */; };
 		C9E70069175CFB3E00CB137F /* UITableView+Universal.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C963C2331756839800D54B86 /* UITableView+Universal.h */; };
 		C9E7006A175CFB3E00CB137F /* UIView+Universal.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C972173E175532F70051A403 /* UIView+Universal.h */; };
 		C9E7006B175CFB3E00CB137F /* AFArrayView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C97217261753DC9A0051A403 /* AFArrayView.h */; };
@@ -58,6 +60,8 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				C9B7C34017B139C50027ECFF /* AFMetamacros.h in CopyFiles */,
+				C9B7C34117B139C50027ECFF /* AFKeypath.h in CopyFiles */,
 				C9E70069175CFB3E00CB137F /* UITableView+Universal.h in CopyFiles */,
 				C9E7006A175CFB3E00CB137F /* UIView+Universal.h in CopyFiles */,
 				C9E7006B175CFB3E00CB137F /* AFArrayView.h in CopyFiles */,
@@ -128,6 +132,8 @@
 		C972173B17552D5F0051A403 /* AFTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFTableView.m; sourceTree = "<group>"; };
 		C972173E175532F70051A403 /* UIView+Universal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Universal.h"; sourceTree = "<group>"; };
 		C972173F175532F70051A403 /* UIView+Universal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Universal.m"; sourceTree = "<group>"; };
+		C9B7C33E17B139570027ECFF /* AFKeypath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AFKeypath.h; sourceTree = "<group>"; };
+		C9B7C33F17B1397F0027ECFF /* AFMetamacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AFMetamacros.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +172,8 @@
 			isa = PBXGroup;
 			children = (
 				97DE933F16C88CA60059199D /* AFDefines.h */,
+				C9B7C33F17B1397F0027ECFF /* AFMetamacros.h */,
+				C9B7C33E17B139570027ECFF /* AFKeypath.h */,
 				97DE934016C88CA60059199D /* AFToolkit.h */,
 				97DE934116C88CA60059199D /* Categories */,
 				97DE934616C88CA60059199D /* Common */,
