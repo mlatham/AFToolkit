@@ -9,7 +9,7 @@
 
 typedef void (^AFObjectUpdateBlock)(id provider, id object, NSDictionary *values);
 
-typedef id (^AFObjectCreateBlock)(id provider, NSDictionary *values);
+typedef id (^AFObjectCreateBlock)(id provider);
 
 
 #pragma mark - Class Interface

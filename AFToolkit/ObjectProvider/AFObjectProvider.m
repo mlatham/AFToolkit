@@ -53,7 +53,7 @@ static __strong NSMutableDictionary *_objectModels;
 		AFObjectCreateBlock createBlock = [objectModel.createBlock copy];
 		
 		// Create the instance.
-		instance = createBlock(self, values);
+		instance = createBlock(self);
 		
 		// Update the object.
 		[self updateObject: instance
