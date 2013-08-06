@@ -48,5 +48,10 @@ typedef id (^AFObjectCreateBlock)(id provider);
 	updateBlock: (AFObjectUpdateBlock)updateBlock
 	createBlock: (AFObjectCreateBlock)createBlock;
 
++ (id)objectModelWithClass: (Class)myClass
+	idProperties: (NSArray *)idProperties
+	propertyKeyMap: (NSDictionary *)propertyKeyMap
+	updateBlock: (AFObjectUpdateBlock)updateBlock;
+
 
 @end // @interface AFObjectModel

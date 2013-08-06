@@ -42,6 +42,21 @@ static __strong NSMutableDictionary *_objectModels;
 
 - (id)createInstanceOf: (Class)myClass
 	withValues: (NSDictionary *)values
+{	
+	id instance = [self createInstanceOf: myClass];
+	
+	// Get an object model for this class.
+	if (AFIsNull(instance) == NO)
+	{
+		// Update the object.
+		[self updateObject: instance
+			withValues: values];
+	}
+	
+	return instance;
+}
+
+- (id)createInstanceOf: (Class)myClass
 {
 	AFObjectModel *objectModel = [AFObjectProvider objectModelForClass: myClass];
 	
@@ -50,14 +65,19 @@ static __strong NSMutableDictionary *_objectModels;
 	// Get an object model for this class.
 	if (AFIsNull(objectModel) == NO)
 	{
-		AFObjectCreateBlock createBlock = [objectModel.createBlock copy];
+		// Use the create block, if specified.
+		if (AFIsNull(objectModel.createBlock) == NO)
+		{
+			AFObjectCreateBlock createBlock = [objectModel.createBlock copy];
 		
-		// Create the instance.
-		instance = createBlock(self);
-		
-		// Update the object.
-		[self updateObject: instance
-			withValues: values];
+			instance = createBlock(self);
+		}
+		// Otherwise, allocate a new instance using the default constructor.
+		else
+		{
+			instance = [[myClass alloc]
+				init];
+		}
 	}
 	
 	return instance;

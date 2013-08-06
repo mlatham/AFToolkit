@@ -18,6 +18,8 @@
 - (id)createInstanceOf: (Class)myClass
 	withValues: (NSDictionary *)values;
 
+- (id)createInstanceOf: (Class)myClass;
+
 - (void)updateObject: (id)object
 	withValues: (NSDictionary *)values;
 

@@ -52,5 +52,19 @@
 		createBlock: createBlock];
 }
 
++ (id)objectModelWithClass: (Class)myClass
+	idProperties: (NSArray *)idProperties
+	propertyKeyMap: (NSDictionary *)propertyKeyMap
+	updateBlock: (AFObjectUpdateBlock)updateBlock
+{
+	return [[AFObjectModel alloc]
+		initWithClass: myClass
+		idProperties: idProperties
+		propertyKeyMap: propertyKeyMap
+		collectionTypeMap: nil
+		updateBlock: updateBlock
+		createBlock: nil];
+}
+
 
 @end // @implementation AFObjectModel
