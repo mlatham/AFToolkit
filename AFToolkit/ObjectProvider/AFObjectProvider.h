@@ -15,12 +15,12 @@
 
 #pragma mark - Instance Methods
 
-- (id)createInstanceOf: (Class)myClass
+- (id)create: (Class)myClass
 	withValues: (NSDictionary *)values;
 
-- (id)createInstanceOf: (Class)myClass;
+- (id)create: (Class)myClass;
 
-- (void)updateObject: (id)object
+- (void)update: (id)object
 	withValues: (NSDictionary *)values;
 
 

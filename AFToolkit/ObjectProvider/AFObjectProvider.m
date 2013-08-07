@@ -40,23 +40,23 @@ static __strong NSMutableDictionary *_objectModels;
 	return [_objectModels objectForKey: (id <NSCopying>)myClass];
 }
 
-- (id)createInstanceOf: (Class)myClass
+- (id)create: (Class)myClass
 	withValues: (NSDictionary *)values
 {	
-	id instance = [self createInstanceOf: myClass];
+	id instance = [self create: myClass];
 	
 	// Get an object model for this class.
 	if (AFIsNull(instance) == NO)
 	{
 		// Update the object.
-		[self updateObject: instance
+		[self update: instance
 			withValues: values];
 	}
 	
 	return instance;
 }
 
-- (id)createInstanceOf: (Class)myClass
+- (id)create: (Class)myClass
 {
 	AFObjectModel *objectModel = [AFObjectProvider objectModelForClass: myClass];
 	
@@ -83,7 +83,7 @@ static __strong NSMutableDictionary *_objectModels;
 	return instance;
 }
 
-- (void)updateObject: (id)object
+- (void)update: (id)object
 	withValues: (NSDictionary *)values
 {
 	Class myClass = [object class];
