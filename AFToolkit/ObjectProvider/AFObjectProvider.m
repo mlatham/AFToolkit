@@ -32,7 +32,7 @@ static __strong NSMutableDictionary *_objectModels;
 + (void)registerObjectModel: (AFObjectModel *)objectModel
 {
 	[_objectModels setObject: objectModel
-		forKey: (id <NSCopying>)objectModel.class];
+		forKey: (id <NSCopying>)objectModel.myClass];
 }
 
 + (AFObjectModel *)objectModelForClass: (Class)myClass
