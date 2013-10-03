@@ -6,13 +6,13 @@
 
 @implementation UITableViewCell (Universal)
 
-+ (UITableViewCell *)cellWithUniversalNibName: (NSString *)nibName
++ (instancetype)cellWithUniversalNibName: (NSString *)nibName
 {
 	return [self cellWithUniversalNibName: nibName
 		bundle: nil];
 }
 
-+ (UITableViewCell *)cellWithUniversalNibName: (NSString *)nibName
++ (instancetype)cellWithUniversalNibName: (NSString *)nibName
 	bundle: (NSBundle *)nibBundleOrNil
 {	
 	// This method allows resolution of nib names according to certain

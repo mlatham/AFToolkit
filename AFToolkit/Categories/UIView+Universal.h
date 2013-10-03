@@ -7,9 +7,10 @@
 
 #pragma mark - Instance Methods
 
-+ (UIView *)viewWithUniversalNibName: (NSString *)nibName
++ (instancetype)viewWithUniversalNibName: (NSString *)nibName
 	owner: (id)owner;
-+ (UIView *)viewWithUniversalNibName: (NSString *)nibName
+	
++ (instancetype)viewWithUniversalNibName: (NSString *)nibName
 	bundle: (NSBundle *)nibBundleOrNil
 	owner: (id)owner;
 

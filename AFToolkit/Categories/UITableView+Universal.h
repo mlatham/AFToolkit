@@ -8,6 +8,7 @@
 #pragma mark - Instance Methods
 
 - (id)dequeueReusableCellWithUniversalNibName: (NSString *)universalNibName;
+
 - (id)dequeueReusableHeaderFooterViewWithUniversalNibName: (NSString *)universalNibName;
 
 

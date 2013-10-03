@@ -7,8 +7,9 @@
 
 #pragma mark - Instance Methods
 
-+ (UITableViewCell *)cellWithUniversalNibName: (NSString *)nibName;
-+ (UITableViewCell *)cellWithUniversalNibName: (NSString *)nibName
++ (instancetype)cellWithUniversalNibName: (NSString *)nibName;
+
++ (instancetype)cellWithUniversalNibName: (NSString *)nibName
 	bundle: (NSBundle *)nibBundleOrNil;
 
 

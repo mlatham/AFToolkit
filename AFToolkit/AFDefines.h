@@ -20,8 +20,6 @@
 	#endif
 #endif
 
-#define AFSafeBlock(block)((typeof(block))(block ? ((id)block) : ((id)^{})))
-
 /* Check Helpers */
 static inline BOOL AFIsNull(id object)
 {
