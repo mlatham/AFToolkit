@@ -41,14 +41,14 @@ typedef id (^AFObjectCreateBlock)(id provider);
 
 #pragma mark - Static Methods
 
-+ (id)objectModelWithClass: (Class)myClass
++ (instancetype)objectModelWithClass: (Class)myClass
 	idProperties: (NSArray *)idProperties
 	propertyKeyMap: (NSDictionary *)propertyKeyMap
 	collectionTypeMap: (NSDictionary *)collectionTypeMap
 	updateBlock: (AFObjectUpdateBlock)updateBlock
 	createBlock: (AFObjectCreateBlock)createBlock;
 
-+ (id)objectModelWithClass: (Class)myClass
++ (instancetype)objectModelWithClass: (Class)myClass
 	idProperties: (NSArray *)idProperties
 	propertyKeyMap: (NSDictionary *)propertyKeyMap
 	updateBlock: (AFObjectUpdateBlock)updateBlock;

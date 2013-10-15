@@ -36,14 +36,14 @@
 
 #pragma mark - Public Methods
 
-+ (id)objectModelWithClass: (Class)myClass
++ (instancetype)objectModelWithClass: (Class)myClass
 	idProperties: (NSArray *)idProperties
 	propertyKeyMap: (NSDictionary *)propertyKeyMap
 	collectionTypeMap: (NSDictionary *)collectionTypeMap
 	updateBlock: (AFObjectUpdateBlock)updateBlock
 	createBlock: (AFObjectCreateBlock)createBlock
 {
-	return [[AFObjectModel alloc]
+	return [[self alloc]
 		initWithClass: myClass
 		idProperties: idProperties
 		propertyKeyMap: propertyKeyMap
@@ -52,12 +52,12 @@
 		createBlock: createBlock];
 }
 
-+ (id)objectModelWithClass: (Class)myClass
++ (instancetype)objectModelWithClass: (Class)myClass
 	idProperties: (NSArray *)idProperties
 	propertyKeyMap: (NSDictionary *)propertyKeyMap
 	updateBlock: (AFObjectUpdateBlock)updateBlock
 {
-	return [[AFObjectModel alloc]
+	return [[self alloc]
 		initWithClass: myClass
 		idProperties: idProperties
 		propertyKeyMap: propertyKeyMap

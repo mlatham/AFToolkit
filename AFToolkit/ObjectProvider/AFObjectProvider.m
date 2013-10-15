@@ -40,6 +40,11 @@ static __strong NSMutableDictionary *_objectModels;
 	return [_objectModels objectForKey: (id <NSCopying>)myClass];
 }
 
++ (NSArray *)objectModels
+{
+	return [_objectModels allValues];
+}
+
 - (id)create: (Class)myClass
 	withValues: (NSDictionary *)values
 {	

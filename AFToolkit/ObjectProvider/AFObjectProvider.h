@@ -12,6 +12,8 @@
 
 + (AFObjectModel *)objectModelForClass: (Class)myClass;
 
++ (NSArray *)objectModels;
+
 
 #pragma mark - Instance Methods
 
