@@ -113,9 +113,24 @@ static __strong NSMutableDictionary *_objectModels;
 				}
 				else if (value != nil)
 				{
-					// Set value otherwise.
-					[object setValue: value
-						forKeyPath: propertyKeyPath];
+					@try
+					{
+						// Set value otherwise.
+						[object setValue: value
+							forKeyPath: propertyKeyPath];
+					}
+					@catch (NSException *exception)
+					{
+						// If the value is a number, try to set it as a string.
+						if ([value isKindOfClass: [NSNumber class]])
+						{
+							NSString *stringValue = [value stringValue];
+							
+							// Set the string value.
+							[object setValue: stringValue
+								forKey: propertyKeyPath];
+						}
+					}
 				}
 				else
 				{
