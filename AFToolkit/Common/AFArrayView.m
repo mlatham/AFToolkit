@@ -314,27 +314,21 @@
 
 - (void)_refreshObjects
 {
-	NSMutableArray *objects = nil;
-
-	// Filter the objects, if a filter is provided.
-	if (_filter != nil)
-	{
-		objects = [NSMutableArray array];
+	NSMutableArray *objects = [NSMutableArray array];
 		
-		for (id object in _source.objects)
-		{
-			// If the filter marks the object for inclusion, include it.
-			if (_filter(object) == YES)
-			{
-				[objects addObject: object];
-			}
-		}
-	}
-	
-	// If no filter is provided, use all of the source objects.
-	else
+	for (id object in _source.objects)
 	{
-		objects = [_source.objects mutableCopy];
+		// If the filter marks the object for inclusion, include it.
+		if (_filter == nil
+			|| _filter(object) == YES)
+		{
+			NSUInteger index = [self _sortedIndexForInsertingObject: object
+				inArray: objects];
+				
+			// Insert the object in position.
+			[objects insertObject: object
+				atIndex: index];
+		}
 	}
 	
 	// Assign the updated objects.
