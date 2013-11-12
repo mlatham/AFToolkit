@@ -9,16 +9,14 @@
 
 @required
 
-+ (NSArray *)keyPathsForIdentity;
-
-+ (NSArray *)collectionPropertyKeyPaths;
-
 + (NSDictionary *)valueKeyPathsByPropertyKeyPath;
-
-+ (NSDictionary *)transformersByPropertyKeyPath;
 
 
 @optional
+
++ (NSArray *)keyPathsForIdentity;
+
++ (NSDictionary *)transformersByPropertyKeyPath;
 
 + (void)update: (id)model
 	withValues: (NSDictionary *)values;

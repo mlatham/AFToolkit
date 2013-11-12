@@ -60,15 +60,18 @@
 					// Value is nil - no value was defined, so set nothing. (NSNull is an empty value).
 					if (value != nil)
 					{
-						// Get the transformers map.
-						NSDictionary *transformers = [myClassObject transformersByPropertyKeyPath];
-						
 						NSValueTransformer *transformer = nil;
 						
-						if (transformer != nil)
+						if ([myClassObject respondsToSelector: @selector(transformersByPropertyKeyPath)] == YES)
 						{
-							// Try to get the transformer.
-							transformer = transformers[propertyKeyPath];
+							// Get the transformers map.
+							NSDictionary *transformers = [myClassObject transformersByPropertyKeyPath];
+							
+							if (transformers != nil)
+							{
+								// Try to get the transformer.
+								transformer = transformers[propertyKeyPath];
+							}
 						}
 						
 						// Don't crash on failing a parse/set.
