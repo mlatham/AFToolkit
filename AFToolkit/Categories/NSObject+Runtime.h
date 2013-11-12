@@ -9,12 +9,12 @@
 @property (nonatomic, strong) NSString *customGetterSelectorName;
 @property (nonatomic, strong) NSString *customSetterSelectorName;
 
-@property (nonatomic, assign) BOOL weak;
-@property (nonatomic, assign) BOOL copy;
-@property (nonatomic, assign) BOOL retain;
-@property (nonatomic, assign) BOOL dynamic;
-@property (nonatomic, assign) BOOL readonly;
-@property (nonatomic, assign) BOOL nonatomic;
+@property (nonatomic, assign) BOOL isWeak;
+@property (nonatomic, assign) BOOL isCopy;
+@property (nonatomic, assign) BOOL isRetain;
+@property (nonatomic, assign) BOOL isDynamic;
+@property (nonatomic, assign) BOOL isReadonly;
+@property (nonatomic, assign) BOOL isNonatomic;
 
 @end
 

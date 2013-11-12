@@ -87,37 +87,37 @@
 					}
 					case 'R':
 					{
-						propertyInfo.readonly = YES;
+						propertyInfo.isReadonly = YES;
 						
 						break;
 					}
 					case 'C':
 					{
-						propertyInfo.copy = YES;
+						propertyInfo.isCopy = YES;
 					
 						break;
 					}
 					case '&':
 					{
-						propertyInfo.retain = YES;
+						propertyInfo.isRetain = YES;
 					
 						break;
 					}
 					case 'N':
 					{
-						propertyInfo.nonatomic = YES;
+						propertyInfo.isNonatomic = YES;
 					
 						break;
 					}
 					case 'D':
 					{
-						propertyInfo.dynamic = YES;
+						propertyInfo.isDynamic = YES;
 					
 						break;
 					}
 					case 'W':
 					{
-						propertyInfo.weak = YES;
+						propertyInfo.isWeak = YES;
 					
 						break;
 					}
