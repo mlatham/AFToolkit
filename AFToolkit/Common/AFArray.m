@@ -126,4 +126,12 @@
 }
 
 
+#pragma mark - Public Methods
+
+- (NSUInteger)count
+{
+	return [_objects count];
+}
+
+
 @end

@@ -44,4 +44,9 @@
 - (NSEnumerator *)enumeratorOfObjects;
 
 
+#pragma mark - Public Methods
+
+- (NSUInteger)count;
+
+
 @end
