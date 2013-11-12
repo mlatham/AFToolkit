@@ -25,6 +25,7 @@
 
 // Object provider
 #import "AFObjectProvider.h"
+#import "AFObjectModel.h"
 
 // Database
 #import "AFDBClient.h"
