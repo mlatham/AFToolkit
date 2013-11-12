@@ -3,14 +3,7 @@
 #include <sys/sysctl.h>
 
 
-#pragma mark Private Methods
-
-@interface AFPlatformHelper ()
-
-@end  // @interface AFPlatformHelper ()
-
-
-#pragma mark - Class Variables
+#pragma mark Class Variables
 
 static BOOL _classInitialized;
 static NSString *_OSVersion = nil;
@@ -229,4 +222,4 @@ static CGFloat _keyboardHeightLandscape = 0.f;
 }
 
 
-@end // @implementation AFPlatformHelper
+@end

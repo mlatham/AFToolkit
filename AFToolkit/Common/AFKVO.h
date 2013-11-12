@@ -28,4 +28,4 @@
     forKeyPath: (NSString *)keyPath;
 
 
-@end  // @interface AFKVO
+@end

@@ -14,7 +14,9 @@
 #pragma mark - Constructors
 
 + (AFMutableArray *)array;
+
 + (AFMutableArray *)arrayWithCapacity: (NSUInteger)numItems;
+
 + (AFMutableArray *)arrayWithArray: (NSArray *)array;
 
 
@@ -22,10 +24,12 @@
 
 - (void)insertObject: (id)object
    inObjectsAtIndex: (NSUInteger)index;
+
 - (void)insertObjects: (NSArray *)objectsArray
 	atIndexes: (NSIndexSet *)indexes;
 
 - (void)removeObjectFromObjectsAtIndex: (NSUInteger)index;
+
 - (void)removeObjectsAtIndexes: (NSIndexSet *)indexes;
 
 - (void)replaceObjectAtIndex: (NSUInteger)index 
@@ -35,7 +39,13 @@
 #pragma mark - Set KVO Methods
 
 - (void)addObject: (id)object;
+
 - (void)removeObject: (id)object;
 
 
-@end // @interface AFMutableArray
+#pragma mark - Public Methods
+
+- (void)removeAllObjects;
+
+
+@end

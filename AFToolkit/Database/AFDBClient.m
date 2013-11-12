@@ -8,9 +8,9 @@
 static NSString * const AFDBExtension = @"sqlite";
 
 
-#pragma mark - Class Extension
+#pragma mark - Class Definition
 
-@interface AFDBClient ()
+@implementation AFDBClient
 {
 	@private sqlite3 *_database;
 	@private NSURL *_databaseURL;
@@ -18,17 +18,6 @@ static NSString * const AFDBExtension = @"sqlite";
 	@private NSOperationQueue *_asyncQueryQueue;
 	@private UIBackgroundTaskIdentifier _exitBackgroundTask;
 }
-
-
-@end // @interface AFDBClient ()
-
-
-#pragma mark - Class Definition
-
-@implementation AFDBClient
-
-
-#pragma mark - Properties
 
 
 #pragma mark - Constructors
@@ -249,4 +238,4 @@ static NSString * const AFDBExtension = @"sqlite";
 }
 
 
-@end // @implementation AFDBClient
+@end

@@ -159,4 +159,4 @@ static inline void AFRollbackTransaction(sqlite3 *database)
 - (void)reset;
 
 
-@end // @interface AFDBClient
+@end

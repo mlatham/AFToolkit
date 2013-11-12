@@ -13,4 +13,4 @@
 	bundle: (NSBundle *)nibBundleOrNil;
 
 
-@end // @interface UITableViewCell (Universal)
+@end

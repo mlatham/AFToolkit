@@ -10,4 +10,4 @@
 - (UIImage *)render;
 
 
-@end // @interface UIView (Render)
+@end

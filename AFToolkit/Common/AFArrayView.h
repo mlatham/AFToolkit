@@ -38,14 +38,18 @@ typedef enum
 	comparator: (AFArrayViewComparator)comparator
 	filter: (AFArrayViewFilter)filter
 	sortOrder: (AFArrayViewSortOrder)sortOrder;
+
 - (id)initWithSource: (AFArray *)source;
+
 - (id)init;
 
 + (AFArrayView *)arrayViewWithSource: (AFArray *)source
 	comparator: (AFArrayViewComparator)comparator
 	filter: (AFArrayViewFilter)filter
 	sortOrder: (AFArrayViewSortOrder)sortOrder;
+
 + (AFArrayView *)arrayViewWithSource: (AFArray *)source;
+
 + (AFArrayView *)arrayView;
 
 
@@ -54,4 +58,4 @@ typedef enum
 - (void)refresh;
 
 
-@end // @interface AFArrayView
+@end

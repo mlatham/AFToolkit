@@ -56,4 +56,4 @@ typedef enum
 + (CGFloat)contentWidthForOrientation: (Orientation)orientation;
 
 
-@end  // @interface AFPlatformHelper
+@end

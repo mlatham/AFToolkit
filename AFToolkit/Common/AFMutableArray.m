@@ -1,17 +1,7 @@
 #import "AFMutableArray.h"
 
 
-#pragma mark Class Extension
-
-@interface AFMutableArray ()
-{
-}
-
-
-@end  // @interface AFMutableArray ()
-
-
-#pragma mark - Class Definition
+#pragma mark Class Definition
 
 @implementation AFMutableArray
 
@@ -95,4 +85,13 @@
 }
 
 
-@end  // @interface AFMutableArray
+#pragma mark - Public Methods
+
+- (void)removeAllObjects
+{
+	// Clear objects by setting the objects array.
+	self.objects = [NSMutableArray array];
+}
+
+
+@end

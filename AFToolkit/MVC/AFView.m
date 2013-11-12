@@ -3,18 +3,7 @@
 #import "UIView+Universal.h"
 
 
-#pragma mark Class Extensions
-
-@interface AFView ()
-
-- (void)AF_loadViewWithUniversalNibName: (NSString *)nibName
-	bundle: (NSBundle *)nibBundleOrNil;
-	
-
-@end // @interface AFView ()
-
-
-#pragma mark - Class Definition
+#pragma mark Class Definition
 
 @implementation AFView
 
@@ -109,4 +98,4 @@
 }
 
 
-@end  // @implementation AFView
+@end

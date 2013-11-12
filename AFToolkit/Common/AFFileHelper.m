@@ -1,13 +1,7 @@
 #import "AFFileHelper.h"
 
 
-#pragma mark Private Methods
-
-@interface AFFileHelper ()
-
-@end  // @interface AFFileHelper ()
-
-#pragma mark - Class Variables
+#pragma mark Class Variables
 
 static BOOL _classInitialized;
 static NSFileManager *_fileManager;
@@ -228,4 +222,4 @@ static inline NSURL *mainBundleURLForFile(NSString *file)
 }
 
 
-@end  // @interface AFFileHelper
+@end

@@ -16,4 +16,4 @@
 - (BOOL)isCompleted;
 
 
-@end  // @interface AFDBOperation
+@end

@@ -1,11 +1,6 @@
 
 
-#pragma mark Constants
-
-extern NSString * const AFArray_ObjectsKeyPath;
-
-
-#pragma mark - Class Interface
+#pragma mark Class Interface
 
 @interface AFArray : NSObject<
 	NSFastEnumeration,
@@ -23,18 +18,24 @@ extern NSString * const AFArray_ObjectsKeyPath;
 #pragma mark - Constructors
 
 - (id)init;
+
 - (id)initWithCapacity: (NSUInteger)numItems;
+
 - (id)initWithArray: (NSArray *)array;
 
 + (AFArray *)array;
+
 + (AFArray *)arrayWithCapacity: (NSUInteger)numItems;
+
 + (AFArray *)arrayWithArray: (NSArray *)array;
 
 
 #pragma mark - Array KVO Methods
 
 - (NSUInteger)countOfObjects;
+
 - (id)objectInObjectsAtIndex: (NSUInteger)index;
+
 - (NSArray *)objectsAtIndexes: (NSIndexSet *)indexes;
 
 
@@ -43,4 +44,4 @@ extern NSString * const AFArray_ObjectsKeyPath;
 - (NSEnumerator *)enumeratorOfObjects;
 
 
-@end // @interface AFArray
+@end

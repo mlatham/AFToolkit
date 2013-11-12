@@ -7,9 +7,9 @@ static NSString * const FinishedKeyPath = @"isFinished";
 static NSString * const ExecutingKeyPath = @"isExecuting";
 
 
-#pragma mark - Class Extension
+#pragma mark - Class Definition
 
-@interface AFDBOperation ()
+@implementation AFDBOperation
 {
 	@private UIBackgroundTaskIdentifier _exitBackgroundTask;
     @private NSRecursiveLock *_databaseLock;
@@ -20,17 +20,6 @@ static NSString * const ExecutingKeyPath = @"isExecuting";
 	@private BOOL _finished;
 	@private BOOL _completed;
 }
-
-- (void)AF_raiseCompleted: (NSArray *)data;
-- (void)AF_raiseCancelled;
-
-
-@end  // @interface AFDBOperation ()
-
-
-#pragma mark - Class Definition
-
-@implementation AFDBOperation
 
 
 #pragma mark - Constructors
@@ -308,4 +297,4 @@ static NSString * const ExecutingKeyPath = @"isExecuting";
 }
 
 
-@end  // @interface AFDBOperation
+@end

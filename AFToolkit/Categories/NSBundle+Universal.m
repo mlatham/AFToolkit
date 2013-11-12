@@ -63,4 +63,4 @@ static NSString * const NibExtension = @"nib";
 }
 
 
-@end  // @interface NSBundle (Universal)
+@end

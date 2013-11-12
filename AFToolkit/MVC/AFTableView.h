@@ -21,4 +21,4 @@
 	style: (UITableViewStyle)style;
 
 
-@end // @interface AFTableView
+@end

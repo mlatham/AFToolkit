@@ -41,6 +41,7 @@
 		97FA17731610E2D800A6756A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FA17721610E2D800A6756A /* UIKit.framework */; };
 		97FA17751610E2E300A6756A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FA17741610E2E300A6756A /* SystemConfiguration.framework */; };
 		97FA17771610E2EB00A6756A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FA17761610E2EB00A6756A /* QuartzCore.framework */; };
+		C92F841C18329554004E5E84 /* NSObject+Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = C92F841B18329554004E5E84 /* NSObject+Runtime.m */; };
 		C963C2361756839800D54B86 /* UITableView+Universal.m in Sources */ = {isa = PBXBuildFile; fileRef = C963C2341756839800D54B86 /* UITableView+Universal.m */; };
 		C97217291753DC9A0051A403 /* AFArrayView.m in Sources */ = {isa = PBXBuildFile; fileRef = C97217271753DC9A0051A403 /* AFArrayView.m */; };
 		C972173D17552D5F0051A403 /* AFTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C972173B17552D5F0051A403 /* AFTableView.m */; };
@@ -48,10 +49,8 @@
 		C9B7C34017B139C50027ECFF /* AFMetamacros.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C9B7C33F17B1397F0027ECFF /* AFMetamacros.h */; };
 		C9B7C34117B139C50027ECFF /* AFKeypath.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C9B7C33E17B139570027ECFF /* AFKeypath.h */; };
 		C9B7C35817B18E2D0027ECFF /* AFObjectProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B7C35717B18E2D0027ECFF /* AFObjectProvider.m */; };
-		C9B7C35B17B191560027ECFF /* AFObjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B7C35A17B191560027ECFF /* AFObjectModel.m */; };
 		C9B7C35D17B198680027ECFF /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9B7C35C17B198670027ECFF /* CoreData.framework */; };
 		C9B7C36117B19E4C0027ECFF /* AFObjectProvider.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C9B7C35617B18E2D0027ECFF /* AFObjectProvider.h */; };
-		C9B7C36217B19E4C0027ECFF /* AFObjectModel.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C9B7C35917B191560027ECFF /* AFObjectModel.h */; };
 		C9E70069175CFB3E00CB137F /* UITableView+Universal.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C963C2331756839800D54B86 /* UITableView+Universal.h */; };
 		C9E7006A175CFB3E00CB137F /* UIView+Universal.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C972173E175532F70051A403 /* UIView+Universal.h */; };
 		C9E7006B175CFB3E00CB137F /* AFArrayView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C97217261753DC9A0051A403 /* AFArrayView.h */; };
@@ -66,7 +65,6 @@
 			dstSubfolderSpec = 16;
 			files = (
 				C9B7C36117B19E4C0027ECFF /* AFObjectProvider.h in CopyFiles */,
-				C9B7C36217B19E4C0027ECFF /* AFObjectModel.h in CopyFiles */,
 				C9B7C34017B139C50027ECFF /* AFMetamacros.h in CopyFiles */,
 				C9B7C34117B139C50027ECFF /* AFKeypath.h in CopyFiles */,
 				C9E70069175CFB3E00CB137F /* UITableView+Universal.h in CopyFiles */,
@@ -131,6 +129,8 @@
 		97FA17721610E2D800A6756A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		97FA17741610E2E300A6756A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		97FA17761610E2EB00A6756A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C92F841A18329554004E5E84 /* NSObject+Runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Runtime.h"; sourceTree = "<group>"; };
+		C92F841B18329554004E5E84 /* NSObject+Runtime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Runtime.m"; sourceTree = "<group>"; };
 		C963C2331756839800D54B86 /* UITableView+Universal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+Universal.h"; sourceTree = "<group>"; };
 		C963C2341756839800D54B86 /* UITableView+Universal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Universal.m"; sourceTree = "<group>"; };
 		C97217261753DC9A0051A403 /* AFArrayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFArrayView.h; sourceTree = "<group>"; };
@@ -143,9 +143,8 @@
 		C9B7C33F17B1397F0027ECFF /* AFMetamacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AFMetamacros.h; sourceTree = "<group>"; };
 		C9B7C35617B18E2D0027ECFF /* AFObjectProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFObjectProvider.h; sourceTree = "<group>"; };
 		C9B7C35717B18E2D0027ECFF /* AFObjectProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFObjectProvider.m; sourceTree = "<group>"; };
-		C9B7C35917B191560027ECFF /* AFObjectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFObjectModel.h; sourceTree = "<group>"; };
-		C9B7C35A17B191560027ECFF /* AFObjectModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFObjectModel.m; sourceTree = "<group>"; };
 		C9B7C35C17B198670027ECFF /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		C9DD692E183199360096D599 /* AFObjectModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AFObjectModel.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +210,8 @@
 				9765D3D016EBD2EB0032FC23 /* UIView+Render.m */,
 				C972173E175532F70051A403 /* UIView+Universal.h */,
 				C972173F175532F70051A403 /* UIView+Universal.m */,
+				C92F841A18329554004E5E84 /* NSObject+Runtime.h */,
+				C92F841B18329554004E5E84 /* NSObject+Runtime.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -295,8 +296,7 @@
 			children = (
 				C9B7C35617B18E2D0027ECFF /* AFObjectProvider.h */,
 				C9B7C35717B18E2D0027ECFF /* AFObjectProvider.m */,
-				C9B7C35917B191560027ECFF /* AFObjectModel.h */,
-				C9B7C35A17B191560027ECFF /* AFObjectModel.m */,
+				C9DD692E183199360096D599 /* AFObjectModel.h */,
 			);
 			path = ObjectProvider;
 			sourceTree = "<group>";
@@ -367,10 +367,10 @@
 				9765D3D216EBD2EB0032FC23 /* UIView+Render.m in Sources */,
 				C97217291753DC9A0051A403 /* AFArrayView.m in Sources */,
 				C972173D17552D5F0051A403 /* AFTableView.m in Sources */,
+				C92F841C18329554004E5E84 /* NSObject+Runtime.m in Sources */,
 				C9721741175532F70051A403 /* UIView+Universal.m in Sources */,
 				C963C2361756839800D54B86 /* UITableView+Universal.m in Sources */,
 				C9B7C35817B18E2D0027ECFF /* AFObjectProvider.m in Sources */,
-				C9B7C35B17B191560027ECFF /* AFObjectModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -44,4 +44,4 @@
 }
 
 
-@end // @implementation UITableViewCell (Universal)
+@end

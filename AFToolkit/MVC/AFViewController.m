@@ -3,20 +3,12 @@
 #import "NSBundle+Universal.h"
 
 
-#pragma mark - Class Extension
+#pragma mark Class Definition
 
-@interface AFViewController ()
+@implementation AFViewController
 {
 	@private BOOL _visible;
 }
-
-
-@end  // @interface AFViewController ()
-
-
-#pragma mark - Class Definition
-
-@implementation AFViewController
 
 
 #pragma mark - Constructors
@@ -99,4 +91,4 @@
 }
 
 
-@end  // @interface AFViewController
+@end

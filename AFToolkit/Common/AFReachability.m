@@ -13,22 +13,12 @@
 NSString * const AFReachability_StateKeyPath = @"state";
 
 
-#pragma mark - Class Extension
-
-@interface AFReachability ()
-{
-	@private SCNetworkReachabilityRef _reachabilityRef;
-}
-
-@end // @interface AFReachability ()
-
-
-#pragma mark - Class Variables
-
-
 #pragma mark - Class Definition
 
 @implementation AFReachability
+{
+	@private SCNetworkReachabilityRef _reachabilityRef;
+}
 
 
 #pragma mark - Class Methods
@@ -186,4 +176,4 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 }
 
 
-@end // @implementation AFReachability
+@end

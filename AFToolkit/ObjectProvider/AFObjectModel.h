@@ -1,57 +1,27 @@
 
 
-#pragma mark Forward Declarations
+#pragma mark Protocol
 
-@class AFObjectProvider;
-
-
-#pragma mark Type Definitions
-
-typedef void (^AFObjectUpdateBlock)(id provider, id object, NSDictionary *values);
-
-typedef id (^AFObjectCreateBlock)(id provider);
+@protocol AFObjectModel<NSObject>
 
 
-#pragma mark - Class Interface
+#pragma mark - Required Methods
 
-@interface AFObjectModel : NSObject
+@required
 
++ (NSArray *)keyPathsForIdentity;
 
-#pragma mark - Properties
++ (NSArray *)collectionPropertyKeyPaths;
 
-@property (nonatomic, strong) Class myClass;
-@property (nonatomic, copy) NSArray *idProperties;
++ (NSDictionary *)valueKeyPathsByPropertyKeyPath;
 
-@property (nonatomic, copy) NSDictionary *propertyKeyMap;
-@property (nonatomic, copy) NSDictionary *collectionTypeMap;
-
-@property (nonatomic, copy) AFObjectUpdateBlock updateBlock;
-@property (nonatomic, copy) AFObjectCreateBlock createBlock;
++ (NSDictionary *)transformersByPropertyKeyPath;
 
 
-#pragma mark - Constructors
+@optional
 
-- (id)initWithClass: (Class)myClass
-	idProperties: (NSArray *)idProperties
-	propertyKeyMap: (NSDictionary *)propertyKeyMap
-	collectionTypeMap: (NSDictionary *)collectionTypeMap
-	updateBlock: (AFObjectUpdateBlock)updateBlock
-	createBlock: (AFObjectCreateBlock)createBlock;
++ (void)update: (id)model
+	withValues: (NSDictionary *)values;
 
 
-#pragma mark - Static Methods
-
-+ (instancetype)objectModelWithClass: (Class)myClass
-	idProperties: (NSArray *)idProperties
-	propertyKeyMap: (NSDictionary *)propertyKeyMap
-	collectionTypeMap: (NSDictionary *)collectionTypeMap
-	updateBlock: (AFObjectUpdateBlock)updateBlock
-	createBlock: (AFObjectCreateBlock)createBlock;
-
-+ (instancetype)objectModelWithClass: (Class)myClass
-	idProperties: (NSArray *)idProperties
-	propertyKeyMap: (NSDictionary *)propertyKeyMap
-	updateBlock: (AFObjectUpdateBlock)updateBlock;
-
-
-@end // @interface AFObjectModel
+@end

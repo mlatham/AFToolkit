@@ -35,4 +35,4 @@
 + (BOOL)fileExists: (NSURL *)url;
 
 
-@end  // @interface AFFileHelper
+@end

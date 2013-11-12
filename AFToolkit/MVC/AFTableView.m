@@ -1,24 +1,16 @@
 #import "AFTableView.h"
 #import "UITableViewCell+Universal.h"
 #import "UIView+Universal.h"
+#import "AFKeypath.h"
 #import "AFKVO.h"
 
 
-#pragma mark Class Extension
+#pragma mark Class Definition
 
-@interface AFTableView ()
+@implementation AFTableView
 {
 	@private __strong AFKVO *_kvo;
 }
-
-
-@end // @interface AFTableView ()
-
-
-#pragma mark - Class Definition
-
-@implementation AFTableView
-
 
 #pragma mark - Properties
 
@@ -28,7 +20,7 @@
 	if (_itemsSource != nil)
 	{
 		[_kvo stopObserving: _itemsSource
-			forKeyPath: AFArray_ObjectsKeyPath];
+			forKeyPath: @keypath(itemsSource.objects)];
 	}
 	
 	// Set value.
@@ -38,8 +30,7 @@
 	if (_itemsSource != nil)
 	{
 		[_kvo startObserving: _itemsSource
-			forKeyPath: AFArray_ObjectsKeyPath
-			options: NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
+			forKeyPath: @keypath(itemsSource.objects)
 			selector: @selector(_sourceDidChange:)];
 	}
 }
@@ -165,4 +156,4 @@
 }
 
 
-@end // @implementation AFTableView
+@end

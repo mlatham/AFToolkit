@@ -1,49 +1,13 @@
 #import "AFObjectProvider.h"
+#import "NSObject+Runtime.h"
 
 
-#pragma mark Class Variables
-
-static __strong NSMutableDictionary *_objectModels;
-
-
-#pragma mark - Class Definition
+#pragma mark Class Definition
 
 @implementation AFObjectProvider
 
 
-#pragma mark - Constructors
-
-+ (void)initialize
-{
-	static BOOL classInitialized = NO;
-	
-	if (classInitialized == NO)
-	{
-		_objectModels = [[NSMutableDictionary alloc]
-			init];
-	
-		classInitialized = YES;
-	}
-}
-
-
 #pragma mark - Public Methods
-
-+ (void)registerObjectModel: (AFObjectModel *)objectModel
-{
-	[_objectModels setObject: objectModel
-		forKey: (id <NSCopying>)objectModel.myClass];
-}
-
-+ (AFObjectModel *)objectModelForClass: (Class)myClass
-{
-	return [_objectModels objectForKey: (id <NSCopying>)myClass];
-}
-
-+ (NSArray *)objectModels
-{
-	return [_objectModels allValues];
-}
 
 - (id)create: (Class)myClass
 	withValues: (NSDictionary *)values
@@ -63,27 +27,9 @@ static __strong NSMutableDictionary *_objectModels;
 
 - (id)create: (Class)myClass
 {
-	AFObjectModel *objectModel = [AFObjectProvider objectModelForClass: myClass];
-	
-	id instance = nil;
-	
-	// Get an object model for this class.
-	if (AFIsNull(objectModel) == NO)
-	{
-		// Use the create block, if specified.
-		if (AFIsNull(objectModel.createBlock) == NO)
-		{
-			AFObjectCreateBlock createBlock = [objectModel.createBlock copy];
-		
-			instance = createBlock(self);
-		}
-		// Otherwise, allocate a new instance using the default constructor.
-		else
-		{
-			instance = [[myClass alloc]
-				init];
-		}
-	}
+	// By default, just allocate and init the class.
+	id instance = [[myClass alloc]
+		init];
 	
 	return instance;
 }
@@ -92,63 +38,80 @@ static __strong NSMutableDictionary *_objectModels;
 	withValues: (NSDictionary *)values
 {
 	Class myClass = [object class];
-
-	AFObjectModel *objectModel = [AFObjectProvider objectModelForClass: myClass];
+	id myClassObject = (id)myClass;
 	
-	// Apply the mapped values, if present.
-	if (AFIsNull(objectModel.propertyKeyMap) == NO)
+	if ([myClassObject conformsToProtocol: @protocol(AFObjectModel)] == YES)
 	{
-		for (NSString *key in [objectModel.propertyKeyMap allKeys])
+		// Get the mapped values.
+		NSDictionary *valueKeyPathsByPropertyKeyPath = [myClassObject valueKeyPathsByPropertyKeyPath];
+		
+		// Apply the mapped values, if present.
+		if (AFIsNull(valueKeyPathsByPropertyKeyPath) == NO)
 		{
-			// If a mapping exists, set the value.
-			id propertyKeyPath = [objectModel.propertyKeyMap objectForKey: key];
-			if (propertyKeyPath != nil)
+			for (NSString *propertyKeyPath in [valueKeyPathsByPropertyKeyPath allKeys])
 			{
-				id value = [values objectForKey: key];
-				if (value == [NSNull null])
+				// If a mapping exists, set the value.
+				id valueKeyPath = valueKeyPathsByPropertyKeyPath[propertyKeyPath];
+				
+				if (AFIsNull(valueKeyPath) == NO)
 				{
-					// Clear value on NSNull.
-					[object setValue: nil
-						forKeyPath: propertyKeyPath];
-				}
-				else if (value != nil)
-				{
-					@try
+					id value = values[valueKeyPath];
+					
+					// Value is nil - no value was defined, so set nothing. (NSNull is an empty value).
+					if (value != nil)
 					{
-						// Set value otherwise.
-						[object setValue: value
-							forKeyPath: propertyKeyPath];
-					}
-					@catch (NSException *exception)
-					{
-						// If the value is a number, try to set it as a string.
-						if ([value isKindOfClass: [NSNumber class]])
+						// Get the transformers map.
+						NSDictionary *transformers = [myClassObject transformersByPropertyKeyPath];
+						
+						NSValueTransformer *transformer = nil;
+						
+						if (transformer != nil)
 						{
-							NSString *stringValue = [value stringValue];
-							
-							// Set the string value.
-							[object setValue: stringValue
-								forKey: propertyKeyPath];
+							// Try to get the transformer.
+							transformer = transformers[propertyKeyPath];
+						}
+						
+						// Don't crash on failing a parse/set.
+						@try
+						{
+							// Set value otherwise.
+							[object setValue: value
+								forPropertyName: propertyKeyPath
+								withTransformer: transformer];
+						}
+						@catch (NSException *exception)
+						{
+							NSLog(@"Failed to parse value: %@ for property: %@. Error: %@", value, propertyKeyPath, exception);
 						}
 					}
-				}
-				else
-				{
-					// Otherwise, no value was defined - don't set anything.
 				}
 			}
 		}
 	}
 	
-	// Apply the update block, if present.
-	if (AFIsNull(objectModel.updateBlock) == NO)
+	// Call the update method, if implemented.
+	if ([myClassObject respondsToSelector: @selector(update:withValues:)] == YES)
 	{
-		AFObjectUpdateBlock updateBlock = [objectModel.updateBlock copy];
-		
-		// Apply the values.
-		updateBlock(self, object, values);
+		[myClassObject update: object
+			withValues: values];
 	}
 }
 
 
-@end // @implementation AFObjectProvider
+#pragma mark - Private Methods
+
++ (void)_setValue: (id)value
+	withTransformer: (NSValueTransformer *)transformer
+	withKeyPath: (NSString *)keyPath
+	onObject: (id)object
+{
+	// Get the property attributes about the keypath.
+	
+	// The property is a collection property.
+	
+	// The property is not a collection property.
+	
+}
+
+
+@end

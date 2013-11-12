@@ -7,6 +7,7 @@
 #import "AFKeypath.h"
 
 // Categories
+#import "NSObject+Runtime.h"
 #import "NSBundle+Universal.h"
 #import "UITableViewCell+Universal.h"
 #import "UITableView+Universal.h"

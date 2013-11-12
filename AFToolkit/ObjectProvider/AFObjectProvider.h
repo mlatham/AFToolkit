@@ -6,15 +6,6 @@
 @interface AFObjectProvider : NSObject
 
 
-#pragma mark - Static Methods
-
-+ (void)registerObjectModel: (AFObjectModel *)objectModel;
-
-+ (AFObjectModel *)objectModelForClass: (Class)myClass;
-
-+ (NSArray *)objectModels;
-
-
 #pragma mark - Instance Methods
 
 - (id)create: (Class)myClass
@@ -26,4 +17,4 @@
 	withValues: (NSDictionary *)values;
 
 
-@end // @interface AFObjectProvider
+@end

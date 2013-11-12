@@ -36,4 +36,4 @@
 }
 
 
-@end // @implementation UIView (Render)
+@end

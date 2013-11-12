@@ -10,4 +10,4 @@
 - (NSString *)universalNibNameForNibName: (NSString *)nibName;	
 
 
-@end  // @interface NSBundle (Universal)
+@end

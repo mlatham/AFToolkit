@@ -1,22 +1,15 @@
 #import "AFArrayView.h"
+#import "AFKeypath.h"
 #import "AFKVO.h"
 
 
-#pragma mark Class Extension
-
-@interface AFArrayView ()
-{
-	@private __strong AFKVO *_kvo;
-}
-
-
-@end // @interface AFArrayView ()
-
-
-#pragma mark - Class Definition
+#pragma mark Class Definition
 
 // THIS CLASS IS NOT THREAD-SAFE
 @implementation AFArrayView
+{
+	@private __strong AFKVO *_kvo;
+}
 
 
 #pragma mark - Properties
@@ -58,7 +51,7 @@
 	if (_source != nil)
 	{
 		[_kvo stopObserving: _source
-			forKeyPath: AFArray_ObjectsKeyPath];
+			forKeyPath: @keypath(_source.objects)];
 	}
 
 	// Set value.
@@ -68,8 +61,7 @@
 	if (_source != nil)
 	{
 		[_kvo startObserving: _source
-			forKeyPath: AFArray_ObjectsKeyPath
-			options: NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
+			forKeyPath: @keypath(_source.objects)
 			selector: @selector(_sourceDidChange:)];
 	}
 }
@@ -114,8 +106,7 @@
 	if (_source != nil)
 	{
 		[_kvo startObserving: _source
-			forKeyPath: AFArray_ObjectsKeyPath
-			options: NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
+			forKeyPath: @keypath(_source.objects)
 			selector: @selector(_sourceDidChange:)];
 	}
 	
@@ -358,4 +349,4 @@
 }
 
 
-@end // @implementation AFArrayView
+@end

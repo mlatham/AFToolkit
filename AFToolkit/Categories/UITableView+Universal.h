@@ -12,4 +12,4 @@
 - (id)dequeueReusableHeaderFooterViewWithUniversalNibName: (NSString *)universalNibName;
 
 
-@end // @interface UITableView (Universal)
+@end
