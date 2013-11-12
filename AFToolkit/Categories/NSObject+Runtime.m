@@ -2,7 +2,14 @@
 #import <objc/runtime.h>
 
 
-#pragma mark Class Definition
+#pragma mark Constants
+
+// Use the addresses as the key.
+static char PROPERTY_INFO_MAP_KEY;
+static char TEMPLATE_KEY;
+
+
+#pragma mark - Class Definition
 
 @implementation NSObject (Runtime)
 
@@ -142,6 +149,21 @@
 	return result;
 }
 
++ (instancetype)template
+{
+	id instance = (id)objc_getAssociatedObject(self, &TEMPLATE_KEY);
+	
+	// Create the property info map on demand.
+	if (instance == nil)
+	{
+		instance = [self alloc];
+	
+		objc_setAssociatedObject(self, &TEMPLATE_KEY, instance, OBJC_ASSOCIATION_RETAIN);
+	}
+	
+	return instance;
+}
+
 - (void)setValue: (id)value
 	forPropertyName: (NSString *)propertyName
 	withTransformer: (NSValueTransformer *)transformer
@@ -246,9 +268,6 @@
 
 
 #pragma mark - Private Methods
-
-// Use the addresses as the key.
-static char PROPERTY_INFO_MAP_KEY;
 
 + (NSMutableDictionary *)propertyInfoMap
 {

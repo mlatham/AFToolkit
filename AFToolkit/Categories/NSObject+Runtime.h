@@ -32,6 +32,10 @@
 
 + (AFPropertyInfo *)propertyInfoForPropertyName: (NSString *)propertyName;
 
+// Gets a singleton allocated (but uninitialized) instance of this type of object.
+
++ (instancetype)template;
+
 
 #pragma mark - Instance Methods
 

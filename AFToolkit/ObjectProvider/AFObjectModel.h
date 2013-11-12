@@ -19,7 +19,8 @@
 + (NSDictionary *)transformersByPropertyKeyPath;
 
 + (void)update: (id)model
-	withValues: (NSDictionary *)values;
+	values: (NSDictionary *)values
+	provider: (id)provider;
 
 
 @end

@@ -93,10 +93,11 @@
 	}
 	
 	// Call the update method, if implemented.
-	if ([myClassObject respondsToSelector: @selector(update:withValues:)] == YES)
+	if ([myClassObject respondsToSelector: @selector(update:values:provider:)] == YES)
 	{
 		[myClassObject update: object
-			withValues: values];
+			values: values
+			provider: self];
 	}
 }
 
