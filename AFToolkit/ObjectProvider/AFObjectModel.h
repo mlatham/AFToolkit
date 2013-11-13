@@ -35,3 +35,20 @@
 
 
 @end
+
+
+#pragma mark AFObjectModel Protocol
+
+@protocol AFObjectModel<NSObject>
+
+@required
+
+- (AFObjectModel *)objectModel;
+
+@optional
+
++ (void)update: (id)value
+	values: (NSDictionary *)values
+	provider: (id)provider;
+
+@end
