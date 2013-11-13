@@ -33,6 +33,8 @@
 
 + (id)objectModelWithMappings: (NSDictionary *)mappings;
 
++ (id)objectModelForClass: (Class)myClass;
+
 
 @end
 

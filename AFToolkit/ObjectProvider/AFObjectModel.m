@@ -1,4 +1,11 @@
 #import "AFObjectModel.h"
+#import <objc/runtime.h>
+
+
+#pragma mark Constants
+
+// Use the addresses as the key.
+static char OBJECT_MODEL_MAP_KEY;
 
 
 #pragma mark Class Definition
@@ -64,6 +71,54 @@
 		initWithKey: nil
 		mappings: mappings
 		transformers: nil];
+}
+
++ (id)objectModelForClass: (Class)myClass
+{
+	NSString *myClassName = NSStringFromClass(myClass);
+
+	NSMutableDictionary *objectModelMap = [self _objectModelMap];
+	
+	AFObjectModel *objectModel = objectModelMap[myClassName];
+	
+	// Create the object models on demand.
+	if (objectModel == nil)
+	{
+		id myClassObject = (id)myClass;
+		
+		if ([myClassObject respondsToSelector: @selector(objectModel)])
+		{
+			objectModel = [myClassObject objectModel];
+			
+			// Cache each object model by class name.
+			objectModelMap[myClassName] = objectModel;
+		}
+	}
+	
+	return objectModel;
+}
+
+
+#pragma mark - Private Methods
+
++ (NSMutableDictionary *)_objectModelMap
+{
+	NSMutableDictionary *objectModelMap = (NSMutableDictionary *)objc_getAssociatedObject(self, &OBJECT_MODEL_MAP_KEY);
+	
+	// Create the property info map on demand.
+	if (objectModelMap == nil)
+	{
+		objectModelMap = [NSMutableDictionary dictionary];
+	
+		[self _setObjectModelMap: objectModelMap];
+	}
+	
+	return objectModelMap;
+}
+
++ (void)_setObjectModelMap: (NSMutableDictionary *)propertyInfoMap
+{
+	objc_setAssociatedObject(self, &OBJECT_MODEL_MAP_KEY, propertyInfoMap, OBJC_ASSOCIATION_RETAIN);
 }
 
 

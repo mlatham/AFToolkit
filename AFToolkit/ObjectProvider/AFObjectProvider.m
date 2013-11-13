@@ -1,13 +1,6 @@
 #import "AFObjectProvider.h"
 #import "NSObject+Runtime.h"
 #import "AFValueTransformer.h"
-#import <objc/runtime.h>
-
-
-#pragma mark Constants
-
-// Use the addresses as the key.
-static char OBJECT_MODEL_MAP_KEY;
 
 
 #pragma mark Class Definition
@@ -46,31 +39,11 @@ static char OBJECT_MODEL_MAP_KEY;
 	withValues: (NSDictionary *)values
 {
 	Class myClass = [object class];
+	
 	id myClassObject = (id)myClass;
-	NSString *className = NSStringFromClass(myClass);
 	
-	// Attempt to get the object model for this class.
-	NSMutableDictionary *objectModelMap = [AFObjectProvider _objectModelMap];
-	
-	// Object models are cached by class name.
-	AFObjectModel *objectModel = objectModelMap[className];
-	
-	// Create the object models on-demand.
-	if (objectModel == nil)
-	{
-		// Attempt to get the object model.
-		if ([myClassObject respondsToSelector: @selector(objectModel)])
-		{
-			// Get the object model.
-			objectModel = [myClassObject objectModel];
-			
-			// Cache the object model.
-			if (objectModel != nil)
-			{
-				objectModelMap[className] = objectModel;
-			}
-		}
-	}
+	// Object models are cached by the AFObjectModel class.
+	AFObjectModel *objectModel = [AFObjectModel objectModelForClass: myClass];
 	
 	if (objectModel != nil)
 	{
@@ -282,26 +255,6 @@ static char OBJECT_MODEL_MAP_KEY;
 	
 	// Class name didn't match any core collection.
 	return nil;
-}
-
-+ (NSMutableDictionary *)_objectModelMap
-{
-	NSMutableDictionary *objectModelMap = (NSMutableDictionary *)objc_getAssociatedObject(self, &OBJECT_MODEL_MAP_KEY);
-	
-	// Create the property info map on demand.
-	if (objectModelMap == nil)
-	{
-		objectModelMap = [NSMutableDictionary dictionary];
-	
-		[self _setObjectModelMap: objectModelMap];
-	}
-	
-	return objectModelMap;
-}
-
-+ (void)_setObjectModelMap: (NSMutableDictionary *)propertyInfoMap
-{
-	objc_setAssociatedObject(self, &OBJECT_MODEL_MAP_KEY, propertyInfoMap, OBJC_ASSOCIATION_RETAIN);
 }
 
 
