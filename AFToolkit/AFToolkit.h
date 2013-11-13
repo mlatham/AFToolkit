@@ -24,6 +24,7 @@
 #import "AFReachability.h"
 
 // Object provider
+#import "AFValueTransformer.h"
 #import "AFObjectProvider.h"
 #import "AFObjectModel.h"
 

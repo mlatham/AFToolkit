@@ -44,6 +44,7 @@
 		C92F841C18329554004E5E84 /* NSObject+Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = C92F841B18329554004E5E84 /* NSObject+Runtime.m */; };
 		C92F84291832C1FD004E5E84 /* NSObject+Runtime.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C92F841A18329554004E5E84 /* NSObject+Runtime.h */; };
 		C92F842A1832D397004E5E84 /* AFObjectModel.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C9DD692E183199360096D599 /* AFObjectModel.h */; };
+		C92F843118334904004E5E84 /* AFValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = C92F843018334904004E5E84 /* AFValueTransformer.m */; };
 		C963C2361756839800D54B86 /* UITableView+Universal.m in Sources */ = {isa = PBXBuildFile; fileRef = C963C2341756839800D54B86 /* UITableView+Universal.m */; };
 		C97217291753DC9A0051A403 /* AFArrayView.m in Sources */ = {isa = PBXBuildFile; fileRef = C97217271753DC9A0051A403 /* AFArrayView.m */; };
 		C972173D17552D5F0051A403 /* AFTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C972173B17552D5F0051A403 /* AFTableView.m */; };
@@ -135,6 +136,8 @@
 		97FA17761610E2EB00A6756A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C92F841A18329554004E5E84 /* NSObject+Runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Runtime.h"; sourceTree = "<group>"; };
 		C92F841B18329554004E5E84 /* NSObject+Runtime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Runtime.m"; sourceTree = "<group>"; };
+		C92F842F18334904004E5E84 /* AFValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFValueTransformer.h; sourceTree = "<group>"; };
+		C92F843018334904004E5E84 /* AFValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFValueTransformer.m; sourceTree = "<group>"; };
 		C963C2331756839800D54B86 /* UITableView+Universal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+Universal.h"; sourceTree = "<group>"; };
 		C963C2341756839800D54B86 /* UITableView+Universal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Universal.m"; sourceTree = "<group>"; };
 		C97217261753DC9A0051A403 /* AFArrayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFArrayView.h; sourceTree = "<group>"; };
@@ -301,6 +304,8 @@
 				C9B7C35617B18E2D0027ECFF /* AFObjectProvider.h */,
 				C9B7C35717B18E2D0027ECFF /* AFObjectProvider.m */,
 				C9DD692E183199360096D599 /* AFObjectModel.h */,
+				C92F842F18334904004E5E84 /* AFValueTransformer.h */,
+				C92F843018334904004E5E84 /* AFValueTransformer.m */,
 			);
 			path = ObjectProvider;
 			sourceTree = "<group>";
@@ -370,6 +375,7 @@
 				97E8502516DB0D7000F64F70 /* AFReachability.m in Sources */,
 				9765D3D216EBD2EB0032FC23 /* UIView+Render.m in Sources */,
 				C97217291753DC9A0051A403 /* AFArrayView.m in Sources */,
+				C92F843118334904004E5E84 /* AFValueTransformer.m in Sources */,
 				C972173D17552D5F0051A403 /* AFTableView.m in Sources */,
 				C92F841C18329554004E5E84 /* NSObject+Runtime.m in Sources */,
 				C9721741175532F70051A403 /* UIView+Universal.m in Sources */,

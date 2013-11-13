@@ -37,15 +37,4 @@
 + (instancetype)template;
 
 
-#pragma mark - Instance Methods
-
-// Sets a value on this object, changing NSNull values to nil, applying the provided
-// transform, handling setting one or many values on a collection type property of
-// either NSMutableSet, NSMutableArray or NSMutableOrderedSet.
-
-- (void)setValue: (id)value
-	forPropertyName: (NSString *)propertyName
-	withTransformer: (NSValueTransformer *)transformer;
-
-
 @end
