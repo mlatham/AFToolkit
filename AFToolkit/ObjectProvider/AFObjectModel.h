@@ -45,7 +45,7 @@
 
 @required
 
-- (AFObjectModel *)objectModel;
++ (AFObjectModel *)objectModel;
 
 @optional
 
