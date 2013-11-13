@@ -1,6 +1,13 @@
 #import "AFObjectProvider.h"
 #import "NSObject+Runtime.h"
 #import "AFValueTransformer.h"
+#import <objc/runtime.h>
+
+
+#pragma mark Constants
+
+// Use the addresses as the key.
+static char OBJECT_MODEL_MAP_KEY;
 
 
 #pragma mark Class Definition
@@ -40,14 +47,38 @@
 {
 	Class myClass = [object class];
 	id myClassObject = (id)myClass;
+	NSString *className = NSStringFromClass(myClass);
 	
-	if ([myClassObject conformsToProtocol: @protocol(AFObjectModel)] == YES)
+	// Attempt to get the object model for this class.
+	NSMutableDictionary *objectModelMap = [AFObjectProvider _objectModelMap];
+	
+	// Object models are cached by class name.
+	AFObjectModel *objectModel = objectModelMap[className];
+	
+	// Create the object models on-demand.
+	if (objectModel == nil)
+	{
+		// Attempt to get the object model.
+		if ([myClassObject respondsToSelector: @selector(objectModel)])
+		{
+			// Get the object model.
+			objectModel = [myClassObject objectModel];
+			
+			// Cache the object model.
+			if (objectModel != nil)
+			{
+				objectModelMap[className] = objectModel;
+			}
+		}
+	}
+	
+	if (objectModel != nil)
 	{
 		// Get the mapped values.
-		NSDictionary *valueKeyPathsByPropertyKeyPath = [myClassObject valueKeyPathsByPropertyKeyPath];
+		NSDictionary *valueKeyPathsByPropertyKeyPath = objectModel.mappings;
 		
 		// Apply the mapped values, if present.
-		if (AFIsNull(valueKeyPathsByPropertyKeyPath) == NO)
+		if (valueKeyPathsByPropertyKeyPath != nil)
 		{
 			for (NSString *propertyKeyPath in [valueKeyPathsByPropertyKeyPath allKeys])
 			{
@@ -63,16 +94,13 @@
 					{
 						AFValueTransformer *transformer = nil;
 						
-						if ([myClassObject respondsToSelector: @selector(transformersByPropertyKeyPath)] == YES)
+						// Get the transformers map.
+						NSDictionary *transformers = objectModel.transformers;
+						
+						if (transformers != nil)
 						{
-							// Get the transformers map.
-							NSDictionary *transformers = [myClassObject transformersByPropertyKeyPath];
-							
-							if (transformers != nil)
-							{
-								// Try to get the transformer.
-								transformer = transformers[propertyKeyPath];
-							}
+							// Try to get the transformer.
+							transformer = transformers[propertyKeyPath];
 						}
 						
 						// Don't crash on failing a parse/set.
@@ -132,8 +160,7 @@
 		NSArray *collectionClasses = @[
 			@"NSMutableArray",
 			@"NSMutableOrderedSet",
-			@"NSMutableSet",
-			@"AFMutableArray"
+			@"NSMutableSet"
 		];
 		
 		// Determine if the property class is one of the collection types.
@@ -252,13 +279,29 @@
 	{
 		return [self mutableOrderedSetValueForKeyPath: keyPath];
 	}
-	else if ([className isEqualToString: @"AFMutableArray"])
-	{
-		return [self valueForKeyPath: keyPath];
-	}
 	
 	// Class name didn't match any core collection.
 	return nil;
+}
+
++ (NSMutableDictionary *)_objectModelMap
+{
+	NSMutableDictionary *objectModelMap = (NSMutableDictionary *)objc_getAssociatedObject(self, &OBJECT_MODEL_MAP_KEY);
+	
+	// Create the property info map on demand.
+	if (objectModelMap == nil)
+	{
+		objectModelMap = [NSMutableDictionary dictionary];
+	
+		[self _setObjectModelMap: objectModelMap];
+	}
+	
+	return objectModelMap;
+}
+
++ (void)_setObjectModelMap: (NSMutableDictionary *)propertyInfoMap
+{
+	objc_setAssociatedObject(self, &OBJECT_MODEL_MAP_KEY, propertyInfoMap, OBJC_ASSOCIATION_RETAIN);
 }
 
 

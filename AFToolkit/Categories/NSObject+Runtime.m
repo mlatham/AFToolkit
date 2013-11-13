@@ -19,7 +19,7 @@ static char TEMPLATE_KEY;
 + (AFPropertyInfo *)propertyInfoForPropertyName: (NSString *)propertyName
 {
 	// Get or create the property info map.
-	NSMutableDictionary *propertyInfoMap = self.propertyInfoMap;
+	NSMutableDictionary *propertyInfoMap = [self _propertyInfoMap];
 	
 	// Check if the property info is cached.
 	AFPropertyInfo *result = propertyInfoMap[propertyName];
@@ -167,22 +167,22 @@ static char TEMPLATE_KEY;
 
 #pragma mark - Private Methods
 
-+ (NSMutableDictionary *)propertyInfoMap
++ (NSMutableDictionary *)_propertyInfoMap
 {
 	NSMutableDictionary *propertyInfoMap = (NSMutableDictionary *)objc_getAssociatedObject(self, &PROPERTY_INFO_MAP_KEY);
 	
 	// Create the property info map on demand.
 	if (propertyInfoMap == nil)
 	{
-		self.propertyInfoMap = [NSMutableDictionary dictionary];
-		
-		return self.propertyInfoMap;
+		propertyInfoMap = [NSMutableDictionary dictionary];
+	
+		[self _setPropertyInfoMap: propertyInfoMap];
 	}
 	
 	return propertyInfoMap;
 }
 
-+ (void)setPropertyInfoMap: (NSMutableDictionary *)propertyInfoMap
++ (void)_setPropertyInfoMap: (NSMutableDictionary *)propertyInfoMap
 {
 	objc_setAssociatedObject(self, &PROPERTY_INFO_MAP_KEY, propertyInfoMap, OBJC_ASSOCIATION_RETAIN);
 }

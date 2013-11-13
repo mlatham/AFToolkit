@@ -1,26 +1,37 @@
 
 
-#pragma mark Protocol
+#pragma mark Class Interface
 
-@protocol AFObjectModel<NSObject>
-
-
-#pragma mark - Required Methods
-
-@required
-
-+ (NSDictionary *)valueKeyPathsByPropertyKeyPath;
+@interface AFObjectModel : NSObject
 
 
-@optional
+#pragma mark - Properties
 
-+ (NSArray *)keyPathsForIdentity;
+@property (nonatomic, strong, readonly) NSArray *key;
+@property (nonatomic, strong, readonly) NSDictionary *mappings;
+@property (nonatomic, strong, readonly) NSDictionary *transformers;
 
-+ (NSDictionary *)transformersByPropertyKeyPath;
 
-+ (void)update: (id)model
-	values: (NSDictionary *)values
-	provider: (id)provider;
+#pragma mark - Constructors
+
+- (id)initWithKey: (NSArray *)key
+	mappings: (NSDictionary *)mappings
+	transformers: (NSDictionary *)transformers;
+
+
+#pragma mark - Static Methods
+
++ (id)objectModelWithKey: (NSArray *)key
+	mappings: (NSDictionary *)mappings
+	transformers: (NSDictionary *)transformers;
+
++ (id)objectModelWithMappings: (NSDictionary *)mappings
+	transformers: (NSDictionary *)transformers;
+
++ (id)objectModelWithKey: (NSArray *)key
+	mappings: (NSDictionary *)mappings;
+
++ (id)objectModelWithMappings: (NSDictionary *)mappings;
 
 
 @end
