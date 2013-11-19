@@ -40,7 +40,7 @@ typedef enum
 + (instancetype)hasMany: (Class)hasManyClass
 	keys: (NSArray *)keys;
 + (instancetype)hasMany: (Class)hasManyClass
-	key: (NSArray *)key;
+	key: (NSString *)key;
 
 
 #pragma mark - Instance Methods

@@ -75,7 +75,7 @@ static NSArray *_collectionClasses;
 }
 
 + (instancetype)hasMany: (Class)hasManyClass
-	key: (NSArray *)key
+	key: (NSString *)key
 {
 	return [[self alloc]
 		initWithHasMany: hasManyClass
