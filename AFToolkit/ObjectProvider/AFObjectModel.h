@@ -33,11 +33,19 @@
 	rootKey: (NSString *)rootKey
 	relationships: (NSDictionary *)relationships;
 
++ (instancetype)objectModelWithIDKeyPath: (NSString *)idKeyPath
+	collectionKey: (NSString *)collectionKey
+	rootKey: (NSString *)rootKey
+	relationships: (NSDictionary *)relationships;
+
 + (instancetype)objectModelWithCollectionKey: (NSString *)collectionKey
 	rootKey: (NSString *)rootKey
 	relatioships: (NSDictionary *)relationships;
 
 + (instancetype)objectModelWithIDKeyPaths: (NSArray *)idKeyPaths
+	relationships: (NSDictionary *)relationships;
+
++ (instancetype)objectModelWithIDKeyPath: (NSString *)idKeyPath
 	relationships: (NSDictionary *)relationships;
 
 + (instancetype)objectModelWithRelationships: (NSDictionary *)relationships;

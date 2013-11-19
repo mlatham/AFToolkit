@@ -51,6 +51,18 @@ static char OBJECT_MODEL_MAP_KEY;
 		relationships: relationships];
 }
 
++ (instancetype)objectModelWithIDKeyPath: (NSString *)idKeyPath
+	collectionKey: (NSString *)collectionKey
+	rootKey: (NSString *)rootKey
+	relationships: (NSDictionary *)relationships
+{
+	return [[self alloc]
+		initWithIDKeyPaths: @[ idKeyPath ]
+		collectionKey: collectionKey
+		rootKey: rootKey
+		relationships: relationships];
+}
+
 + (instancetype)objectModelWithCollectionKey: (NSString *)collectionKey
 	rootKey: (NSString *)rootKey
 	relatioships: (NSDictionary *)relationships
@@ -67,6 +79,16 @@ static char OBJECT_MODEL_MAP_KEY;
 {
 	return [[self alloc]
 		initWithIDKeyPaths: idKeyPaths
+		collectionKey: nil
+		rootKey: nil
+		relationships: relationships];
+}
+
++ (instancetype)objectModelWithIDKeyPath: (NSString *)idKeyPath
+	relationships: (NSDictionary *)relationships
+{
+	return [[self alloc]
+		initWithIDKeyPaths: @[ idKeyPath ]
 		collectionKey: nil
 		rootKey: nil
 		relationships: relationships];
