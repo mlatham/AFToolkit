@@ -46,21 +46,21 @@
 	return self;
 }
 
-+ (AFArray *)array
++ (instancetype)array
 {
-	return [[AFArray alloc]
+	return [[self alloc]
 		init];
 }
 
-+ (AFArray *)arrayWithCapacity: (NSUInteger)numItems
++ (instancetype)arrayWithCapacity: (NSUInteger)numItems
 {
-	return [[AFArray alloc]
+	return [[self alloc]
 		initWithCapacity: numItems];
 }
 
-+ (AFArray *)arrayWithArray: (NSArray *)array
++ (instancetype)arrayWithArray: (NSArray *)array
 {
-	return [[AFArray alloc]
+	return [[self alloc]
 		initWithArray: array];
 }
 

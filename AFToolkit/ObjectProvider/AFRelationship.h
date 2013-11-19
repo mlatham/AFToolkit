@@ -33,13 +33,13 @@ typedef enum
 #pragma mark - Static Methods
 
 // Returns a relationship that resolves a single object or value and sets its value.
-+ (id)key: (NSString *)key;
++ (instancetype)key: (NSString *)key;
 
 // Returns a relationship that resolves a single object or value and sets its value.
-+ (id)keys: (NSArray *)keys;
++ (instancetype)keys: (NSArray *)keys;
 
 // Returns a relationship that resolves one or many object instances and assigns them to a collection.
-+ (id)hasMany: (Class)hasManyClass
++ (instancetype)hasMany: (Class)hasManyClass
 	keys: (NSArray *)keys;
 
 

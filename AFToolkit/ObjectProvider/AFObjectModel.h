@@ -28,21 +28,21 @@
 
 #pragma mark - Static Methods
 
-+ (id)objectModelWithIDKeyPaths: (NSArray *)idKeyPaths
++ (instancetype)objectModelWithIDKeyPaths: (NSArray *)idKeyPaths
 	collectionKey: (NSString *)collectionKey
 	rootKey: (NSString *)rootKey
 	relationships: (NSDictionary *)relationships;
 
-+ (id)objectModelWithCollectionKey: (NSString *)collectionKey
++ (instancetype)objectModelWithCollectionKey: (NSString *)collectionKey
 	rootKey: (NSString *)rootKey
 	relatioships: (NSDictionary *)relationships;
 
-+ (id)objectModelWithIDKeyPaths: (NSArray *)idKeyPaths
++ (instancetype)objectModelWithIDKeyPaths: (NSArray *)idKeyPaths
 	relationships: (NSDictionary *)relationships;
 
-+ (id)objectModelWithRelationships: (NSDictionary *)relationships;
++ (instancetype)objectModelWithRelationships: (NSDictionary *)relationships;
 
-+ (id)objectModelForClass: (Class)myClass;
++ (instancetype)objectModelForClass: (Class)myClass;
 
 
 @end

@@ -59,9 +59,9 @@
 	return self;
 }
 
-+ (AFKVO *)kvoWithTarget: (NSObject *)target
++ (instancetype)kvoWithTarget: (NSObject *)target
 {
-	return [[AFKVO alloc]
+	return [[self alloc]
 		initWithTarget: target];
 }
 

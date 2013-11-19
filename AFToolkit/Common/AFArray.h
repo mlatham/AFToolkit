@@ -23,11 +23,11 @@
 
 - (id)initWithArray: (NSArray *)array;
 
-+ (AFArray *)array;
++ (instancetype)array;
 
-+ (AFArray *)arrayWithCapacity: (NSUInteger)numItems;
++ (instancetype)arrayWithCapacity: (NSUInteger)numItems;
 
-+ (AFArray *)arrayWithArray: (NSArray *)array;
++ (instancetype)arrayWithArray: (NSArray *)array;
 
 
 #pragma mark - Array KVO Methods

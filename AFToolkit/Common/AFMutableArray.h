@@ -11,15 +11,6 @@
 - (void)setObjects: (NSArray *)objects;
 
 
-#pragma mark - Constructors
-
-+ (AFMutableArray *)array;
-
-+ (AFMutableArray *)arrayWithCapacity: (NSUInteger)numItems;
-
-+ (AFMutableArray *)arrayWithArray: (NSArray *)array;
-
-
 #pragma mark - Mutable Array KVO Methods
 
 - (void)insertObject: (id)object

@@ -132,27 +132,27 @@
 	return self;
 }
 
-+ (AFArrayView *)arrayViewWithSource: (AFArray *)source
++ (instancetype)arrayViewWithSource: (AFArray *)source
 	comparator: (AFArrayViewComparator)comparator
 	filter: (AFArrayViewFilter)filter
 	sortOrder: (AFArrayViewSortOrder)sortOrder
 {
-	return [[AFArrayView alloc]
+	return [[self alloc]
 		initWithSource: source
 		comparator: comparator
 		filter: filter
 		sortOrder: sortOrder];
 }
 
-+ (AFArrayView *)arrayViewWithSource: (AFArray *)source
++ (instancetype)arrayViewWithSource: (AFArray *)source
 {
-	return [[AFArrayView alloc]
+	return [[self alloc]
 		initWithSource: source];
 }
 
-+ (AFArrayView *)arrayView
++ (instancetype)arrayView
 {
-	return [[AFArrayView alloc]
+	return [[self alloc]
 		init];
 }
 

@@ -15,27 +15,6 @@
 }
 
 
-#pragma mark - Constructors
-
-+ (AFMutableArray *)array
-{
-	return [[AFMutableArray alloc]
-		init];
-}
-
-+ (AFMutableArray *)arrayWithCapacity: (NSUInteger)numItems
-{
-	return [[AFMutableArray alloc]
-		initWithCapacity: numItems];
-}
-
-+ (AFMutableArray *)arrayWithArray: (NSArray *)array
-{
-	return [[AFMutableArray alloc]
-		initWithArray: array];
-}
-
-
 #pragma mark - Array KVO Methods
 
 - (void)insertObject: (id)object

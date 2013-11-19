@@ -54,22 +54,22 @@ static NSArray *_collectionClasses;
 
 #pragma mark - Public Methods
 
-+ (id)key: (NSString *)key
++ (instancetype)key: (NSString *)key
 {
-	return [[AFRelationship alloc]
+	return [[self alloc]
 		initWithKeys: @[ key ]];
 }
 
-+ (id)keys: (NSArray *)keys
++ (instancetype)keys: (NSArray *)keys
 {
-	return [[AFRelationship alloc]
+	return [[self alloc]
 		initWithKeys: keys];
 }
 
-+ (id)hasMany: (Class)hasManyClass
++ (instancetype)hasMany: (Class)hasManyClass
 	keys: (NSArray *)keys
 {
-	return [[AFRelationship alloc]
+	return [[self alloc]
 		initWithHasMany: hasManyClass
 		keys: keys];
 }

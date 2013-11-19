@@ -39,49 +39,49 @@ static char OBJECT_MODEL_MAP_KEY;
 
 #pragma mark - Public Methods
 
-+ (id)objectModelWithIDKeyPaths: (NSArray *)idKeyPaths
++ (instancetype)objectModelWithIDKeyPaths: (NSArray *)idKeyPaths
 	collectionKey: (NSString *)collectionKey
 	rootKey: (NSString *)rootKey
 	relationships: (NSDictionary *)relationships
 {
-	return [[AFObjectModel alloc]
+	return [[self alloc]
 		initWithIDKeyPaths: idKeyPaths
 		collectionKey: collectionKey
 		rootKey: rootKey
 		relationships: relationships];
 }
 
-+ (id)objectModelWithCollectionKey: (NSString *)collectionKey
++ (instancetype)objectModelWithCollectionKey: (NSString *)collectionKey
 	rootKey: (NSString *)rootKey
 	relatioships: (NSDictionary *)relationships
 {
-	return [[AFObjectModel alloc]
+	return [[self alloc]
 		initWithIDKeyPaths: nil
 		collectionKey: collectionKey
 		rootKey: rootKey
 		relationships: relationships];
 }
 
-+ (id)objectModelWithIDKeyPaths: (NSArray *)idKeyPaths
++ (instancetype)objectModelWithIDKeyPaths: (NSArray *)idKeyPaths
 	relationships: (NSDictionary *)relationships
 {
-	return [[AFObjectModel alloc]
+	return [[self alloc]
 		initWithIDKeyPaths: idKeyPaths
 		collectionKey: nil
 		rootKey: nil
 		relationships: relationships];
 }
 
-+ (id)objectModelWithRelationships: (NSDictionary *)relationships
++ (instancetype)objectModelWithRelationships: (NSDictionary *)relationships
 {
-	return [[AFObjectModel alloc]
+	return [[self alloc]
 		initWithIDKeyPaths: nil
 		collectionKey: nil
 		rootKey: nil
 		relationships: relationships];
 }
 
-+ (id)objectModelForClass: (Class)myClass
++ (instancetype)objectModelForClass: (Class)myClass
 {
 	AFObjectModel *objectModel = nil;
 	

@@ -9,7 +9,7 @@
 
 - (id)initWithTarget: (NSObject *)target;
 
-+ (AFKVO *)kvoWithTarget: (NSObject *)target;
++ (instancetype)kvoWithTarget: (NSObject *)target;
 
 
 #pragma mark - Methods

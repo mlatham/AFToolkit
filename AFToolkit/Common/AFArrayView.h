@@ -43,14 +43,14 @@ typedef enum
 
 - (id)init;
 
-+ (AFArrayView *)arrayViewWithSource: (AFArray *)source
++ (instancetype)arrayViewWithSource: (AFArray *)source
 	comparator: (AFArrayViewComparator)comparator
 	filter: (AFArrayViewFilter)filter
 	sortOrder: (AFArrayViewSortOrder)sortOrder;
 
-+ (AFArrayView *)arrayViewWithSource: (AFArray *)source;
++ (instancetype)arrayViewWithSource: (AFArray *)source;
 
-+ (AFArrayView *)arrayView;
++ (instancetype)arrayView;
 
 
 #pragma mark - Public Methods
