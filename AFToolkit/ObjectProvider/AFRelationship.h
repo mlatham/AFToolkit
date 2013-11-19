@@ -34,13 +34,13 @@ typedef enum
 
 // Returns a relationship that resolves a single object or value and sets its value.
 + (instancetype)key: (NSString *)key;
-
-// Returns a relationship that resolves a single object or value and sets its value.
 + (instancetype)keys: (NSArray *)keys;
 
 // Returns a relationship that resolves one or many object instances and assigns them to a collection.
 + (instancetype)hasMany: (Class)hasManyClass
 	keys: (NSArray *)keys;
++ (instancetype)hasMany: (Class)hasManyClass
+	key: (NSArray *)key;
 
 
 #pragma mark - Instance Methods

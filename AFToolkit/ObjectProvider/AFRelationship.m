@@ -74,6 +74,14 @@ static NSArray *_collectionClasses;
 		keys: keys];
 }
 
++ (instancetype)hasMany: (Class)hasManyClass
+	key: (NSArray *)key
+{
+	return [[self alloc]
+		initWithHasMany: hasManyClass
+		keys: @[ key ]];
+}
+
 - (void)update: (id)object
 	values: (NSDictionary *)values
 	propertyName: (NSString *)propertyName
