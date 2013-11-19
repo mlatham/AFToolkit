@@ -16,10 +16,10 @@
 // Common
 #import "AFArray.h"
 #import "AFArrayView.h"
+#import "AFMutableArray.h"
 #import "AFFileHelper.h"
 #import "AFKVO.h"
 #import "AFLogHelper.h"
-#import "AFMutableArray.h"
 #import "AFPlatformHelper.h"
 #import "AFReachability.h"
 
@@ -27,6 +27,7 @@
 #import "AFValueTransformer.h"
 #import "AFObjectProvider.h"
 #import "AFObjectModel.h"
+#import "AFRelationship.h"
 
 // Database
 #import "AFDBClient.h"

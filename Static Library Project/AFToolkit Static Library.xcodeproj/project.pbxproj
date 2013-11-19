@@ -59,6 +59,7 @@
 		C9E7006B175CFB3E00CB137F /* AFArrayView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C97217261753DC9A0051A403 /* AFArrayView.h */; };
 		C9E7006C175CFB3E00CB137F /* AFTableView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C972173A17552D5F0051A403 /* AFTableView.h */; };
 		C9F38E09183A827D00B81095 /* AFRelationship.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F38E08183A827D00B81095 /* AFRelationship.m */; };
+		C9F38E39183C0E2200B81095 /* AFRelationship.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C9F38E07183A827D00B81095 /* AFRelationship.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -68,6 +69,7 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				C9F38E39183C0E2200B81095 /* AFRelationship.h in CopyFiles */,
 				C92F844218336296004E5E84 /* AFObjectModel.h in CopyFiles */,
 				C92F84291832C1FD004E5E84 /* NSObject+Runtime.h in CopyFiles */,
 				C9B7C36117B19E4C0027ECFF /* AFObjectProvider.h in CopyFiles */,
