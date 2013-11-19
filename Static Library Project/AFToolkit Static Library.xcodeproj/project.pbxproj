@@ -43,8 +43,6 @@
 		97FA17771610E2EB00A6756A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FA17761610E2EB00A6756A /* QuartzCore.framework */; };
 		C92F841C18329554004E5E84 /* NSObject+Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = C92F841B18329554004E5E84 /* NSObject+Runtime.m */; };
 		C92F84291832C1FD004E5E84 /* NSObject+Runtime.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C92F841A18329554004E5E84 /* NSObject+Runtime.h */; };
-		C92F843118334904004E5E84 /* AFValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = C92F843018334904004E5E84 /* AFValueTransformer.m */; };
-		C92F843518334C8D004E5E84 /* AFValueTransformer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C92F842F18334904004E5E84 /* AFValueTransformer.h */; };
 		C92F844118335B66004E5E84 /* AFObjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C92F844018335B66004E5E84 /* AFObjectModel.m */; };
 		C92F844218336296004E5E84 /* AFObjectModel.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C92F843F18335B66004E5E84 /* AFObjectModel.h */; };
 		C963C2361756839800D54B86 /* UITableView+Universal.m in Sources */ = {isa = PBXBuildFile; fileRef = C963C2341756839800D54B86 /* UITableView+Universal.m */; };
@@ -60,6 +58,7 @@
 		C9E7006A175CFB3E00CB137F /* UIView+Universal.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C972173E175532F70051A403 /* UIView+Universal.h */; };
 		C9E7006B175CFB3E00CB137F /* AFArrayView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C97217261753DC9A0051A403 /* AFArrayView.h */; };
 		C9E7006C175CFB3E00CB137F /* AFTableView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C972173A17552D5F0051A403 /* AFTableView.h */; };
+		C9F38E09183A827D00B81095 /* AFRelationship.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F38E08183A827D00B81095 /* AFRelationship.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -70,7 +69,6 @@
 			dstSubfolderSpec = 16;
 			files = (
 				C92F844218336296004E5E84 /* AFObjectModel.h in CopyFiles */,
-				C92F843518334C8D004E5E84 /* AFValueTransformer.h in CopyFiles */,
 				C92F84291832C1FD004E5E84 /* NSObject+Runtime.h in CopyFiles */,
 				C9B7C36117B19E4C0027ECFF /* AFObjectProvider.h in CopyFiles */,
 				C9B7C34017B139C50027ECFF /* AFMetamacros.h in CopyFiles */,
@@ -139,8 +137,6 @@
 		97FA17761610E2EB00A6756A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C92F841A18329554004E5E84 /* NSObject+Runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Runtime.h"; sourceTree = "<group>"; };
 		C92F841B18329554004E5E84 /* NSObject+Runtime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Runtime.m"; sourceTree = "<group>"; };
-		C92F842F18334904004E5E84 /* AFValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFValueTransformer.h; sourceTree = "<group>"; };
-		C92F843018334904004E5E84 /* AFValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFValueTransformer.m; sourceTree = "<group>"; };
 		C92F843F18335B66004E5E84 /* AFObjectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFObjectModel.h; sourceTree = "<group>"; };
 		C92F844018335B66004E5E84 /* AFObjectModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFObjectModel.m; sourceTree = "<group>"; };
 		C963C2331756839800D54B86 /* UITableView+Universal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+Universal.h"; sourceTree = "<group>"; };
@@ -156,6 +152,8 @@
 		C9B7C35617B18E2D0027ECFF /* AFObjectProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFObjectProvider.h; sourceTree = "<group>"; };
 		C9B7C35717B18E2D0027ECFF /* AFObjectProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFObjectProvider.m; sourceTree = "<group>"; };
 		C9B7C35C17B198670027ECFF /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		C9F38E07183A827D00B81095 /* AFRelationship.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFRelationship.h; sourceTree = "<group>"; };
+		C9F38E08183A827D00B81095 /* AFRelationship.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFRelationship.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -309,8 +307,8 @@
 				C9B7C35717B18E2D0027ECFF /* AFObjectProvider.m */,
 				C92F843F18335B66004E5E84 /* AFObjectModel.h */,
 				C92F844018335B66004E5E84 /* AFObjectModel.m */,
-				C92F842F18334904004E5E84 /* AFValueTransformer.h */,
-				C92F843018334904004E5E84 /* AFValueTransformer.m */,
+				C9F38E07183A827D00B81095 /* AFRelationship.h */,
+				C9F38E08183A827D00B81095 /* AFRelationship.m */,
 			);
 			path = ObjectProvider;
 			sourceTree = "<group>";
@@ -381,10 +379,10 @@
 				97E8502516DB0D7000F64F70 /* AFReachability.m in Sources */,
 				9765D3D216EBD2EB0032FC23 /* UIView+Render.m in Sources */,
 				C97217291753DC9A0051A403 /* AFArrayView.m in Sources */,
-				C92F843118334904004E5E84 /* AFValueTransformer.m in Sources */,
 				C972173D17552D5F0051A403 /* AFTableView.m in Sources */,
 				C92F841C18329554004E5E84 /* NSObject+Runtime.m in Sources */,
 				C9721741175532F70051A403 /* UIView+Universal.m in Sources */,
+				C9F38E09183A827D00B81095 /* AFRelationship.m in Sources */,
 				C963C2361756839800D54B86 /* UITableView+Universal.m in Sources */,
 				C9B7C35817B18E2D0027ECFF /* AFObjectProvider.m in Sources */,
 			);

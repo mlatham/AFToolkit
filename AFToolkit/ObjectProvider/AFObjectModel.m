@@ -15,9 +15,10 @@ static char OBJECT_MODEL_MAP_KEY;
 
 #pragma mark - Constructors
 
-- (id)initWithKey: (NSArray *)key
-	mappings: (NSDictionary *)mappings
-	transformers: (NSDictionary *)transformers
+- (id)initWithIDKeyPaths: (NSArray *)idKeyPaths
+	collectionKey: (NSString *)collectionKey
+	rootKey: (NSString *)rootKey
+	relationships: (NSDictionary *)relationships
 {
 	// Abort if base initializer fails.
 	if ((self = [super init]) == nil)
@@ -26,9 +27,10 @@ static char OBJECT_MODEL_MAP_KEY;
 	}
 	
 	// Initialize instance variables.
-	_key = key;
-	_mappings = mappings;
-	_transformers = transformers;
+	_idKeyPaths = idKeyPaths;
+	_collectionKey = collectionKey;
+	_rootKey = rootKey;
+	_relationships = relationships;
 	
 	// Return initialized instance.
 	return self;
@@ -37,61 +39,73 @@ static char OBJECT_MODEL_MAP_KEY;
 
 #pragma mark - Public Methods
 
-+ (id)objectModelWithKey: (NSArray *)key
-	mappings: (NSDictionary *)mappings
-	transformers: (NSDictionary *)transformers
++ (id)objectModelWithIDKeyPaths: (NSArray *)idKeyPaths
+	collectionKey: (NSString *)collectionKey
+	rootKey: (NSString *)rootKey
+	relationships: (NSDictionary *)relationships
 {
 	return [[AFObjectModel alloc]
-		initWithKey: key
-		mappings: mappings
-		transformers: transformers];
+		initWithIDKeyPaths: idKeyPaths
+		collectionKey: collectionKey
+		rootKey: rootKey
+		relationships: relationships];
 }
 
-+ (id)objectModelWithMappings: (NSDictionary *)mappings
-	transformers: (NSDictionary *)transformers
++ (id)objectModelWithCollectionKey: (NSString *)collectionKey
+	rootKey: (NSString *)rootKey
+	relatioships: (NSDictionary *)relationships
 {
 	return [[AFObjectModel alloc]
-		initWithKey: nil
-		mappings: mappings
-		transformers: transformers];
+		initWithIDKeyPaths: nil
+		collectionKey: collectionKey
+		rootKey: rootKey
+		relationships: relationships];
 }
 
-+ (id)objectModelWithKey: (NSArray *)key
-	mappings: (NSDictionary *)mappings
++ (id)objectModelWithIDKeyPaths: (NSArray *)idKeyPaths
+	relationships: (NSDictionary *)relationships
 {
 	return [[AFObjectModel alloc]
-		initWithKey: key
-		mappings: mappings
-		transformers: nil];
+		initWithIDKeyPaths: idKeyPaths
+		collectionKey: nil
+		rootKey: nil
+		relationships: relationships];
 }
 
-+ (id)objectModelWithMappings: (NSDictionary *)mappings
++ (id)objectModelWithRelationships: (NSDictionary *)relationships
 {
 	return [[AFObjectModel alloc]
-		initWithKey: nil
-		mappings: mappings
-		transformers: nil];
+		initWithIDKeyPaths: nil
+		collectionKey: nil
+		rootKey: nil
+		relationships: relationships];
 }
 
 + (id)objectModelForClass: (Class)myClass
 {
-	NSString *myClassName = NSStringFromClass(myClass);
-
-	NSMutableDictionary *objectModelMap = [self _objectModelMap];
+	AFObjectModel *objectModel = nil;
 	
-	AFObjectModel *objectModel = objectModelMap[myClassName];
-	
-	// Create the object models on demand.
-	if (objectModel == nil)
+	// Only try to get the object model if the class is set.
+	if (AFIsNull(myClass) == NO)
 	{
-		id myClassObject = (id)myClass;
+		NSString *myClassName = NSStringFromClass(myClass);
+
+		NSMutableDictionary *objectModelMap = [self _objectModelMap];
 		
-		if ([myClassObject respondsToSelector: @selector(objectModel)])
+		objectModel = objectModelMap[myClassName];
+		
+		// Create the object models on demand.
+		if (objectModel == nil)
 		{
-			objectModel = [myClassObject objectModel];
+			id myClassObject = (id)myClass;
 			
-			// Cache each object model by class name.
-			objectModelMap[myClassName] = objectModel;
+			if ([myClassObject respondsToSelector: @selector(objectModel)])
+			{
+				objectModel = [myClassObject objectModel];
+				
+				// Cache each object model by class name.
+				objectModelMap[myClassName] = objectModel;
+			}
 		}
 	}
 	

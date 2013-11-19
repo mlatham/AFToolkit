@@ -7,31 +7,40 @@
 
 #pragma mark - Properties
 
-@property (nonatomic, strong, readonly) NSArray *key;
-@property (nonatomic, strong, readonly) NSDictionary *mappings;
-@property (nonatomic, strong, readonly) NSDictionary *transformers;
+// Keypath of the model object defining identity (or nil).
+@property (nonatomic, strong, readonly) NSArray *idKeyPaths;
+
+// Root and collection keys when applying values.
+@property (nonatomic, strong, readonly) NSString *collectionKey;
+@property (nonatomic, strong, readonly) NSString *rootKey;
+
+// Relationships by keypath.
+@property (nonatomic, strong, readonly) NSDictionary *relationships;
 
 
 #pragma mark - Constructors
 
-- (id)initWithKey: (NSArray *)key
-	mappings: (NSDictionary *)mappings
-	transformers: (NSDictionary *)transformers;
+- (id)initWithIDKeyPaths: (NSArray *)idKeyPaths
+	collectionKey: (NSString *)collectionKey
+	rootKey: (NSString *)rootKey
+	relationships: (NSDictionary *)relationships;
 
 
 #pragma mark - Static Methods
 
-+ (id)objectModelWithKey: (NSArray *)key
-	mappings: (NSDictionary *)mappings
-	transformers: (NSDictionary *)transformers;
++ (id)objectModelWithIDKeyPaths: (NSArray *)idKeyPaths
+	collectionKey: (NSString *)collectionKey
+	rootKey: (NSString *)rootKey
+	relationships: (NSDictionary *)relationships;
 
-+ (id)objectModelWithMappings: (NSDictionary *)mappings
-	transformers: (NSDictionary *)transformers;
++ (id)objectModelWithCollectionKey: (NSString *)collectionKey
+	rootKey: (NSString *)rootKey
+	relatioships: (NSDictionary *)relationships;
 
-+ (id)objectModelWithKey: (NSArray *)key
-	mappings: (NSDictionary *)mappings;
++ (id)objectModelWithIDKeyPaths: (NSArray *)idKeyPaths
+	relationships: (NSDictionary *)relationships;
 
-+ (id)objectModelWithMappings: (NSDictionary *)mappings;
++ (id)objectModelWithRelationships: (NSDictionary *)relationships;
 
 + (id)objectModelForClass: (Class)myClass;
 

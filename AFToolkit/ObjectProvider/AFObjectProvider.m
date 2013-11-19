@@ -1,6 +1,6 @@
-#import "AFObjectProvider.h"
 #import "NSObject+Runtime.h"
-#import "AFValueTransformer.h"
+#import "AFObjectProvider.h"
+#import "AFRelationship.h"
 
 
 #pragma mark Class Definition
@@ -11,22 +11,6 @@
 #pragma mark - Public Methods
 
 - (id)create: (Class)myClass
-	withValues: (NSDictionary *)values
-{	
-	id instance = [self create: myClass];
-	
-	// Get an object model for this class.
-	if (AFIsNull(instance) == NO)
-	{
-		// Update the object.
-		[self update: instance
-			withValues: values];
-	}
-	
-	return instance;
-}
-
-- (id)create: (Class)myClass
 {
 	// By default, just allocate and init the class.
 	id instance = [[myClass alloc]
@@ -35,8 +19,90 @@
 	return instance;
 }
 
+- (id)create: (Class)myClass
+	values: (NSDictionary *)values
+{
+	// Create an instance.
+	id instance = [self create: myClass];
+	
+	// Update the instance, if created.
+	if (AFIsNull(instance) == NO)
+	{
+		[self update: instance
+			values: values];
+	}
+	
+	return instance;
+}
+
+- (id)fetch: (Class)myClass
+	values: (NSDictionary *)values
+{
+	// By default, this provider does no identity mapping. Return nil.
+	return nil;
+}
+
+- (id)fetchOrCreate: (Class)myClass
+	idValue: (NSString *)idValue
+{
+	id instance = nil;
+
+	AFObjectModel *objectModel = [AFObjectModel objectModelForClass: myClass];
+	
+	if ([objectModel.idKeyPaths count] != 1)
+	{
+#if defined(DEBUG_OBJECT_PROVIDER)
+		NSLog(@"AFObjectProvider: Object model must define exactly one idKeyPath for fetchOrCreate");
+#endif
+	}
+	else if (AFIsNull(idValue) == NO)
+	{
+		// Form a fetch request with the object's key value.
+		NSDictionary *values =
+		@{
+			objectModel.idKeyPaths[0] : idValue
+		};
+		
+		// Fetch the instance.
+		instance = [self fetch: myClass
+			values: values];
+	
+		// Create the instance, if it didn't exist.
+		if (AFIsNull(instance) == NO)
+		{
+			instance = [self create: myClass
+				values: values];
+		}
+	}
+	
+	return instance;
+}
+
+- (id)updateOrCreate: (Class)myClass
+	values: (NSDictionary *)values
+{
+	// Try to fetch an existing instance.
+	id instance = [self fetch: myClass
+		values: values];
+	
+	// Create the instance, if it wasn't found.
+	if (AFIsNull(instance) == YES)
+	{
+		instance = [self create: myClass];
+	}
+	
+	// Update the instance, if it exists.
+	if (AFIsNull(instance) == NO)
+	{
+		[self update: instance
+			values: values];
+	}
+	
+	return instance;
+}
+
 - (void)update: (id)object
-	withValues: (NSDictionary *)values
+	values: (NSDictionary *)values
 {
 	Class myClass = [object class];
 	
@@ -48,47 +114,35 @@
 	if (objectModel != nil)
 	{
 		// Get the mapped values.
-		NSDictionary *valueKeyPathsByPropertyKeyPath = objectModel.mappings;
+		NSDictionary *relationshipsByPropertyKeyPath = objectModel.relationships;
 		
 		// Apply the mapped values, if present.
-		if (valueKeyPathsByPropertyKeyPath != nil)
+		if (relationshipsByPropertyKeyPath != nil)
 		{
-			for (NSString *propertyKeyPath in [valueKeyPathsByPropertyKeyPath allKeys])
+			for (NSString *propertyKeyPath in [relationshipsByPropertyKeyPath allKeys])
 			{
-				// If a mapping exists, set the value.
-				id valueKeyPath = valueKeyPathsByPropertyKeyPath[propertyKeyPath];
+				// If a mapping exists and is valid, set the value.
+				id relationship = relationshipsByPropertyKeyPath[propertyKeyPath];
 				
-				if (AFIsNull(valueKeyPath) == NO)
+				if (AFIsNull(relationship) == NO
+					&& [relationship isKindOfClass: AFRelationship.class])
 				{
-					id value = values[valueKeyPath];
+					AFRelationship *relationship = (AFRelationship *)relationship;
 					
-					// Value is nil - no value was defined, so set nothing. (NSNull is an empty value).
-					if (value != nil)
+					// Don't crash on failing a parse/set.
+					@try
 					{
-						AFValueTransformer *transformer = nil;
-						
-						// Get the transformers map.
-						NSDictionary *transformers = objectModel.transformers;
-						
-						if (transformers != nil)
-						{
-							// Try to get the transformer.
-							transformer = transformers[propertyKeyPath];
-						}
-						
-						// Don't crash on failing a parse/set.
-						@try
-						{
-							// Set value otherwise.
-							[self _setValue: value
-								target: object
-								propertyName: propertyKeyPath
-								transformer: transformer];
-						}
-						@catch (NSException *exception)
-						{
-							NSLog(@"Failed to parse value: %@ for property: %@. Error: %@", value, propertyKeyPath, exception);
-						}
+						// Use the relationship to get and set the value.
+						[relationship update: object
+							values: values
+							propertyName: propertyKeyPath
+							provider: self];
+					}
+					@catch (NSException *exception)
+					{
+#if defined(DEBUG_OBJECT_PROVIDER)
+						NSLog(@"Failed to parse value for property: %@. Error: %@", propertyKeyPath, exception);
+#endif
 					}
 				}
 			}
@@ -102,159 +156,6 @@
 			values: values
 			provider: self];
 	}
-}
-
-
-#pragma mark - Private Methods
-
-// Sets a value on this object, changing NSNull values to nil, applying the provided
-// transform, handling setting one or many values on a collection type property of
-// either NSMutableSet, NSMutableArray or NSMutableOrderedSet.
-
-- (void)_setValue: (id)value
-	target: (id)target
-	propertyName: (NSString *)propertyName
-	transformer: (AFValueTransformer *)transformer
-{
-	// Get the property info.
-	AFPropertyInfo *propertyInfo = [self.class propertyInfoForPropertyName: propertyName];
-	
-	NSString *propertyClassName = nil;
-	BOOL isPropertyCollection = NO;
-	
-	// The property type string is complicated, determine specifically if this property is
-	// an NSMutableArray, NSMutableSet, NSMutableOrderedSet or AFMutableArray.
-	if ([propertyInfo.propertyType characterAtIndex: 0] == '^')
-	{
-		// This is a pointer type property.
-		propertyClassName = [propertyInfo.propertyType substringFromIndex: 1];
-		
-		// TODO: Move this to static creation.
-		NSArray *collectionClasses = @[
-			@"NSMutableArray",
-			@"NSMutableOrderedSet",
-			@"NSMutableSet"
-		];
-		
-		// Determine if the property class is one of the collection types.
-		if ([collectionClasses containsObject: propertyClassName])
-		{
-			// This is a collection type property.
-			isPropertyCollection = YES;
-		}
-	}
-
-	// Translate NSNulls to nil, or clear set in response to NSNull.
-	if ([value isEqual: [NSNull null]])
-	{
-		// Clear collection for collection type properties.
-		if (isPropertyCollection)
-		{
-			// Get the collection.
-			id set = [target _mutableCollectionWithClassName: propertyClassName
-				forKeyPath: propertyName];
-				
-			// Clear the collection.
-			[set removeAllObjects];
-		}
-		// Clear value for non-collections.
-		else
-		{
-			// Clear the value.
-			[self setValue: nil
-				forKeyPath: propertyName];
-		}
-	}
-	
-	// Value is not NSNull.
-	else
-	{
-		// Replace items for collection type properties.
-		if (isPropertyCollection)
-		{
-			// Get the collection.
-			id set = [target _mutableCollectionWithClassName: propertyClassName
-				forKeyPath: propertyName];
-				
-			// Clear the collection.
-			[set removeAllObjects];
-			
-			// If the value is an array, apply the transform to each item.
-			if ([value isKindOfClass: [NSArray class]])
-			{
-				// Tranform each item.
-				for (id itemValue in value)
-				{
-					// Transform the value.
-					id transformedItemValue = [self _transformValue: itemValue
-						transformer: transformer];
-					
-					// Add the transformed item, if non-null.
-					if (AFIsNull(transformedItemValue) == NO)
-					{
-						[set addObject: transformedItemValue];
-					}
-				}
-			}
-			else
-			{
-				// Skip non-array value.
-				NSLog(@"WARNING: Non-array value being assigned to array property: %@. Class: %@",
-					propertyName, NSStringFromClass(self.class));
-			}
-		}
-		
-		// Set value for non-collections.
-		else
-		{
-			// Transform the value.
-			id transformedValue = [self _transformValue: value
-				transformer: transformer];
-		
-			// Set the transformed value.
-			[self setValue: transformedValue
-				forKey: propertyName];
-		}
-	}
-}
-
-- (id)_transformValue: (id)value
-	transformer: (AFValueTransformer *)transformer
-{
-	// Transform or use the original value.
-	id transformedValue = AFIsNull(transformer) == NO
-		? [transformer transform: value provider: self]
-		: value;
-		
-	// Don't allow NSNull.
-	if ([transformedValue isEqual: [NSNull null]])
-	{
-		transformedValue = nil;
-	}
-	
-	// Return value.
-	return transformedValue;
-}
-
-- (id)_mutableCollectionWithClassName: (NSString *)className
-	forKeyPath: (NSString *)keyPath
-{
-	// Get the appropriate collection class.
-	if ([className isEqualToString: @"NSMutableArray"])
-	{
-		return [self mutableArrayValueForKeyPath: keyPath];
-	}
-	else if ([className isEqualToString: @"NSMutableSet"])
-	{
-		return [self mutableSetValueForKeyPath: keyPath];
-	}
-	else if ([className isEqualToString: @"NSMutableOrderedSet"])
-	{
-		return [self mutableOrderedSetValueForKeyPath: keyPath];
-	}
-	
-	// Class name didn't match any core collection.
-	return nil;
 }
 
 

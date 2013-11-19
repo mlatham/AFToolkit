@@ -4,6 +4,12 @@
 
 @interface AFPropertyInfo : NSObject
 
+// Property class, or nil if the property is not a pointer to a class type.
+@property (nonatomic, strong, readonly) Class propertyClass;
+
+// Property class name, or nil if the property is not a pointer to a class type.
+@property (nonatomic, strong, readonly) NSString *propertyClassName;
+
 @property (nonatomic, strong) NSString *propertyName;
 @property (nonatomic, strong) NSString *propertyType;
 @property (nonatomic, strong) NSString *customGetterSelectorName;
