@@ -213,6 +213,8 @@
 			children = (
 				97DE934216C88CA60059199D /* NSBundle+Universal.h */,
 				97DE934316C88CA60059199D /* NSBundle+Universal.m */,
+				C92F841A18329554004E5E84 /* NSObject+Runtime.h */,
+				C92F841B18329554004E5E84 /* NSObject+Runtime.m */,
 				C963C2331756839800D54B86 /* UITableView+Universal.h */,
 				C963C2341756839800D54B86 /* UITableView+Universal.m */,
 				97DE934416C88CA60059199D /* UITableViewCell+Universal.h */,
@@ -221,8 +223,6 @@
 				9765D3D016EBD2EB0032FC23 /* UIView+Render.m */,
 				C972173E175532F70051A403 /* UIView+Universal.h */,
 				C972173F175532F70051A403 /* UIView+Universal.m */,
-				C92F841A18329554004E5E84 /* NSObject+Runtime.h */,
-				C92F841B18329554004E5E84 /* NSObject+Runtime.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";

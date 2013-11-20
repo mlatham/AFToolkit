@@ -8,9 +8,9 @@
 
 // Categories
 #import "NSObject+Runtime.h"
-#import "NSBundle+Universal.h"
-#import "UITableViewCell+Universal.h"
 #import "UITableView+Universal.h"
+#import "UITableViewCell+Universal.h"
+#import "UIView+Universal.h"
 #import "UIView+Render.h"
 
 // Common
@@ -24,7 +24,6 @@
 #import "AFReachability.h"
 
 // Object provider
-#import "AFValueTransformer.h"
 #import "AFObjectProvider.h"
 #import "AFObjectModel.h"
 #import "AFRelationship.h"
