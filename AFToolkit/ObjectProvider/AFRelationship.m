@@ -92,7 +92,32 @@ static NSArray *_collectionClasses;
 	// First - resolve the available value key.
 	for (NSString *key in _keys)
 	{
-		value = values[key];
+		// If the key is composite, descent into values.
+		NSArray *subKeys = [key componentsSeparatedByString: @"."];
+	
+		// Descent into the values for subkeys.
+		NSDictionary *subValues = values;
+		
+		// Traverse each subkey.
+		for (int i = 0; i < [subKeys count]; i++)
+		{
+			if (AFIsNull(subValues) == NO)
+			{
+				// Get the subkey.
+				NSString *subKey = subKeys[i];
+				
+				if (i < [subKeys count] - 1)
+				{
+					// Descent into the subvalues with each subkey.
+					subValues = subValues[subKey];
+				}
+				else
+				{
+					// Update the value with the last subkey.
+					value = subValues[key];
+				}
+			}
+		}
 		
 		// Stop searching as soon as a value is found.
 		if (value != nil)
