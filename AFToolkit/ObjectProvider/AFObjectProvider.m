@@ -127,8 +127,6 @@
 				if (AFIsNull(relationship) == NO
 					&& [relationship isKindOfClass: AFRelationship.class])
 				{
-					AFRelationship *relationship = (AFRelationship *)relationship;
-					
 					// Don't crash on failing a parse/set.
 					@try
 					{
