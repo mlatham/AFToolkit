@@ -38,7 +38,7 @@
 	id nibRoot = [nibContents objectAtIndex: 0];
 	
 	// Validate nib contained a cell.
-	AFAssert([nibRoot isKindOfClass: [UITableViewCell class]]);
+	AFAssert([nibRoot isKindOfClass: UITableViewCell.class]);
 	
 	return nibRoot;
 }

@@ -14,5 +14,9 @@
 	bundle: (NSBundle *)nibBundleOrNil
 	owner: (id)owner;
 
++ (NSArray *)viewsWithUniversalNibName: (NSString *)nibName
+	bundle: (NSBundle *)nibBundleOrNil
+	owner: (id)owner;
+
 
 @end
