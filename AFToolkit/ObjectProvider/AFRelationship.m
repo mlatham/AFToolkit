@@ -3,21 +3,11 @@
 #import <objc/runtime.h>
 
 
-#pragma mark - Constants
-
-// Use the addresses as the key.
-static char PROPERTY_INFO_MAP_KEY;
-
-
-#pragma mark Static Variables
-
-static NSArray *_collectionClasses;
-
-
-#pragma mark - Class Definition
+#pragma mark Class Definition
 
 @implementation AFRelationship
 {
+	@private __strong NSMutableDictionary *_propertyInfoMap;
 	@private __strong Class _hasManyClass;
 }
 
@@ -38,6 +28,7 @@ static NSArray *_collectionClasses;
 	_keys = keys;
 	_type = type;
 	_hasManyClass = hasManyClass;
+	_propertyInfoMap = [NSMutableDictionary dictionary];
 	
 	// Return initialized instance.
 	return self;
@@ -56,6 +47,16 @@ static NSArray *_collectionClasses;
 	return [self initWithKeys: keys
 		type: AFRelationshipTypeHasMany
 		hasManyClass: hasManyClass];
+}
+
+
+#pragma mark - Dealloc
+
+- (void)dealloc
+{
+#if defined(DEBUG_OBJECT_PROVIDER)
+	AFLog(AFLogLevelDebug, @"AFRelationship::dealloc");
+#endif
 }
 
 
@@ -218,138 +219,158 @@ static NSArray *_collectionClasses;
 // first access, this method caches that property info in an associated
 // object on this class.
 
-+ (AFPropertyInfo *)_propertyInfoForClass: (Class)myClass
+- (AFPropertyInfo *)_propertyInfoForClass: (Class)myClass
 	propertyName: (NSString *)propertyName
 {
-	// Get or create the property info map.
-	NSMutableDictionary *propertyInfoMap = [self _propertyInfoMap];
-	
-	// Check if the property info is cached.
-	AFPropertyInfo *result = propertyInfoMap[propertyName];
-	
-	// If not, generate and cache the property info.
-	if (result == nil)
+	@synchronized(self)
 	{
-		const char *propertyNameCString = [propertyName UTF8String];
-
-		unsigned int outCount;
+		// Get or create the property info map.
+		NSMutableDictionary *propertyInfoMap = _propertyInfoMap;
 		
-		// Get this class's property metadata. TODO: Cache this per-class?
-		objc_property_t *properties = class_copyPropertyList(self, &outCount);
+		// Check if the property info is cached.
+		AFPropertyInfo *result = propertyInfoMap[propertyName];
 		
-		// Find the property with the provided name.
-		for (int i = 0; i < outCount; i++)
+		// If not, generate and cache the property info.
+		if (result == nil)
 		{
-			// Get the property.
-			objc_property_t property = properties[i];
+			unsigned int outCount;
 			
-			// Get the property name.
-			const char *testPropertyNameCString = property_getName(property);
+			// Get the desired property name, as a c-string. This c-string is a pointer to the
+			// contents of the propertyName string. It does not need to be freed.
+			const char *propertyNameCString = [propertyName UTF8String];
 			
-			// This is the property - get its attributes.
-			const char *attributes = property_getAttributes(property);
+			// Get this class's property metadata. This array needs to be freed.
+			objc_property_t *properties = class_copyPropertyList(myClass, &outCount);
 			
-			// Copy the attributes into a mutable representation.
-			char *mutableAttributes = (char *)malloc(strlen(attributes) * sizeof(char));
-			strcpy(mutableAttributes, attributes);
-			
-			// Create the property info.
-			AFPropertyInfo *propertyInfo = [[AFPropertyInfo alloc]
-				init];
-			propertyInfo.propertyName = propertyName;
-			
-			// Attributes are comma-separated.
-			char *token = strtok(mutableAttributes, ",");
-			
-			// Tokenize the string.
-			while (token != NULL)
+			// Find the property with the provided name.
+			for (int i = 0; i < outCount; i++)
 			{
-				char marker = token[0];
+				// Get the property.
+				objc_property_t property = properties[i];
+				
+				// This is the property - get its attributes.
+				const char *attributes = property_getAttributes(property);
+				
+				// Copy the attributes into a mutable representation.
+				char *mutableAttributes = (char *)malloc(strlen(attributes) * sizeof(char));
+				strcpy(mutableAttributes, attributes);
+				
+				// Create the property info.
+				AFPropertyInfo *propertyInfo = [[AFPropertyInfo alloc]
+					init];
+				
+				// Attributes are comma-separated.
+				char *token = strtok(mutableAttributes, ",");
+				
+				// Tokenize the string.
+				while (token != NULL)
+				{
+					char marker = token[0];
+				
+					switch (marker)
+					{
+						case 'T':
+						{
+							// Advance past the type marker.
+							token++;
+							
+							propertyInfo.propertyType = [[NSString stringWithUTF8String: token] copy];
+							
+							break;
+						}
+						case 'G':
+						{
+							// Advance past the type marker.
+							token++;
+							
+							propertyInfo.customGetterSelectorName = [[NSString stringWithUTF8String: token] copy];
+							
+							break;
+						}
+						case 'S':
+						{
+							// Advance past the type marker.
+							token++;
+							
+							propertyInfo.customSetterSelectorName = [[NSString stringWithUTF8String: token] copy];
+							
+							break;
+						}
+						case 'R':
+						{
+							propertyInfo.isReadonly = YES;
+							
+							break;
+						}
+						case 'C':
+						{
+							propertyInfo.isCopy = YES;
+						
+							break;
+						}
+						case '&':
+						{
+							propertyInfo.isRetain = YES;
+						
+							break;
+						}
+						case 'N':
+						{
+							propertyInfo.isNonatomic = YES;
+						
+							break;
+						}
+						case 'D':
+						{
+							propertyInfo.isDynamic = YES;
+						
+							break;
+						}
+						case 'W':
+						{
+							propertyInfo.isWeak = YES;
+						
+							break;
+						}
+					}
+				
+					// Get the property name.
+					const char *testPropertyNameCString = property_getName(property);
+					NSString *testPropertyName = [[NSString stringWithUTF8String: testPropertyNameCString] copy];
+					
+					// Set the property info name.
+					propertyInfo.propertyName = testPropertyName;
+					
+					// Cache the property info.
+					propertyInfoMap[testPropertyName] = propertyInfo;
+					
+					// Get the next token.
+					token = strtok(NULL, mutableAttributes);
+					
+					// Set the result.
+					if (strcmp(propertyNameCString, testPropertyNameCString) == 0)
+					{
+						result = propertyInfo;
+					}
+				}
+				
+				// Free the mutable attributes.
+				if (mutableAttributes != NULL)
+				{
+					free(mutableAttributes);
+				}
+			}
 			
-				switch (marker)
-				{
-					case 'T':
-					{
-						// Advance past the type marker.
-						token++;
-						
-						propertyInfo.propertyType = [NSString stringWithUTF8String: token];
-						
-						break;
-					}
-					case 'G':
-					{
-						// Advance past the type marker.
-						token++;
-						
-						propertyInfo.customGetterSelectorName = [NSString stringWithUTF8String: token];
-						
-						break;
-					}
-					case 'S':
-					{
-						// Advance past the type marker.
-						token++;
-						
-						propertyInfo.customSetterSelectorName = [NSString stringWithUTF8String: token];
-						
-						break;
-					}
-					case 'R':
-					{
-						propertyInfo.isReadonly = YES;
-						
-						break;
-					}
-					case 'C':
-					{
-						propertyInfo.isCopy = YES;
-					
-						break;
-					}
-					case '&':
-					{
-						propertyInfo.isRetain = YES;
-					
-						break;
-					}
-					case 'N':
-					{
-						propertyInfo.isNonatomic = YES;
-					
-						break;
-					}
-					case 'D':
-					{
-						propertyInfo.isDynamic = YES;
-					
-						break;
-					}
-					case 'W':
-					{
-						propertyInfo.isWeak = YES;
-					
-						break;
-					}
-				}
-				
-				// Get the next token.
-				token = strtok(NULL, mutableAttributes);
-				
-				// Set the result.
-				if (strcmp(propertyNameCString, testPropertyNameCString) == 0)
-				{
-					result = propertyInfo;
-				}
-				
-				// Cache the property info.
-				propertyInfoMap[propertyName] = propertyInfo;
+			// Free the properties.
+			if (properties != NULL)
+			{
+				free(properties);
 			}
 		}
+			
+		// Return the property info, or nil if it didn't exist on this class.
+		return result;
 	}
-		
-	// Return the property info, or nil if it didn't exist on this class.
-	return result;
 }
 
 - (void)_setHasOneValue: (id)value
@@ -358,7 +379,7 @@ static NSArray *_collectionClasses;
 	provider: (AFObjectProvider *)provider
 {
 	// Get the property info - has one relationships are defined by their property type.
-	AFPropertyInfo *propertyInfo = [AFRelationship _propertyInfoForClass: [target class]
+	AFPropertyInfo *propertyInfo = [self _propertyInfoForClass: [target class]
 		propertyName: propertyName];
 	
 	// Attempt to transform the value.
@@ -366,18 +387,28 @@ static NSArray *_collectionClasses;
 		toClass: propertyInfo.propertyClass
 		provider: provider];
 	
-	// Set the property directly.
-	[target setValue: transformedValue
-		forKeyPath: propertyName];
+	// TODO: remove.
+	if (propertyInfo.propertyClass != nil
+		&& propertyInfo.propertyClass == [transformedValue class])
+	{
+		// Set the property directly.
+		[target setValue: transformedValue
+			forKeyPath: propertyName];
+	}
+	else
+	{
+		AFLog(AFLogLevelDebug, @"Skipping invalid assignment: %@ to property: %@",
+			transformedValue, propertyName);
+	}
 }
-
+	
 - (void)_setHasManyValue: (id)value
 	target: (id)target
 	propertyName: (NSString *)propertyName
 	provider: (AFObjectProvider *)provider
 {
 	// Get the property info - this is used to determine collection type for has-many relationships.
-	AFPropertyInfo *propertyInfo = [AFRelationship _propertyInfoForClass: [target class]
+	AFPropertyInfo *propertyInfo = [self _propertyInfoForClass: [target class]
 		propertyName: propertyName];
 	
 	// Assign to read-only properties.
@@ -492,26 +523,5 @@ static NSArray *_collectionClasses;
 	// Class name didn't match any supported collection.
 	return nil;
 }
-
-+ (NSMutableDictionary *)_propertyInfoMap
-{
-	NSMutableDictionary *propertyInfoMap = (NSMutableDictionary *)objc_getAssociatedObject(self, &PROPERTY_INFO_MAP_KEY);
-	
-	// Create the property info map on demand.
-	if (propertyInfoMap == nil)
-	{
-		propertyInfoMap = [NSMutableDictionary dictionary];
-	
-		[self _setPropertyInfoMap: propertyInfoMap];
-	}
-	
-	return propertyInfoMap;
-}
-
-+ (void)_setPropertyInfoMap: (NSMutableDictionary *)propertyInfoMap
-{
-	objc_setAssociatedObject(self, &PROPERTY_INFO_MAP_KEY, propertyInfoMap, OBJC_ASSOCIATION_RETAIN);
-}
-
 
 @end

@@ -13,10 +13,10 @@
 // Property class name, or nil if the property is not a pointer to a class type.
 @property (nonatomic, strong, readonly) NSString *propertyClassName;
 
-@property (nonatomic, strong) NSString *propertyName;
-@property (nonatomic, strong) NSString *propertyType;
-@property (nonatomic, strong) NSString *customGetterSelectorName;
-@property (nonatomic, strong) NSString *customSetterSelectorName;
+@property (nonatomic, copy) NSString *propertyName;
+@property (nonatomic, copy) NSString *propertyType;
+@property (nonatomic, copy) NSString *customGetterSelectorName;
+@property (nonatomic, copy) NSString *customSetterSelectorName;
 
 @property (nonatomic, assign) BOOL isWeak;
 @property (nonatomic, assign) BOOL isCopy;
