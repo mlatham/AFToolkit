@@ -79,41 +79,44 @@ static char PROPERTY_INFO_KEY;
 			
 			for (NSString *token in tokens)
 			{
-				if ([token isEqualToString: @"T"])
+				if ([token length] > 0)
 				{
-					propertyInfo.propertyType = token;
-				}
-				else if ([token isEqualToString: @"G"])
-				{
-					propertyInfo.customGetterSelectorName = token;
-				}
-				else if ([token isEqualToString: @"S"])
-				{
-					propertyInfo.customSetterSelectorName = token;
-				}
-				else if ([token isEqualToString: @"R"])
-				{
-					propertyInfo.isReadonly = YES;
-				}
-				else if ([token isEqualToString: @"C"])
-				{
-					propertyInfo.isCopy = YES;
-				}
-				else if ([token isEqualToString: @"&"])
-				{
-					propertyInfo.isRetain = YES;
-				}
-				else if ([token isEqualToString: @"N"])
-				{
-					propertyInfo.isNonatomic = YES;
-				}
-				else if ([token isEqualToString: @"D"])
-				{
-					propertyInfo.isDynamic = YES;
-				}
-				else if ([token isEqualToString: @"W"])
-				{
-					propertyInfo.isWeak = YES;
+					if ([token characterAtIndex: 0] ==  'T')
+					{
+						propertyInfo.propertyType = [token substringFromIndex: 1];
+					}
+					else if ([token characterAtIndex: 0] ==  'G')
+					{
+						propertyInfo.customGetterSelectorName = [token substringFromIndex: 1];
+					}
+					else if ([token characterAtIndex: 0] ==  'S')
+					{
+						propertyInfo.customSetterSelectorName = [token substringFromIndex: 1];
+					}
+					else if ([token characterAtIndex: 0] ==  'R')
+					{
+						propertyInfo.isReadonly = YES;
+					}
+					else if ([token characterAtIndex: 0] ==  'C')
+					{
+						propertyInfo.isCopy = YES;
+					}
+					else if ([token characterAtIndex: 0] ==  '&')
+					{
+						propertyInfo.isRetain = YES;
+					}
+					else if ([token characterAtIndex: 0] ==  'N')
+					{
+						propertyInfo.isNonatomic = YES;
+					}
+					else if ([token characterAtIndex: 0] ==  'D')
+					{
+						propertyInfo.isDynamic = YES;
+					}
+					else if ([token characterAtIndex: 0] ==  'W')
+					{
+						propertyInfo.isWeak = YES;
+					}
 				}
 			}
 		}
