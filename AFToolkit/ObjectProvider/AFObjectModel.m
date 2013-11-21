@@ -1,16 +1,20 @@
 #import "AFObjectModel.h"
-#import <objc/runtime.h>
 
 
 #pragma mark Constants
 
-// Use the addresses as the key.
-static char OBJECT_MODEL_MAP_KEY;
+static __strong NSMutableDictionary *_objectModelsByClassName;
 
 
 #pragma mark Class Definition
 
 @implementation AFObjectModel
+{
+	@private __strong NSString *_rootKey;
+	@private __strong NSArray *_idKeyPaths;
+	@private __strong NSString *_collectionKey;
+	@private __strong NSDictionary *_relationships;
+}
 
 
 #pragma mark - Constructors
@@ -27,13 +31,27 @@ static char OBJECT_MODEL_MAP_KEY;
 	}
 	
 	// Initialize instance variables.
-	_idKeyPaths = idKeyPaths;
-	_collectionKey = collectionKey;
-	_rootKey = rootKey;
-	_relationships = relationships;
+	_rootKey = [rootKey copy];
+	_idKeyPaths = [idKeyPaths copy];
+	_collectionKey = [collectionKey copy];
+	_relationships = [relationships copy];
 	
 	// Return initialized instance.
 	return self;
+}
+
++ (void)initialize
+{
+	static BOOL _classInitialized = NO;
+	
+	if (_classInitialized == NO)
+	{
+		// Initialize the static object model dictionary.
+		_objectModelsByClassName = [[NSMutableDictionary alloc]
+			init];
+	
+		_classInitialized = YES;
+	}
 }
 
 
@@ -111,45 +129,25 @@ static char OBJECT_MODEL_MAP_KEY;
 	if (AFIsNull(myClass) == NO)
 	{
 		NSString *myClassName = NSStringFromClass(myClass);
-
-		NSMutableDictionary *objectModelMap = [self _objectModelMap];
 		
-		objectModel = objectModelMap[myClassName];
+		objectModel = _objectModelsByClassName[myClassName];
 		
 		// Create the object models on demand.
 		if (objectModel == nil)
 		{
 			id myClassObject = (id)myClass;
 			
-			if ([myClassObject respondsToSelector: @selector(objectModel)])
+			if ([myClassObject conformsToProtocol: @protocol(AFObjectModel)])
 			{
 				objectModel = [myClassObject objectModel];
 				
 				// Cache each object model by class name.
-				objectModelMap[myClassName] = objectModel;
+				_objectModelsByClassName[myClassName] = objectModel;
 			}
 		}
 	}
 	
 	return objectModel;
-}
-
-
-#pragma mark - Private Methods
-
-+ (NSMutableDictionary *)_objectModelMap
-{
-	NSMutableDictionary *objectModelMap = (NSMutableDictionary *)objc_getAssociatedObject(self, &OBJECT_MODEL_MAP_KEY);
-	
-	// Create the property info map on demand.
-	if (objectModelMap == nil)
-	{
-		objectModelMap = [NSMutableDictionary dictionary];
-	
-		objc_setAssociatedObject(self, &OBJECT_MODEL_MAP_KEY, objectModelMap, OBJC_ASSOCIATION_RETAIN);
-	}
-	
-	return objectModelMap;
 }
 
 

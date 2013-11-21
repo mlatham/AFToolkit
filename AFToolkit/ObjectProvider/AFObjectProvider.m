@@ -52,7 +52,7 @@
 	if ([objectModel.idKeyPaths count] != 1)
 	{
 #if defined(DEBUG_OBJECT_PROVIDER)
-		NSLog(@"AFObjectProvider: Object model must define exactly one idKeyPath for fetchOrCreate");
+		AFLog(AFLogLevelDebug, @"AFObjectProvider: Object model must define exactly one idKeyPath for fetchOrCreate");
 #endif
 	}
 	else if (AFIsNull(idValue) == NO)
@@ -139,7 +139,7 @@
 					@catch (NSException *exception)
 					{
 #if defined(DEBUG_OBJECT_PROVIDER)
-						NSLog(@"Failed to parse value for property: %@. Error: %@", propertyKeyPath, exception);
+						AFLog(AFLogLevelDebug, @"Failed to parse value for property: %@. Error: %@", propertyKeyPath, exception);
 #endif
 					}
 				}

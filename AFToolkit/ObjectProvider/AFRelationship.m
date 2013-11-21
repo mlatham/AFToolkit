@@ -1,20 +1,20 @@
 #import "AFRelationship.h"
 #import "AFPropertyInfo.h"
-#import <objc/runtime.h>
+#import "NSObject+Runtime.h"
 
 
 #pragma mark Class Definition
 
 @implementation AFRelationship
 {
-	@private __strong NSMutableDictionary *_propertyInfoMap;
+	@private __strong NSArray *_keys;
 	@private __strong Class _hasManyClass;
 }
 
 
 #pragma mark - Constructors
 
-- (id)initWithKeys:(NSArray *)keys
+- (id)initWithKeys: (NSArray *)keys
 	type: (AFRelationshipType)type
 	hasManyClass: (Class)hasManyClass
 {
@@ -25,10 +25,9 @@
 	}
 	
 	// Initialize instance variables.
-	_keys = keys;
-	_type = type;
-	_hasManyClass = hasManyClass;
-	_propertyInfoMap = [NSMutableDictionary dictionary];
+	[self _initializeWithKeys: keys
+		type: type
+		hasManyClass: hasManyClass];
 	
 	// Return initialized instance.
 	return self;
@@ -36,27 +35,37 @@
 
 - (id)initWithKeys: (NSArray *)keys
 {
-	return [self initWithKeys: keys
+	// Abort if base initializer fails.
+	if ((self = [super init]) == nil)
+	{
+		return nil;
+	}
+	
+	// Initialize instance variables.
+	[self _initializeWithKeys: keys
 		type: AFRelationshipTypeHasOne
 		hasManyClass: nil];
+	
+	// Return initialized instance.
+	return self;
 }
 
 - (id)initWithHasMany: (Class)hasManyClass
 	keys: (NSArray *)keys
 {
-	return [self initWithKeys: keys
+	// Abort if base initializer fails.
+	if ((self = [super init]) == nil)
+	{
+		return nil;
+	}
+	
+	// Initialize instance variables.
+	[self _initializeWithKeys: keys
 		type: AFRelationshipTypeHasMany
 		hasManyClass: hasManyClass];
-}
-
-
-#pragma mark - Dealloc
-
-- (void)dealloc
-{
-#if defined(DEBUG_OBJECT_PROVIDER)
-	AFLog(AFLogLevelDebug, @"AFRelationship::dealloc");
-#endif
+	
+	// Return initialized instance.
+	return self;
 }
 
 
@@ -215,162 +224,13 @@
 
 #pragma mark - Private Methods
 
-// Gets the property info for the provided property name on this class. On
-// first access, this method caches that property info in an associated
-// object on this class.
-
-- (AFPropertyInfo *)_propertyInfoForClass: (Class)myClass
-	propertyName: (NSString *)propertyName
+- (void)_initializeWithKeys: (NSArray *)keys
+	type: (AFRelationshipType)type
+	hasManyClass: (Class)hasManyClass
 {
-	@synchronized(self)
-	{
-		// Get or create the property info map.
-		NSMutableDictionary *propertyInfoMap = _propertyInfoMap;
-		
-		// Check if the property info is cached.
-		AFPropertyInfo *result = propertyInfoMap[propertyName];
-		
-		// If not, generate and cache the property info.
-		if (result == nil)
-		{
-			unsigned int outCount;
-			
-			// Get the desired property name, as a c-string. This c-string is a pointer to the
-			// contents of the propertyName string. It does not need to be freed.
-			const char *propertyNameCString = [propertyName UTF8String];
-			
-			// Get this class's property metadata. This array needs to be freed.
-			objc_property_t *properties = class_copyPropertyList(myClass, &outCount);
-			
-			// Find the property with the provided name.
-			for (int i = 0; i < outCount; i++)
-			{
-				// Get the property.
-				objc_property_t property = properties[i];
-				
-				// This is the property - get its attributes.
-				const char *attributes = property_getAttributes(property);
-				
-				// Copy the attributes into a mutable representation.
-				char *mutableAttributes = (char *)malloc(strlen(attributes) * sizeof(char));
-				strcpy(mutableAttributes, attributes);
-				
-				// Create the property info.
-				AFPropertyInfo *propertyInfo = [[AFPropertyInfo alloc]
-					init];
-				
-				// Attributes are comma-separated.
-				char *token = strtok(mutableAttributes, ",");
-				
-				// Tokenize the string.
-				while (token != NULL)
-				{
-					char marker = token[0];
-				
-					switch (marker)
-					{
-						case 'T':
-						{
-							// Advance past the type marker.
-							token++;
-							
-							propertyInfo.propertyType = [[NSString stringWithUTF8String: token] copy];
-							
-							break;
-						}
-						case 'G':
-						{
-							// Advance past the type marker.
-							token++;
-							
-							propertyInfo.customGetterSelectorName = [[NSString stringWithUTF8String: token] copy];
-							
-							break;
-						}
-						case 'S':
-						{
-							// Advance past the type marker.
-							token++;
-							
-							propertyInfo.customSetterSelectorName = [[NSString stringWithUTF8String: token] copy];
-							
-							break;
-						}
-						case 'R':
-						{
-							propertyInfo.isReadonly = YES;
-							
-							break;
-						}
-						case 'C':
-						{
-							propertyInfo.isCopy = YES;
-						
-							break;
-						}
-						case '&':
-						{
-							propertyInfo.isRetain = YES;
-						
-							break;
-						}
-						case 'N':
-						{
-							propertyInfo.isNonatomic = YES;
-						
-							break;
-						}
-						case 'D':
-						{
-							propertyInfo.isDynamic = YES;
-						
-							break;
-						}
-						case 'W':
-						{
-							propertyInfo.isWeak = YES;
-						
-							break;
-						}
-					}
-				
-					// Get the property name.
-					const char *testPropertyNameCString = property_getName(property);
-					NSString *testPropertyName = [[NSString stringWithUTF8String: testPropertyNameCString] copy];
-					
-					// Set the property info name.
-					propertyInfo.propertyName = testPropertyName;
-					
-					// Cache the property info.
-					propertyInfoMap[testPropertyName] = propertyInfo;
-					
-					// Get the next token.
-					token = strtok(NULL, mutableAttributes);
-					
-					// Set the result.
-					if (strcmp(propertyNameCString, testPropertyNameCString) == 0)
-					{
-						result = propertyInfo;
-					}
-				}
-				
-				// Free the mutable attributes.
-				if (mutableAttributes != NULL)
-				{
-					free(mutableAttributes);
-				}
-			}
-			
-			// Free the properties.
-			if (properties != NULL)
-			{
-				free(properties);
-			}
-		}
-			
-		// Return the property info, or nil if it didn't exist on this class.
-		return result;
-	}
+	_keys = [keys copy];
+	_type = type;
+	_hasManyClass = hasManyClass;
 }
 
 - (void)_setHasOneValue: (id)value
@@ -379,27 +239,16 @@
 	provider: (AFObjectProvider *)provider
 {
 	// Get the property info - has one relationships are defined by their property type.
-	AFPropertyInfo *propertyInfo = [self _propertyInfoForClass: [target class]
-		propertyName: propertyName];
+	AFPropertyInfo *propertyInfo = [[target class] propertyInfoForPropertyName: propertyName];
 	
 	// Attempt to transform the value.
 	id transformedValue = [self transformValue: value
 		toClass: propertyInfo.propertyClass
 		provider: provider];
 	
-	// TODO: remove.
-	if (propertyInfo.propertyClass != nil
-		&& propertyInfo.propertyClass == [transformedValue class])
-	{
-		// Set the property directly.
-		[target setValue: transformedValue
-			forKeyPath: propertyName];
-	}
-	else
-	{
-		AFLog(AFLogLevelDebug, @"Skipping invalid assignment: %@ to property: %@",
-			transformedValue, propertyName);
-	}
+	// Set the property directly.
+	[target setValue: transformedValue
+		forKeyPath: propertyName];
 }
 	
 - (void)_setHasManyValue: (id)value
@@ -408,8 +257,7 @@
 	provider: (AFObjectProvider *)provider
 {
 	// Get the property info - this is used to determine collection type for has-many relationships.
-	AFPropertyInfo *propertyInfo = [self _propertyInfoForClass: [target class]
-		propertyName: propertyName];
+	AFPropertyInfo *propertyInfo = [[target class] propertyInfoForPropertyName: propertyName];
 	
 	// Assign to read-only properties.
 	BOOL needsAssignment = propertyInfo.isReadonly == NO;
