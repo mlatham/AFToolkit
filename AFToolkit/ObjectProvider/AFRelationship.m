@@ -273,7 +273,7 @@
 	if (AFIsNull(value) == NO)
 	{
 		// Ignore any non-array values. TODO: Fail in debug.
-		if ([value isKindOfClass: NSArray.class] == NO)
+		if ([value isKindOfClass: NSArray.class] == YES)
 		{
 			// Clear the collection, before assignment.
 			[mutableCollection removeAllObjects];
