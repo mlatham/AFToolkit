@@ -60,6 +60,7 @@
 		C9E7006C175CFB3E00CB137F /* AFTableView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C972173A17552D5F0051A403 /* AFTableView.h */; };
 		C9F38E09183A827D00B81095 /* AFRelationship.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F38E08183A827D00B81095 /* AFRelationship.m */; };
 		C9F38E39183C0E2200B81095 /* AFRelationship.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C9F38E07183A827D00B81095 /* AFRelationship.h */; };
+		C9FA11DD183D65720014BE0D /* AFPropertyInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FA11DC183D65720014BE0D /* AFPropertyInfo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -156,6 +157,8 @@
 		C9B7C35C17B198670027ECFF /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		C9F38E07183A827D00B81095 /* AFRelationship.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFRelationship.h; sourceTree = "<group>"; };
 		C9F38E08183A827D00B81095 /* AFRelationship.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFRelationship.m; sourceTree = "<group>"; };
+		C9FA11DB183D65720014BE0D /* AFPropertyInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFPropertyInfo.h; sourceTree = "<group>"; };
+		C9FA11DC183D65720014BE0D /* AFPropertyInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFPropertyInfo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -311,6 +314,8 @@
 				C92F844018335B66004E5E84 /* AFObjectModel.m */,
 				C9F38E07183A827D00B81095 /* AFRelationship.h */,
 				C9F38E08183A827D00B81095 /* AFRelationship.m */,
+				C9FA11DB183D65720014BE0D /* AFPropertyInfo.h */,
+				C9FA11DC183D65720014BE0D /* AFPropertyInfo.m */,
 			);
 			path = ObjectProvider;
 			sourceTree = "<group>";
@@ -367,6 +372,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97DE935F16C88CA60059199D /* NSBundle+Universal.m in Sources */,
+				C9FA11DD183D65720014BE0D /* AFPropertyInfo.m in Sources */,
 				97DE936116C88CA60059199D /* UITableViewCell+Universal.m in Sources */,
 				97DE936316C88CA60059199D /* AFArray.m in Sources */,
 				97DE936516C88CA60059199D /* AFFileHelper.m in Sources */,

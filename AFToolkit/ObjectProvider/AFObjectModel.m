@@ -146,15 +146,10 @@ static char OBJECT_MODEL_MAP_KEY;
 	{
 		objectModelMap = [NSMutableDictionary dictionary];
 	
-		[self _setObjectModelMap: objectModelMap];
+		objc_setAssociatedObject(self, &OBJECT_MODEL_MAP_KEY, objectModelMap, OBJC_ASSOCIATION_RETAIN);
 	}
 	
 	return objectModelMap;
-}
-
-+ (void)_setObjectModelMap: (NSMutableDictionary *)propertyInfoMap
-{
-	objc_setAssociatedObject(self, &OBJECT_MODEL_MAP_KEY, propertyInfoMap, OBJC_ASSOCIATION_RETAIN);
 }
 
 
