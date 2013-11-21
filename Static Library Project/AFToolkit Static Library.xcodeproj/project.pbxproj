@@ -41,6 +41,7 @@
 		97FA17731610E2D800A6756A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FA17721610E2D800A6756A /* UIKit.framework */; };
 		97FA17751610E2E300A6756A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FA17741610E2E300A6756A /* SystemConfiguration.framework */; };
 		97FA17771610E2EB00A6756A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FA17761610E2EB00A6756A /* QuartzCore.framework */; };
+		C923083E183E9DEA00850493 /* AFPropertyInfo.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C9FA11DB183D65720014BE0D /* AFPropertyInfo.h */; };
 		C92F841C18329554004E5E84 /* NSObject+Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = C92F841B18329554004E5E84 /* NSObject+Runtime.m */; };
 		C92F84291832C1FD004E5E84 /* NSObject+Runtime.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C92F841A18329554004E5E84 /* NSObject+Runtime.h */; };
 		C92F844118335B66004E5E84 /* AFObjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C92F844018335B66004E5E84 /* AFObjectModel.m */; };
@@ -70,6 +71,7 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				C923083E183E9DEA00850493 /* AFPropertyInfo.h in CopyFiles */,
 				C9F38E39183C0E2200B81095 /* AFRelationship.h in CopyFiles */,
 				C92F844218336296004E5E84 /* AFObjectModel.h in CopyFiles */,
 				C92F84291832C1FD004E5E84 /* NSObject+Runtime.h in CopyFiles */,
