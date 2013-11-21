@@ -82,56 +82,38 @@ static char PROPERTY_INFO_KEY;
 				if ([token isEqualToString: @"T"])
 				{
 					propertyInfo.propertyType = token;
-					
-					break;
 				}
 				else if ([token isEqualToString: @"G"])
 				{
 					propertyInfo.customGetterSelectorName = token;
-					
-					break;
 				}
 				else if ([token isEqualToString: @"S"])
 				{
 					propertyInfo.customSetterSelectorName = token;
-					
-					break;
 				}
 				else if ([token isEqualToString: @"R"])
 				{
 					propertyInfo.isReadonly = YES;
-					
-					break;
 				}
 				else if ([token isEqualToString: @"C"])
 				{
 					propertyInfo.isCopy = YES;
-				
-					break;
 				}
 				else if ([token isEqualToString: @"&"])
 				{
 					propertyInfo.isRetain = YES;
-				
-					break;
 				}
 				else if ([token isEqualToString: @"N"])
 				{
 					propertyInfo.isNonatomic = YES;
-				
-					break;
 				}
 				else if ([token isEqualToString: @"D"])
 				{
 					propertyInfo.isDynamic = YES;
-				
-					break;
 				}
 				else if ([token isEqualToString: @"W"])
 				{
 					propertyInfo.isWeak = YES;
-				
-					break;
 				}
 			}
 		}
