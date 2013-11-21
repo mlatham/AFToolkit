@@ -83,7 +83,7 @@ static __strong NSMutableDictionary *_objectModelsByClassName;
 
 + (instancetype)objectModelWithCollectionKey: (NSString *)collectionKey
 	rootKey: (NSString *)rootKey
-	relatioships: (NSDictionary *)relationships
+	relationships: (NSDictionary *)relationships
 {
 	return [[self alloc]
 		initWithIDKeyPaths: nil

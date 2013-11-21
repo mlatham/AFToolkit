@@ -40,7 +40,7 @@
 
 + (instancetype)objectModelWithCollectionKey: (NSString *)collectionKey
 	rootKey: (NSString *)rootKey
-	relatioships: (NSDictionary *)relationships;
+	relationships: (NSDictionary *)relationships;
 
 + (instancetype)objectModelWithIDKeyPaths: (NSArray *)idKeyPaths
 	relationships: (NSDictionary *)relationships;
