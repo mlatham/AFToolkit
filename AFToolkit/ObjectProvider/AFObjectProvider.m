@@ -68,7 +68,7 @@
 			values: values];
 	
 		// Create the instance, if it didn't exist.
-		if (AFIsNull(instance) == NO)
+		if (AFIsNull(instance) == YES)
 		{
 			instance = [self create: myClass
 				values: values];
