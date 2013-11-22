@@ -131,7 +131,7 @@
 				else
 				{
 					// Update the value with the last subkey.
-					value = subValues[key];
+					value = subValues[subKey];
 				}
 			}
 		}
