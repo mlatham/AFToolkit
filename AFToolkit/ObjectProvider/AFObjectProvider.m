@@ -57,21 +57,31 @@
 	}
 	else if (AFIsNull(idValue) == NO)
 	{
-		// Form a fetch request with the object's key value.
-		NSDictionary *values =
-		@{
-			objectModel.idKeyPaths[0] : idValue
-		};
+		// Get the key for the ID key.
+		NSString *idKeyPath = objectModel.idKeyPaths[0];
+		AFRelationship *idRelationship = objectModel.relationships[idKeyPath];
 		
-		// Fetch the instance.
-		instance = [self fetch: myClass
-			values: values];
-	
-		// Create the instance, if it didn't exist.
-		if (AFIsNull(instance) == YES)
+		// Get the key value of the ID relationship.
+		if (AFIsNull(idRelationship) == NO)
 		{
-			instance = [self create: myClass
+			NSString *idKey = idRelationship.keys[0];
+		
+			// Form a fetch request with the object's key value.
+			NSDictionary *values =
+			@{
+				idKey : idValue
+			};
+			
+			// Fetch the instance.
+			instance = [self fetch: myClass
 				values: values];
+		
+			// Create the instance, if it didn't exist.
+			if (AFIsNull(instance) == YES)
+			{
+				instance = [self create: myClass
+					values: values];
+			}
 		}
 	}
 	
