@@ -150,12 +150,9 @@ static __strong NSMutableDictionary *_objectModelsByClassName;
 	return objectModel;
 }
 
-+ (NSArray *)objectModels
++ (NSDictionary *)objectModels
 {
-	// Get the cached object models.
-	NSArray *objectModels = [[_objectModelsByClassName allValues] copy];
-	
-	return objectModels;
+	return [_objectModelsByClassName copy];
 }
 
 
