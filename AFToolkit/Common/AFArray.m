@@ -133,5 +133,10 @@
 	return [_objects count];
 }
 
+- (BOOL)containsObject: (id)object
+{
+	return [_objects containsObject: object];
+}
+
 
 @end

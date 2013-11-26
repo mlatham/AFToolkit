@@ -48,5 +48,7 @@
 
 - (NSUInteger)count;
 
+- (BOOL)containsObject: (id)object;
+
 
 @end
