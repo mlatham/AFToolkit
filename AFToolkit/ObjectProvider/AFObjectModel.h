@@ -52,6 +52,9 @@
 
 + (instancetype)objectModelForClass: (Class)myClass;
 
+// Gets each object model for which objectModelForClass has been called.
++ (NSArray *)objectModels;
+
 
 @end
 
