@@ -10,6 +10,69 @@
 
 #pragma mark - Public Methods
 
+// Parse all root and collection keys in the provided values.
+- (NSDictionary *)parse: (NSDictionary *)values
+{
+	NSDictionary *objectModelsByClassName = [AFObjectModel objectModels];
+	
+	NSMutableDictionary *results = [NSMutableDictionary dictionary];
+
+	// For each object model, check for its sideloading key - if it exists, parse it.
+	for (NSString *modelClassName in [objectModelsByClassName allKeys])
+	{
+		AFObjectModel *objectModel = objectModelsByClassName[modelClassName];
+	
+		// Load models by collection keys.
+		for (NSString *collectionKey in objectModel.collectionKeys)
+		{
+			if (AFIsNull([values objectForKey: collectionKey]) == NO)
+			{
+				NSArray *modelsJSON = values[collectionKey];
+				
+				NSMutableArray *modelResults = [NSMutableArray array];
+				
+				for (NSDictionary *modelJSON in modelsJSON)
+				{
+					Class modelClass = NSClassFromString(modelClassName);
+					
+					// Sideload the model.
+					id model = [self updateOrCreate: modelClass
+						values: modelJSON];
+						
+					// Add the model to the results.
+					if (AFIsNull(model) == NO)
+					{
+						[modelResults addObject: model];
+					}
+				}
+				
+				// Set the results.
+				results[collectionKey] = results;
+			}
+		}
+		
+		// Load models by root key.
+		for (NSString *rootKey in objectModel.rootKeys)
+		{
+			if (AFIsNull([values objectForKey: rootKey]) == NO)
+			{
+				Class modelClass = NSClassFromString(modelClassName);
+		
+				// Sideload the model.
+				id model = [self updateOrCreate: modelClass
+					values: values[rootKey]];
+					
+				if (AFIsNull(model) == NO)
+				{
+					results[rootKey] = model;
+				}
+			}
+		}
+	}
+	
+	return results;
+}
+
 - (id)create: (Class)myClass
 {
 	// By default, just allocate and init the class.

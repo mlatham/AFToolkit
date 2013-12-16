@@ -10,9 +10,9 @@ static __strong NSMutableDictionary *_objectModelsByClassName;
 
 @implementation AFObjectModel
 {
-	@private __strong NSString *_rootKey;
+	@private __strong NSArray *_rootKeys;
 	@private __strong NSArray *_idKeyPaths;
-	@private __strong NSString *_collectionKey;
+	@private __strong NSArray *_collectionKeys;
 	@private __strong NSDictionary *_relationships;
 }
 
@@ -20,8 +20,8 @@ static __strong NSMutableDictionary *_objectModelsByClassName;
 #pragma mark - Constructors
 
 - (id)initWithIDKeyPaths: (NSArray *)idKeyPaths
-	collectionKey: (NSString *)collectionKey
-	rootKey: (NSString *)rootKey
+	collectionKeys: (NSArray *)collectionKeys
+	rootKeys: (NSArray *)rootKeys
 	relationships: (NSDictionary *)relationships
 {
 	// Abort if base initializer fails.
@@ -31,9 +31,9 @@ static __strong NSMutableDictionary *_objectModelsByClassName;
 	}
 	
 	// Initialize instance variables.
-	_rootKey = [rootKey copy];
+	_rootKeys = [rootKeys copy];
 	_idKeyPaths = [idKeyPaths copy];
-	_collectionKey = [collectionKey copy];
+	_collectionKeys = [collectionKeys copy];
 	_relationships = [relationships copy];
 	
 	// Return initialized instance.
@@ -58,37 +58,37 @@ static __strong NSMutableDictionary *_objectModelsByClassName;
 #pragma mark - Public Methods
 
 + (instancetype)objectModelWithIDKeyPaths: (NSArray *)idKeyPaths
-	collectionKey: (NSString *)collectionKey
-	rootKey: (NSString *)rootKey
+	collectionKeys: (NSArray *)collectionKeys
+	rootKeys: (NSArray *)rootKeys
 	relationships: (NSDictionary *)relationships
 {
 	return [[self alloc]
 		initWithIDKeyPaths: idKeyPaths
-		collectionKey: collectionKey
-		rootKey: rootKey
+		collectionKeys: collectionKeys
+		rootKeys: rootKeys
 		relationships: relationships];
 }
 
 + (instancetype)objectModelWithIDKeyPath: (NSString *)idKeyPath
-	collectionKey: (NSString *)collectionKey
-	rootKey: (NSString *)rootKey
+	collectionKeys: (NSArray *)collectionKeys
+	rootKeys: (NSArray *)rootKeys
 	relationships: (NSDictionary *)relationships
 {
 	return [[self alloc]
 		initWithIDKeyPaths: @[ idKeyPath ]
-		collectionKey: collectionKey
-		rootKey: rootKey
+		collectionKeys: collectionKeys
+		rootKeys: rootKeys
 		relationships: relationships];
 }
 
-+ (instancetype)objectModelWithCollectionKey: (NSString *)collectionKey
-	rootKey: (NSString *)rootKey
++ (instancetype)objectModelWithCollectionKeys: (NSArray *)collectionKeys
+	rootKeys: (NSArray *)rootKeys
 	relationships: (NSDictionary *)relationships
 {
 	return [[self alloc]
 		initWithIDKeyPaths: nil
-		collectionKey: collectionKey
-		rootKey: rootKey
+		collectionKeys: collectionKeys
+		rootKeys: rootKeys
 		relationships: relationships];
 }
 
@@ -97,8 +97,8 @@ static __strong NSMutableDictionary *_objectModelsByClassName;
 {
 	return [[self alloc]
 		initWithIDKeyPaths: idKeyPaths
-		collectionKey: nil
-		rootKey: nil
+		collectionKeys: nil
+		rootKeys: nil
 		relationships: relationships];
 }
 
@@ -107,8 +107,8 @@ static __strong NSMutableDictionary *_objectModelsByClassName;
 {
 	return [[self alloc]
 		initWithIDKeyPaths: @[ idKeyPath ]
-		collectionKey: nil
-		rootKey: nil
+		collectionKeys: nil
+		rootKeys: nil
 		relationships: relationships];
 }
 
@@ -116,8 +116,8 @@ static __strong NSMutableDictionary *_objectModelsByClassName;
 {
 	return [[self alloc]
 		initWithIDKeyPaths: nil
-		collectionKey: nil
-		rootKey: nil
+		collectionKeys: nil
+		rootKeys: nil
 		relationships: relationships];
 }
 

@@ -8,6 +8,9 @@
 
 #pragma mark - Instance Methods
 
+// Parse all root and collection keys in the provided values.
+- (NSDictionary *)parse: (NSDictionary *)values;
+
 - (id)create: (Class)myClass;
 
 - (id)create: (Class)myClass
