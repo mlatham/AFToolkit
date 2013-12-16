@@ -55,6 +55,9 @@
 // Dictionary of object models by class name (NSString).
 + (NSDictionary *)objectModels;
 
+// Registers the object model classes.
++ (void)registerClasses: (NSArray *)classes;
+
 
 @end
 

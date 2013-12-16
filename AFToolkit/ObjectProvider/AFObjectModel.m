@@ -155,5 +155,23 @@ static __strong NSMutableDictionary *_objectModelsByClassName;
 	return [_objectModelsByClassName copy];
 }
 
++ (void)registerClasses: (NSArray *)classes
+{
+	for (Class myClass in classes)
+	{
+		NSString *myClassName = NSStringFromClass(myClass);
+	
+		id myClassObject = (id)myClass;
+		
+		if ([myClassObject conformsToProtocol: @protocol(AFObjectModel)])
+		{
+			AFObjectModel *objectModel = [myClassObject objectModel];
+			
+			// Register each object model by class name.
+			_objectModelsByClassName[myClassName] = objectModel;
+		}
+	}
+}
+
 
 @end
