@@ -47,7 +47,7 @@
 				}
 				
 				// Set the results.
-				results[collectionKey] = results;
+				results[collectionKey] = modelResults;
 			}
 		}
 		
