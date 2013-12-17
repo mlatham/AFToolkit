@@ -118,7 +118,8 @@
 		AFLog(AFLogLevelDebug, @"AFObjectProvider: Object model must define exactly one idKeyPath for fetchOrCreate");
 #endif
 	}
-	else if (AFIsNull(idValue) == NO)
+	// Empty and null are not valid ID values.
+	else if (AFIsEmpty(idValue) == NO)
 	{
 		// Get the key for the ID key.
 		NSString *idKeyPath = objectModel.idKeyPaths[0];
@@ -146,6 +147,12 @@
 					values: values];
 			}
 		}
+	}
+	else
+	{
+		// TODO: How should this be handled generally?
+		// No ID was available, create an anonymous item.
+		instance = [self create: myClass];
 	}
 	
 	return instance;
