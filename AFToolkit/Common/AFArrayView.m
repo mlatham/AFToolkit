@@ -295,7 +295,7 @@
 					}];
 				
 				// Remove objects.
-				[self removeObjectsAtIndexes: indices];
+				[self removeObjectsAtIndexes: indicesToRemove];
 			}
 
 			break;
