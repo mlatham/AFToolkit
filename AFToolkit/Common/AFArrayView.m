@@ -108,6 +108,7 @@
 	{
 		[_kvo startObserving: _source
 			forKeyPath: @keypath(_source.objects)
+			options: NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew | NSKeyValueObservingOptionPrior
 			selector: @selector(_sourceDidChange:)];
 	}
 	
