@@ -125,8 +125,18 @@
 				
 				if (i < [subKeys count] - 1)
 				{
-					// Descent into the subvalues with each subkey.
-					subValues = subValues[subKey];
+					id subValue = subValues[subKey];
+				
+					// Until the last component - only take
+					if (AFIsNull(subValue) == NO && [subValue isKindOfClass: NSDictionary.class])
+					{
+						// Descent into the subvalues with each subkey.
+						subValues = subValue;
+					}
+					else
+					{
+						subValues = nil;
+					}
 				}
 				else
 				{
