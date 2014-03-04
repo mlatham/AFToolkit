@@ -269,8 +269,11 @@
 					}];
 				
 				// Insert objects at their sorted locations.
-				[self insertObjects: objectsToInsert
-					atIndexes: indicesToInsert];
+				if ([objectsToInsert count] > 0)
+				{
+					[self insertObjects: objectsToInsert
+						atIndexes: indicesToInsert];
+				}
 			}
 
 			break;
@@ -297,7 +300,10 @@
 					}];
 				
 				// Remove objects.
-				[self removeObjectsAtIndexes: indicesToRemove];
+				if ([indicesToRemove count] > 0)
+				{
+					[self removeObjectsAtIndexes: indicesToRemove];
+				}
 			}
 
 			break;
