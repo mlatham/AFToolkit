@@ -247,11 +247,6 @@
 			
 			if (isPrior == NO)
 			{
-				NSMutableArray *objectsToInsert = [[NSMutableArray alloc]
-					init];
-				NSMutableIndexSet *indicesToInsert = [[NSMutableIndexSet alloc]
-					init];
-
 				// Enumerate each inserted index.
 				[indices enumerateIndexesUsingBlock: ^(NSUInteger index, BOOL *stop) 
 					{
@@ -263,17 +258,12 @@
 							// Insert this object in the sorted, filtered array.
 							NSUInteger index = [self _sortedIndexForInsertingObject: object
 								inArray: _objects];
-							[objectsToInsert addObject: object];
-							[indicesToInsert addIndex: index];
+								
+							// Insert the objects, one at a time.
+							[self insertObject: object
+								inObjectsAtIndex: index];
 						}
 					}];
-				
-				// Insert objects at their sorted locations.
-				if ([objectsToInsert count] > 0)
-				{
-					[self insertObjects: objectsToInsert
-						atIndexes: indicesToInsert];
-				}
 			}
 
 			break;
@@ -290,7 +280,7 @@
 				// Build list of indices to remove.
 				[indices enumerateIndexesUsingBlock: ^(NSUInteger index, BOOL *stop) 
 					{
-						id object = [_source.objects objectAtIndex: index];
+						id object = [_source objectInObjectsAtIndex: index];
 						
 						if ([_objects containsObject: object] == YES)
 						{
