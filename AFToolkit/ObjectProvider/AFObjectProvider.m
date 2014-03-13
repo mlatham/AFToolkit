@@ -112,17 +112,11 @@
 
 	AFObjectModel *objectModel = [AFObjectModel objectModelForClass: myClass];
 	
-	if ([objectModel.idKeyPaths count] != 1)
-	{
-#if defined(DEBUG_OBJECT_PROVIDER)
-		AFLog(AFLogLevelDebug, @"AFObjectProvider: Object model must define exactly one idKeyPath for fetchOrCreate");
-#endif
-	}
 	// Empty and null are not valid ID values.
-	else if (AFIsEmpty(idValue) == NO)
+	if (AFIsEmpty(idValue) == NO)
 	{
 		// Get the key for the ID key.
-		NSString *idKeyPath = objectModel.idKeyPaths[0];
+		NSString *idKeyPath = objectModel.idKeyPath;
 		AFRelationship *idRelationship = objectModel.relationships[idKeyPath];
 		
 		// Get the key value of the ID relationship.

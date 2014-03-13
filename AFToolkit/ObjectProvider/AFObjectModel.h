@@ -30,7 +30,7 @@
 #pragma mark - Properties
 
 // Keypath of the model object defining identity (or nil).
-@property (nonatomic, strong, readonly) NSArray *idKeyPaths;
+@property (nonatomic, strong, readonly) NSString *idKeyPath;
 
 // Root and collection keys when applying values.
 @property (nonatomic, strong, readonly) NSArray *collectionKeys;
@@ -42,18 +42,13 @@
 
 #pragma mark - Constructors
 
-- (id)initWithIDKeyPaths: (NSArray *)idKeyPaths
+- (id)initWithIDKeyPath: (NSString *)idKeyPath
 	collectionKeys: (NSArray *)collectionKeys
 	rootKeys: (NSArray *)rootKeys
 	relationships: (NSDictionary *)relationships;
 
 
 #pragma mark - Static Methods
-
-+ (instancetype)objectModelWithIDKeyPaths: (NSArray *)idKeyPaths
-	collectionKeys: (NSArray *)collectionKeys
-	rootKeys: (NSArray *)rootKeys
-	relationships: (NSDictionary *)relationships;
 
 + (instancetype)objectModelWithIDKeyPath: (NSString *)idKeyPath
 	collectionKeys: (NSArray *)collectionKeys
@@ -62,9 +57,6 @@
 
 + (instancetype)objectModelWithCollectionKeys: (NSArray *)collectionKeys
 	rootKeys: (NSArray *)rootKeys
-	relationships: (NSDictionary *)relationships;
-
-+ (instancetype)objectModelWithIDKeyPaths: (NSArray *)idKeyPaths
 	relationships: (NSDictionary *)relationships;
 
 + (instancetype)objectModelWithIDKeyPath: (NSString *)idKeyPath
@@ -80,8 +72,8 @@
 // Registers the object model classes.
 + (void)registerClasses: (NSArray *)classes;
 
-// Gets the ids.
-+ (NSArray *)idsForModel: (NSObject<AFObjectModel> *)model;
+// Gets the id for a model, if defined.
++ (NSString *)idForModel: (NSObject<AFObjectModel> *)model;
 
 
 @end
