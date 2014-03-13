@@ -1,6 +1,28 @@
 
 
-#pragma mark Class Interface
+#pragma mark Forward Declaration
+
+@class AFObjectModel;
+
+
+#pragma mark AFObjectModel Protocol
+
+@protocol AFObjectModel<NSObject>
+
+@required
+
++ (AFObjectModel *)objectModel;
+
+@optional
+
++ (void)update: (id)value
+	values: (NSDictionary *)values
+	provider: (id)provider;
+
+@end
+
+
+#pragma mark - Class Interface
 
 @interface AFObjectModel : NSObject
 
@@ -58,22 +80,8 @@
 // Registers the object model classes.
 + (void)registerClasses: (NSArray *)classes;
 
+// Gets the ids.
++ (NSArray *)idsForModel: (NSObject<AFObjectModel> *)model;
 
-@end
-
-
-#pragma mark AFObjectModel Protocol
-
-@protocol AFObjectModel<NSObject>
-
-@required
-
-+ (AFObjectModel *)objectModel;
-
-@optional
-
-+ (void)update: (id)value
-	values: (NSDictionary *)values
-	provider: (id)provider;
 
 @end

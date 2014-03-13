@@ -173,5 +173,38 @@ static __strong NSMutableDictionary *_objectModelsByClassName;
 	}
 }
 
++ (NSArray *)idsForModel: (NSObject<AFObjectModel> *)model
+{
+	AFObjectModel *objectModel = [[model class] objectModel];
+	
+	@try
+	{
+		NSMutableArray *ids = [NSMutableArray array];
+
+		for (NSString *idKeyPath in objectModel.idKeyPaths)
+		{
+			// Ensure all ID values are strings.
+			NSString *idValue = [[model valueForKeyPath: idKeyPath] description];
+			
+			// Add the value.
+			[ids addObject: idValue];
+		}
+		
+		if ([ids count] == 0)
+		{
+			return nil;
+		}
+		else
+		{
+			return ids;
+		}
+	}
+	@catch (NSException *exception)
+	{
+		return nil;
+	}
+}
+
+
 
 @end
