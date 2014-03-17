@@ -112,7 +112,7 @@
     [self beginUpdates];
     
     NSMutableArray *indicesRemoved = [NSMutableArray array];
-    for (int i = firstIndex; i <= lastIndex; i++)
+    for (NSInteger i = firstIndex; i <= lastIndex; i++)
     {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow: i
 			inSection: 0];
@@ -141,7 +141,7 @@
     [self beginUpdates];
     
     NSMutableArray *indicesAdded = [NSMutableArray array];
-    for (int i = firstIndex; i <= lastIndex; i++)
+    for (NSInteger i = firstIndex; i <= lastIndex; i++)
     {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow: i
 			inSection: 0];
