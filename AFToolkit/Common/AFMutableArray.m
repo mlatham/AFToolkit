@@ -14,6 +14,16 @@
 	_objects = [objects mutableCopy];
 }
 
+- (void)setObjects: (NSArray *)objects
+	copy: (BOOL)copy
+{
+	[self willChangeValueForKey: @"objects"];
+	
+	_objects = copy ? [objects mutableCopy] : objects;
+	
+	[self didChangeValueForKey: @"objects"];
+}
+
 
 #pragma mark - Array KVO Methods
 
@@ -70,6 +80,14 @@
 {
 	// Clear objects by setting the objects array.
 	self.objects = [NSMutableArray array];
+}
+
+- (void)removeAllObjectsWithoutSetting
+{
+	NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange: NSMakeRange(0, [_objects count])];
+	
+	// Remove all objects.
+	[self removeObjectsAtIndexes: indexSet];
 }
 
 

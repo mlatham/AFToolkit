@@ -10,6 +10,9 @@
 
 - (void)setObjects: (NSArray *)objects;
 
+- (void)setObjects: (NSArray *)objects
+	copy: (BOOL)copy;
+
 
 #pragma mark - Mutable Array KVO Methods
 
@@ -37,6 +40,8 @@
 #pragma mark - Public Methods
 
 - (void)removeAllObjects;
+
+- (void)removeAllObjectsWithoutSetting;
 
 
 @end
