@@ -10,6 +10,18 @@
 
 #pragma mark - Public Methods
 
+- (id)dequeueReusableCellWithCellClass: (Class)cellClass
+{
+	id cellClassObject = cellClass;
+	
+	if ([cellClassObject respondsToSelector: @selector(universalNibName)])
+	{
+		return [self dequeueReusableCellWithUniversalNibName: [cellClassObject universalNibName]];
+	}
+	
+	return nil;
+}
+
 - (id)dequeueReusableCellWithUniversalNibName: (NSString *)universalNibName
 {
 	// Reuse cell if possible (or create one).
