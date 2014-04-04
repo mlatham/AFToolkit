@@ -20,5 +20,9 @@
 
 + (instancetype)templateCell;
 
+// Lays out this cell's subviews and returns the height that fits the provided width.
+
+- (CGFloat)heightConstrainedToWidth: (CGFloat)width;
+
 
 @end

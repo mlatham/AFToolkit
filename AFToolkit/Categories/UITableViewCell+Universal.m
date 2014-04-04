@@ -70,5 +70,48 @@ static char TEMPLATE_KEY;
 	return instance;
 }
 
+- (CGFloat)heightConstrainedToWidth: (CGFloat)width
+{
+	// Update the constraints.
+	[self setNeedsUpdateConstraints];
+    [self updateConstraintsIfNeeded];
+	
+	// Set the bounds.
+	self.bounds = CGRectMake(0.0f, 0.0f, width, CGRectGetHeight(self.bounds));
+	
+	// Update the layout.
+	[self setNeedsLayout];
+    [self layoutIfNeeded];
+	
+	// If the cell supports AutoLayout, use systemLayoutSizeFittingSize.
+	if (self.translatesAutoresizingMaskIntoConstraints == YES)
+	{
+		CGFloat height = 0.f;
+	
+		// Size to the cell's subviews.
+		for (UIView *subview in self.contentView.subviews)
+		{
+			if (subview.frame.origin.y + subview.frame.size.height > height)
+			{
+				height = height;
+			}
+		}
+		
+		return height;
+	}
+	else
+	{
+		// Get the height.
+		CGFloat height = [self.contentView systemLayoutSizeFittingSize: UILayoutFittingCompressedSize].height;
+
+		// Add an extra point to the height to account for the cell separator, which is added between the bottom
+		// of the cell's contentView and the bottom of the table view cell.
+		height += 1.0f;
+		
+		// Return the height.
+		return height;
+	}
+}
+
 
 @end
