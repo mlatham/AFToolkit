@@ -1,10 +1,22 @@
 #import "UITableViewCell+Universal.h"
 #import "NSBundle+Universal.h"
+#import <objc/runtime.h>
 
 
-#pragma mark Class Definition
+#pragma mark Constants
+
+// Use the addresses as the key.
+static char TEMPLATE_KEY;
+
+
+#pragma mark - Class Definition
 
 @implementation UITableViewCell (Universal)
+
++ (NSString *)universalNibName
+{
+	return NSStringFromClass([self class]);
+}
 
 + (instancetype)cellWithUniversalNibName: (NSString *)nibName
 {
@@ -41,6 +53,21 @@
 	AFAssert([nibRoot isKindOfClass: UITableViewCell.class]);
 	
 	return nibRoot;
+}
+
++ (instancetype)templateCell
+{
+	id instance = (id)objc_getAssociatedObject(self, &TEMPLATE_KEY);
+	
+	// Create the template on demand.
+	if (instance == nil)
+	{
+		instance = [self cellWithUniversalNibName: self.universalNibName];
+	
+		objc_setAssociatedObject(self, &TEMPLATE_KEY, instance, OBJC_ASSOCIATION_RETAIN);
+	}
+	
+	return instance;
 }
 
 
