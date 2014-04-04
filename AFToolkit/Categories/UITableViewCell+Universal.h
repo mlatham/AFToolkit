@@ -26,7 +26,8 @@
 
 // Lays out this cell's subviews and returns the height that fits the provided width.
 
-- (CGFloat)heightConstrainedToWidth: (CGFloat)width;
+- (CGFloat)heightConstrainedToWidth: (CGFloat)width
+	useAutoLayout: (BOOL)useAutoLayout;
 
 
 @end

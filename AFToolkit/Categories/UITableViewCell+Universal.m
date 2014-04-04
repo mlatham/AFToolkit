@@ -76,6 +76,7 @@ static char TEMPLATE_KEY;
 }
 
 - (CGFloat)heightConstrainedToWidth: (CGFloat)width
+	useAutoLayout: (BOOL)useAutoLayout
 {
 	// Update the constraints.
 	[self setNeedsUpdateConstraints];
@@ -89,7 +90,7 @@ static char TEMPLATE_KEY;
     [self layoutIfNeeded];
 	
 	// If the cell supports AutoLayout, use systemLayoutSizeFittingSize.
-	if (self.translatesAutoresizingMaskIntoConstraints == YES)
+	if (useAutoLayout == NO)
 	{
 		CGFloat height = 0.f;
 	
