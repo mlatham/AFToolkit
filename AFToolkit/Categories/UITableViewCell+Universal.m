@@ -99,7 +99,7 @@ static char TEMPLATE_KEY;
 		{
 			if (subview.frame.origin.y + subview.frame.size.height > height)
 			{
-				height = height;
+				height = subview.frame.origin.y + subview.frame.size.height;
 			}
 		}
 		
