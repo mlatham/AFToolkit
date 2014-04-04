@@ -5,7 +5,6 @@
 #pragma mark Constants
 
 // Use the addresses as the key.
-static char TEMPLATE_KEY;
 static char PROPERTY_INFO_KEY;
 
 
@@ -130,21 +129,6 @@ static char PROPERTY_INFO_KEY;
 		
 	// Return the property info, or nil if it didn't exist on this class.
 	return result;
-}
-
-+ (instancetype)template
-{
-	id instance = (id)objc_getAssociatedObject(self, &TEMPLATE_KEY);
-	
-	// Create the template on demand.
-	if (instance == nil)
-	{
-		instance = [self alloc];
-	
-		objc_setAssociatedObject(self, &TEMPLATE_KEY, instance, OBJC_ASSOCIATION_RETAIN);
-	}
-	
-	return instance;
 }
 
 
