@@ -18,6 +18,11 @@ static char TEMPLATE_KEY;
 	return NSStringFromClass([self class]);
 }
 
++ (instancetype)universalCell
+{
+	return [self cellWithUniversalNibName: self.universalNibName];
+}
+
 + (instancetype)cellWithUniversalNibName: (NSString *)nibName
 {
 	return [self cellWithUniversalNibName: nibName

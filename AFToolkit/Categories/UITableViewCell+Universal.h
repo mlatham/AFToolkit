@@ -11,6 +11,10 @@
 
 + (NSString *)universalNibName;
 
+// Creates a cell using the universal nib name.
+
++ (instancetype)universalCell;
+
 + (instancetype)cellWithUniversalNibName: (NSString *)nibName;
 
 + (instancetype)cellWithUniversalNibName: (NSString *)nibName
