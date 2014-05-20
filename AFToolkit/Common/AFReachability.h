@@ -1,5 +1,5 @@
-#import <Foundation/Foundation.h>
-#import <SystemConfiguration/SystemConfiguration.h>
+@import Foundation;
+@import SystemConfiguration;
 
 
 #pragma mark Enumerations

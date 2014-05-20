@@ -1,5 +1,6 @@
+@import QuartzCore;
+
 #import "UIView+Render.h"
-#import <QuartzCore/QuartzCore.h>
 
 
 #pragma mark Class Definition

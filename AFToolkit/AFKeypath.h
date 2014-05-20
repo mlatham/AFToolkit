@@ -8,7 +8,8 @@
 //
 //  Source file from: https://github.com/jspahrsummers/libextobjc
 
-#import <Foundation/Foundation.h>
+@import Foundation;
+
 #import "AFMetamacros.h"
 
 /**
