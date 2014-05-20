@@ -1,3 +1,4 @@
+@import Foundation;
 
 
 #pragma mark Enumerations
