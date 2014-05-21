@@ -12,6 +12,7 @@
 #import "UITableViewCell+Universal.h"
 #import "UIView+Universal.h"
 #import "UIView+Render.h"
+#import "UIColor+Hex.h"
 
 // Common
 #import "AFArray.h"

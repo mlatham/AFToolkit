@@ -42,6 +42,8 @@
 		97FA17751610E2E300A6756A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FA17741610E2E300A6756A /* SystemConfiguration.framework */; };
 		97FA17771610E2EB00A6756A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FA17761610E2EB00A6756A /* QuartzCore.framework */; };
 		C923083E183E9DEA00850493 /* AFPropertyInfo.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C9FA11DB183D65720014BE0D /* AFPropertyInfo.h */; };
+		C9249C78192D545B000AE924 /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = C9249C77192D545B000AE924 /* UIColor+Hex.m */; };
+		C9249C79192D54FF000AE924 /* UIColor+Hex.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C9249C76192D545B000AE924 /* UIColor+Hex.h */; };
 		C92F841C18329554004E5E84 /* NSObject+Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = C92F841B18329554004E5E84 /* NSObject+Runtime.m */; };
 		C92F84291832C1FD004E5E84 /* NSObject+Runtime.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C92F841A18329554004E5E84 /* NSObject+Runtime.h */; };
 		C92F844118335B66004E5E84 /* AFObjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C92F844018335B66004E5E84 /* AFObjectModel.m */; };
@@ -71,6 +73,7 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				C9249C79192D54FF000AE924 /* UIColor+Hex.h in CopyFiles */,
 				C923083E183E9DEA00850493 /* AFPropertyInfo.h in CopyFiles */,
 				C9F38E39183C0E2200B81095 /* AFRelationship.h in CopyFiles */,
 				C92F844218336296004E5E84 /* AFObjectModel.h in CopyFiles */,
@@ -140,6 +143,8 @@
 		97FA17721610E2D800A6756A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		97FA17741610E2E300A6756A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		97FA17761610E2EB00A6756A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C9249C76192D545B000AE924 /* UIColor+Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Hex.h"; sourceTree = "<group>"; };
+		C9249C77192D545B000AE924 /* UIColor+Hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Hex.m"; sourceTree = "<group>"; };
 		C92F841A18329554004E5E84 /* NSObject+Runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Runtime.h"; sourceTree = "<group>"; };
 		C92F841B18329554004E5E84 /* NSObject+Runtime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Runtime.m"; sourceTree = "<group>"; };
 		C92F843F18335B66004E5E84 /* AFObjectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFObjectModel.h; sourceTree = "<group>"; };
@@ -228,6 +233,8 @@
 				9765D3D016EBD2EB0032FC23 /* UIView+Render.m */,
 				C972173E175532F70051A403 /* UIView+Universal.h */,
 				C972173F175532F70051A403 /* UIView+Universal.m */,
+				C9249C76192D545B000AE924 /* UIColor+Hex.h */,
+				C9249C77192D545B000AE924 /* UIColor+Hex.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -382,6 +389,7 @@
 				97DE936A16C88CA60059199D /* AFMutableArray.m in Sources */,
 				97DE936C16C88CA60059199D /* AFPlatformHelper.m in Sources */,
 				97DE936E16C88CA60059199D /* AFDBClient.m in Sources */,
+				C9249C78192D545B000AE924 /* UIColor+Hex.m in Sources */,
 				97DE937016C88CA60059199D /* AFDBOperation.m in Sources */,
 				97DE937216C88CA60059199D /* AFView.m in Sources */,
 				C92F844118335B66004E5E84 /* AFObjectModel.m in Sources */,
