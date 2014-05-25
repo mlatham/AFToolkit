@@ -29,8 +29,6 @@ static NSString * const NibExtension = @"nib";
 	// if device-specific nib doesn't exist, fall back to shared nib
 	if ([fileManager fileExistsAtPath: path] == NO)
 	{
-		AFLog(AFLogLevelDebug, @"Device-specific nib not found: %@", deviceNibName);
-	
 		// fall back to shared nib
 		deviceNibName = nibName;
 		
@@ -40,9 +38,7 @@ static NSString * const NibExtension = @"nib";
 		
 		// finally, if shared nib doesn't exist, fall back to iPhone nib
 		if ([fileManager fileExistsAtPath: path] == NO)
-		{
-			AFLog(AFLogLevelDebug, @"Shared nib not found: %@", deviceNibName);
-		
+		{		
 			// fall back to iPhone nib
 			deviceNibName = [NSString stringWithFormat: @"%@_iPhone", nibName];
 			
