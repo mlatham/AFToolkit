@@ -14,7 +14,7 @@ class SqliteOperation: AsyncOperation {
 
 	// MARK: - Properties
 
-	private var _database: sqlite3?
+	private var _database: SqliteDatabase?
 	private let _databaseLock: NSRecursiveLock
 	private var _task: SqliteTask
 	private var _completion: SqliteCompletion
@@ -23,10 +23,10 @@ class SqliteOperation: AsyncOperation {
     // MARK: - Inits
     
 	init(
-		database: sqlite3?,
+		database: SqliteDatabase?,
 		lock: NSRecursiveLock,
-		task: SqliteTask,
-		completion: SqliteCompletion) {
+		task: @escaping SqliteTask,
+		completion: @escaping SqliteCompletion) {
 		
 		_database = database
 		_databaseLock = lock
@@ -43,18 +43,18 @@ class SqliteOperation: AsyncOperation {
 		var databaseLockAcquired = false
 		var databaseRollbackRequired = false
 		var success = false
-		var result: AnyObject = nil
+		var result: AnyObject? = nil
 		
 		defer {
 			// Rollback if required.
 			if (databaseRollbackRequired) {
 				// Log error if rollback fails.
 				if (sqlite3_exec(_database, "ROLLBACK TRANSACTION", nil, nil, nil) != SQLITE_OK) {
-					log(.error, "Error rolling back transaction: \(String.fromCString(sqlite3_errmsg(_database)))";
+					log(.error, "Error rolling back transaction: \(String(cString: sqlite3_errmsg(_database)))")
 				}
 			}
 			
-			if (databaseLockAquired) {
+			if (databaseLockAcquired) {
 				_databaseLock.unlock()
 			}
 
@@ -82,7 +82,7 @@ class SqliteOperation: AsyncOperation {
 			if (sqlite3_exec(_database, "BEGIN TRANSACTION", nil, nil, nil) == SQLITE_OK) {
 				databaseRollbackRequired = true
 			} else {
-				log(.error, "Error beginning transaction: \(String.fromCString(sqlite3_errmsg(_database)))";
+				log(.error, "Error beginning transaction: \(String(cString: sqlite3_errmsg(_database)))")
 				throw Errors.beginTransactionFailed
 			}
 			
@@ -105,7 +105,7 @@ class SqliteOperation: AsyncOperation {
 				databaseRollbackRequired = false
 				
 				// Throw if commit fails.
-				if (sqlite3_exec(_database, "COMMIT TRANSACTION", NULL, NULL, NULL) != SQLITE_OK) {
+				if (sqlite3_exec(_database, "COMMIT TRANSACTION", nil, nil, nil) != SQLITE_OK) {
 					throw Errors.commitTransactionFailed
 				}
 			}

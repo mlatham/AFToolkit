@@ -1,16 +1,20 @@
 import SQLite3
+import Foundation
+import UIKit
 
 
 class SqliteClient {
 	
 	// MARK: - Constants
 	
-	private let SqliteExtension = "sqlite"
+	static let SQLITE_STATIC = unsafeBitCast(0, to: sqlite3_destructor_type.self)
+	static let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
+	static let SqliteExtension = "sqlite"
 	
 	
 	// MARK: - Properties
 
-	private var _database: sqlite3?
+	private var _database: SqliteDatabase?
 	private var _databaseUrl: URL?
 	private var _databaseLock = NSRecursiveLock()
 	private var _asyncQueryQueue = OperationQueue()
@@ -21,10 +25,12 @@ class SqliteClient {
 	
 	init?(databaseName: String) {
 		// Ensure database file is copied into documents folder.
-		let databaseFile = "\(databaseName).\(SqliteExtension)"
-		_databaseUrl = FileManager.urlByAppending(
+		let databaseFile = "\(databaseName).\(SqliteClient.SqliteExtension)"
+		guard let _databaseUrl = FileManager.urlByAppending(
 			path: databaseFile,
-			for: .documentDirectory)
+			for: .documentDirectory) else {
+			return nil
+		}
 		
 		// Initialize the database, if it doesn't already exist.
 		if (!FileManager.fileExists(filename: databaseFile, for: .documentDirectory)) {
@@ -36,12 +42,13 @@ class SqliteClient {
 		_asyncQueryQueue.maxConcurrentOperationCount = 1
 		
 		// Create database connection.
-		if (sqlite3_open(_databaseURL.path?.utf8, &_database) != SQLITE_OK) {
-			log(.error, "Unable to connect to database '\(databaseName)': \(String.fromCString(sqlite3_errmsg(_database)))")
+		let databasePathNSString = _databaseUrl.path as NSString
+		if (sqlite3_open(databasePathNSString.utf8String, &_database) != SQLITE_OK) {
+			log(.error, "Unable to connect to database '\(databaseName)': \(String(cString: sqlite3_errmsg(_database)))")
 		
 		// Enable foreign key support.
 		} else if (sqlite3_exec(_database, "PRAGMA foreign_keys = ON", nil, nil, nil) != SQLITE_OK) {
-			log(.error, "Unable to activate database foreign key support: \(String.fromCString(sqlite3_errmsg(_database)))")
+			log(.error, "Unable to activate database foreign key support: \(String(cString: sqlite3_errmsg(_database)))")
 		}
 		
 		// Register for notifications.
@@ -65,7 +72,7 @@ class SqliteClient {
 		sqlite3_close(_database)
 	}
 	
-	func execute(task: SqliteTask, success: Bool?) -> AnyObject {
+	func execute(task: SqliteTask, success: inout Bool) -> AnyObject {
 		// Start assuming success.
 		success = true
 		
@@ -78,18 +85,18 @@ class SqliteClient {
 		
 		do {
 			// Execute the query.
-			let result = task(_database, success)
+			let result = task(_database, &success)
 			return result
 		} catch {
 			// Fail.
 			success = false
 
-			// Rethrow.
-			throw error
+			// TODO: Rethrow?
+			// throw error
 		}
 	}
 	
-	func beginExecution(task: SqliteTask, completion: SqliteCompletion) -> SqliteOperation {
+	func beginExecution(task: @escaping SqliteTask, completion: @escaping SqliteCompletion) -> SqliteOperation {
 		// Create operation.
 		let operation = SqliteOperation(
 			database: _database,
@@ -108,25 +115,31 @@ class SqliteClient {
 		_asyncQueryQueue.cancelAllOperations()
 	}
 	
-	func _applicationDidEnterBackground() {
-		_beginExitBackgroundTask()
+	@objc func _applicationDidEnterBackground() {
+		_beginBackgroundTask()
 	
 		_asyncQueryQueue.waitUntilAllOperationsAreFinished()
 		
-		_endExitBackgroundTask()
+		_endBackgroundTask()
 	}
 	
-	static func initializeDatabase(name: String, overwrite: Bool): Bool {
-		let databaseFile = "\(databaseName).\(SqliteExtension)"
+	static func initializeDatabase(name: String, overwrite: Bool) -> Bool {
+		let databaseFile = "\(name).\(SqliteExtension)"
 
 		// Determine database target URL.
-		let databaseURL = FileManager.urlByAppending(path: databaseFile, for: .documentsDirectory)
+		guard let databaseURL = FileManager.urlByAppending(path: databaseFile, for: .documentDirectory) else {
+			log(.error, "Failed to get destination database URL \(databaseFile)")
+			return false
+		}
 
 		// Determine database source URL.
-		NSURL *databaseBundleURL = FileManager.mainBundleURL(for: databaseFile)
+		guard let databaseBundleURL = FileManager.mainBundleUrl(for: databaseFile) else {
+			log(.error, "Failed to find source database at \(databaseFile)")
+			return false
+		}
 
 		// Copy database from bundle, if not yet created.
-		let copied = FileHelper.copyFile(atURL: databaseBundleURL, toURL: databaseURL, overwrite: overwrite)
+		let copied = FileManager.copyFile(atURL: databaseBundleURL, toURL: databaseURL, overwrite: overwrite)
 			
 		// Log if copy failed.
 		if (!copied) {
@@ -146,7 +159,7 @@ private extension SqliteClient {
 			return
 		}
 		
-		_backgroundTask = UIApplication.shared.beginBackgroundTask { [weak self]
+		_backgroundTask = UIApplication.shared.beginBackgroundTask { [weak self] in
 			self?._endBackgroundTask()
 		}
 	}

@@ -48,8 +48,6 @@ class AsyncOperation: Operation {
 		return finishTime.timeIntervalSince(_createTime)
 	}
 	
-	var debugLoggingEnabled: Bool = true
-	
 	override var isAsynchronous: Bool {
 		return true
 	}
@@ -80,6 +78,8 @@ class AsyncOperation: Operation {
 		timeout = AsyncOperation.NeverTimeout
 		_createTime = Date()
 		
+		super.init()
+		
 		_beginBackgroundTask()
 	}
 	
@@ -103,7 +103,7 @@ class AsyncOperation: Operation {
 		
 		willChangeValue(forKey: #keyPath(AsyncOperation.isExecuting))
 		
-		if debugLoggingEnabled {
+		if self.debugLoggingEnabled {
 			log(.debug, "\(self.description): Starting")
 		}
 		_isExecuting = true
@@ -204,7 +204,7 @@ private extension AsyncOperation {
 			return
 		}
 		
-		_backgroundTask = UIApplication.shared.beginBackgroundTask { [weak self]
+		_backgroundTask = UIApplication.shared.beginBackgroundTask { [weak self] in
 			self?._endBackgroundTask()
 		}
 	}
