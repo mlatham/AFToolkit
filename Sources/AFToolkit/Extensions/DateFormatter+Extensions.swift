@@ -1,9 +1,6 @@
 import Foundation
 
 public extension DateFormatter {
-	
-	// MARK: - Properties
-	
 	static var iso8601: DateFormatter {
 		let formatter = DateFormatter()
 		formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"

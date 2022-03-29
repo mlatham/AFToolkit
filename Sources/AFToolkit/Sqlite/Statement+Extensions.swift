@@ -13,6 +13,16 @@ public extension Sqlite.Statement {
 			sqlite3_bind_null(self, Int32(columnIndex))
 		}
 	}
+	
+	// Uses GMT and en_us_POSIX locale. TODO: Provide locale?
+	func bindIso8601String(at columnIndex: Int, from date: Date?) {
+		let string = date?.iso8601GMT
+		if let string = string as NSString? {
+			sqlite3_bind_text(self, Int32(columnIndex), string.utf8String, -1, Sqlite.Client.SQLITE_TRANSIENT)
+		} else {
+			sqlite3_bind_null(self, Int32(columnIndex))
+		}
+	}
 
 	func string(at columnIndex: Int) -> String? {
 		if isNull(at: columnIndex) {
@@ -23,9 +33,27 @@ public extension Sqlite.Statement {
 		return nil
 	}
 	
+	func iso8601StringDate(at columnIndex: Int) -> Date? {
+		if isNull(at: columnIndex) {
+			return nil
+		} else if let text = sqlite3_column_text(self, Int32(columnIndex)) {
+			let stringDate = String(cString: text)
+			return Date.from(iso8601String: stringDate)
+		}
+		return nil
+	}
+	
 	func bind(at columnIndex: Int, int: Int?) {
 		if let int = int {
 			sqlite3_bind_int(self, Int32(columnIndex), Int32(int))
+		} else {
+			sqlite3_bind_null(self, Int32(columnIndex))
+		}
+	}
+	
+	func bindInt(at columnIndex: Int, number: NSNumber?) {
+		if let number = number {
+			sqlite3_bind_int(self, Int32(columnIndex), number.int32Value)
 		} else {
 			sqlite3_bind_null(self, Int32(columnIndex))
 		}
@@ -39,9 +67,34 @@ public extension Sqlite.Statement {
 		}
 	}
 	
+	func intNumber(at columnIndex: Int) -> NSNumber? {
+		if isNull(at: columnIndex) {
+			return nil
+		} else {
+			return NSNumber(value: sqlite3_column_int(self, Int32(columnIndex)))
+		}
+	}
+	
 	func bind(at columnIndex: Int, double: Double?) {
 		if let double = double {
 			sqlite3_bind_double(self, Int32(columnIndex), double)
+		} else {
+			sqlite3_bind_null(self, Int32(columnIndex))
+		}
+	}
+	
+	func bindDouble(at columnIndex: Int, number: NSNumber?) {
+		if let number = number {
+			sqlite3_bind_double(self, Int32(columnIndex), number.doubleValue)
+		} else {
+			sqlite3_bind_null(self, Int32(columnIndex))
+		}
+	}
+
+	// Uses GMT and en_us_POSIX locale. TODO: Provide locale?
+	func bindTimeIntervalSinceReferenceDouble(at columnIndex: Int, from date: Date?) {
+		if let timeInterval = date?.timeIntervalSinceReferenceDate {
+			sqlite3_bind_double(self, Int32(columnIndex), timeInterval)
 		} else {
 			sqlite3_bind_null(self, Int32(columnIndex))
 		}
@@ -52,6 +105,23 @@ public extension Sqlite.Statement {
 			return nil
 		} else {
 			return Double(sqlite3_column_double(self, Int32(columnIndex)))
+		}
+	}
+	
+	func doubleNumber(at columnIndex: Int) -> NSNumber? {
+		if isNull(at: columnIndex) {
+			return nil
+		} else {
+			return NSNumber(value: sqlite3_column_double(self, Int32(columnIndex)))
+		}
+	}
+	
+	func timeIntervalSinceReferenceDate(at columnIndex: Int) -> Date? {
+		if isNull(at: columnIndex) {
+			return nil
+		} else {
+			let timeInterval = TimeInterval(sqlite3_column_double(self, Int32(columnIndex)))
+			return Date(timeIntervalSinceReferenceDate: timeInterval)
 		}
 	}
 }
