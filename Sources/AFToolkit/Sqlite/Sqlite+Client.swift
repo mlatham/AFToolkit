@@ -11,7 +11,7 @@ public extension Sqlite {
 		static let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
 		static let SqliteExtension = "sqlite"
 		
-		enum Errors: Error {
+		public enum Errors: Error {
 			case databaseConnectionClosed
 			case execFailed(String)
 		}
@@ -33,7 +33,7 @@ public extension Sqlite {
 		
 		// MARK: - Inits
 		
-		init?(databaseName: String) {
+		public init?(databaseName: String) {
 			// Ensure database file is copied into documents folder.
 			let databaseFile = "\(databaseName).\(Client.SqliteExtension)"
 			guard let databaseUrl = FileManager.urlByAppending(
@@ -73,7 +73,7 @@ public extension Sqlite {
 		
 		// MARK: - Functions
 		
-		func openConnection() {
+		public func openConnection() {
 			guard !connected else {
 				return
 			}
@@ -100,7 +100,7 @@ public extension Sqlite {
 			connected = true
 		}
 		
-		func closeConnection() {
+		public func closeConnection() {
 			guard connected else {
 				return
 			}
@@ -121,7 +121,7 @@ public extension Sqlite {
 			connected = false
 		}
 		
-		func execute(statement: StatementClosure) throws {
+		public func execute(statement: StatementClosure) throws {
 			// Acquire re-entrant lock.
 			_databaseLock.lock()
 			
@@ -138,7 +138,7 @@ public extension Sqlite {
 			}
 		}
 		
-		func query(_ query: QueryClosure) throws -> Any? {
+		public func query(_ query: QueryClosure) throws -> Any? {
 			// Acquire re-entrant lock.
 			_databaseLock.lock()
 			
@@ -158,7 +158,7 @@ public extension Sqlite {
 		}
 		
 		@discardableResult
-		func beginExecute(
+		public func beginExecute(
 			statement: @escaping StatementClosure,
 			completion: @escaping StatementCompletion) -> Operation {
 			// Create operation.
@@ -176,7 +176,7 @@ public extension Sqlite {
 		}
 		
 		@discardableResult
-		func beginQuery(
+		public func beginQuery(
 			_ query: @escaping QueryClosure,
 			completion: @escaping QueryCompletion) -> Operation {
 			// Create operation.
@@ -193,11 +193,11 @@ public extension Sqlite {
 			return operation
 		}
 		
-		func resetOperationQueue() {
+		public func resetOperationQueue() {
 			_asyncQueryQueue.cancelAllOperations()
 		}
 		
-		func deleteDatabase() {
+		public func deleteDatabase() {
 			closeConnection()
 			
 			// Delete the database file.
@@ -209,7 +209,7 @@ public extension Sqlite {
 		}
 		
 		// Removes all prepared statements.
-		@objc func resetCache() {
+		@objc public func resetCache() {
 			_ = try? self.execute { [weak self] (database, error) in
 				let statementsCopy = self?._preparedStatements.copy() as? [OpaquePointer]
 				
@@ -218,7 +218,7 @@ public extension Sqlite {
 			}
 		}
 
-		func resetDatabase() {
+		public func resetDatabase() {
 			resetCache()
 		
 			// Acquire re-entrant lock.
@@ -235,25 +235,25 @@ public extension Sqlite {
 			openConnection()
 		}
 		
-		func beginTransaction() throws {
+		public func beginTransaction() throws {
 			if (sqlite3_exec(database, "BEGIN TRANSACTION", nil, nil, nil) != SQLITE_OK) {
 				throw Errors.execFailed("Error beginning transaction: \(String(cString: sqlite3_errmsg(database)))")
 			}
 		}
 		
-		func commitTransaction() throws {
+		public func commitTransaction() throws {
 			if (sqlite3_exec(database, "COMMIT TRANSACTION", nil, nil, nil) != SQLITE_OK) {
 				throw Errors.execFailed("Error committing transaction: \(String(cString: sqlite3_errmsg(database)))")
 			}
 		}
 		
-		func rollbackTransaction() throws {
+		public func rollbackTransaction() throws {
 			if (sqlite3_exec(database, "ROLLBACK TRANSACTION", nil, nil, nil) != SQLITE_OK) {
 				throw Errors.execFailed("Error committing transaction: \(String(cString: sqlite3_errmsg(database)))")
 			}
 		}
 		
-		func query<T>(from table: Table<T>, _ query: String, cache: Bool) -> [T] {
+		public func query<T>(from table: Table<T>, _ query: String, cache: Bool) -> [T] {
 			var results: [T]?
 			
 			do {
@@ -293,7 +293,7 @@ public extension Sqlite {
 			return results ?? []
 		}
 		
-		func count(query: String, cache: Bool) -> Int {
+		public func count(query: String, cache: Bool) -> Int {
 			var result: Int?
 			
 			do {
@@ -333,7 +333,7 @@ public extension Sqlite {
 		}
 		
 		@discardableResult
-		func beginQuery<T>(
+		public func beginQuery<T>(
 			from table: Table<T>,
 			query: String,
 			cache: Bool,
@@ -374,7 +374,7 @@ public extension Sqlite {
 			}, completion: completion)
 		}
 		
-		func preparedStatement(query: String, cache: Bool) -> Statement? {
+		public func preparedStatement(query: String, cache: Bool) -> Statement? {
 			guard let database = database else {
 				return nil
 			}
@@ -396,7 +396,7 @@ public extension Sqlite {
 			return statementPointer as? Statement
 		}
 		
-		static func initializeDatabase(name: String, overwrite: Bool) -> Bool {
+		public static func initializeDatabase(name: String, overwrite: Bool) -> Bool {
 			let databaseFile = "\(name).\(SqliteExtension)"
 
 			// Determine database target URL.
