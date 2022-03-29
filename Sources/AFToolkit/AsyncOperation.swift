@@ -163,10 +163,18 @@ class AsyncOperation: Operation {
 		finish()
 	}
 	
+	func finishWork(withError error: Error?) {
+		finishWork(withError: error != nil ? NSError(error?.localizedDescription ?? "") : nil)
+	}
+	
 	func cancelWork(withError error: NSError?) {
 		guard canStartFinishOrCancel else { return }
 		self.error = error
 		cancel()
+	}
+	
+	func cancelWork(withError error: Error?) {
+		cancelWork(withError: error != nil ? NSError(error?.localizedDescription ?? "") : nil)
 	}
 	
 	func finish() {
