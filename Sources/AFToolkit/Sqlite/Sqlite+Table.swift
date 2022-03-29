@@ -73,12 +73,12 @@ public extension Sqlite {
 			return _columnReadIndices[column.name] ?? -1
 		}
 		
-		public func bind(to statement: Statement, column: Column, string: String?, allowNull: Bool = false) {
+		public func bind(to statement: Statement, at column: Column, string: String?, allowNull: Bool = false) {
 			let index = replaceIndex(of: column)
 	
 			// Set the value if present.
 			if (string != nil || allowNull) {
-				statement.bind(column: index, string: string)
+				statement.bind(at: index, string: string)
 				
 				if selfLogEnabled {
 					selfLog(.debug, "Bind column: \(column), value: \(string ?? ""), index: \(index)")
@@ -89,11 +89,11 @@ public extension Sqlite {
 			}
 		}
 		
-		public func bind(to statement: Statement, column: Column, int: Int?, allowNull: Bool = false) {
+		public func bind(to statement: Statement, at column: Column, int: Int?, allowNull: Bool = false) {
 			let index = replaceIndex(of: column)
 			
 			if (int != nil || allowNull) {
-				statement.bind(column: index, int: int)
+				statement.bind(at: index, int: int)
 				
 				if selfLogEnabled {
 					selfLog(.debug, "Bind column: \(column), value: \(int ?? 0), index: \(index)")
