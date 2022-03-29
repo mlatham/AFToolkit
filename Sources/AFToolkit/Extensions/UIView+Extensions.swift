@@ -11,7 +11,7 @@ public extension UIView {
 	
 	func presentViewController(_ controller: UIViewController, animated: Bool = true, completion: (() -> Void)? = nil) {
 		guard let viewController = firstAvailableViewController else {
-			log(.debug, "Couldn't find parent view controller")
+			selfLog(.debug, "Couldn't find parent view controller")
 			return
 		}
 		

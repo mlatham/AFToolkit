@@ -81,12 +81,12 @@ extension Sqlite {
 			// Create database connection.
 			let databasePathNSString = _databaseUrl.path as NSString
 			if (sqlite3_open(databasePathNSString.utf8String, &database) != SQLITE_OK) {
-				log(.error, "Unable to connect to database '\(_databaseName)': \(String(cString: sqlite3_errmsg(database)))")
+				selfLog(.error, "Unable to connect to database '\(_databaseName)': \(String(cString: sqlite3_errmsg(database)))")
 			}
 			
 			// Enable foreign key support.
 			if (sqlite3_exec(database, "PRAGMA foreign_keys = ON", nil, nil, nil) != SQLITE_OK) {
-				log(.error, "Unable to activate database foreign key support: \(String(cString: sqlite3_errmsg(database)))")
+				selfLog(.error, "Unable to activate database foreign key support: \(String(cString: sqlite3_errmsg(database)))")
 			}
 			
 			// Register for notifications.
@@ -204,7 +204,7 @@ extension Sqlite {
 			do {
 				try FileManager.default.removeItem(at: _databaseUrl)
 			} catch {
-				log(.error, "Failed to delete database at '\(_databaseUrl)': \(error)")
+				selfLog(.error, "Failed to delete database at '\(_databaseUrl)': \(error)")
 			}
 		}
 		
@@ -265,7 +265,7 @@ extension Sqlite {
 					
 					guard let statement = self.preparedStatement(query: query, cache: cache)
 						else {
-							log(.debug, "Statement failed: \(query)")
+							selfLog(.debug, "Statement failed: \(query)")
 							return nil
 					}
 					var result = [T]()
@@ -287,7 +287,7 @@ extension Sqlite {
 					return result
 				} as? [T]
 			} catch {
-				log(.error, "Could not execute query: \(query). Error: \(error)")
+				selfLog(.error, "Could not execute query: \(query). Error: \(error)")
 			}
 			
 			return results ?? []
@@ -305,7 +305,7 @@ extension Sqlite {
 					
 					guard let statement = self.preparedStatement(query: query, cache: cache)
 						else {
-							log(.debug, "Statement failed: \(query)")
+							selfLog(.debug, "Statement failed: \(query)")
 							return nil
 					}
 					var count: Int = 0
@@ -326,7 +326,7 @@ extension Sqlite {
 					return count
 				} as? Int
 			} catch {
-				log(.error, "Could not execute count query: \(query). Error: \(error)")
+				selfLog(.error, "Could not execute count query: \(query). Error: \(error)")
 			}
 			
 			return result ?? 0
@@ -352,7 +352,7 @@ extension Sqlite {
 				var result = [T]()
 				guard let statement = strongSelf.preparedStatement(query: query, cache: cache)
 					else {
-						strongSelf.log(.debug, "Statement failed: \(query)")
+						strongSelf.selfLog(.debug, "Statement failed: \(query)")
 						return nil
 				}
 				
@@ -386,8 +386,8 @@ extension Sqlite {
 				
 				// Only cache statements if needed.
 				if cache {
-					if debugLoggingEnabled {
-						log(.debug, "Caching statement:\n\t'\(query)")
+					if selfLogEnabled {
+						selfLog(.debug, "Caching statement:\n\t'\(query)")
 					}
 					_preparedStatements[query] = statementPointer
 				}
@@ -457,7 +457,7 @@ extension Sqlite {
 			
 			if sqlite3_prepare_v2(database, query.utf8String, -1, &statement, nil) != SQLITE_OK {
 				let error = String(cString: sqlite3_errmsg(database))
-				log(.error, "Failed to compile statement:\n\t\(query)\n\tError:\(error)")
+				selfLog(.error, "Failed to compile statement:\n\t\(query)\n\tError:\(error)")
 				// TODO: Throw.
 				assert(false)
 				return nil
@@ -467,14 +467,14 @@ extension Sqlite {
 		}
 		
 		private func _logStats(for query: String, _ startTime: CFAbsoluteTime) {
-			guard debugLoggingEnabled else {
+			guard selfLogEnabled else {
 				return
 			}
 			
 			let queryTime = CFAbsoluteTimeGetCurrent() - startTime
-			log(.debug, "Query took \(queryTime * 1000) ms")
+			selfLog(.debug, "Query took \(queryTime * 1000) ms")
 			if queryTime > 0.2 {
-				log(.debug, "Slow query:\n\t \(query)")
+				selfLog(.debug, "Slow query:\n\t \(query)")
 			}
 		}
 	}

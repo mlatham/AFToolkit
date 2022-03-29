@@ -166,7 +166,7 @@ public class PagedSectionedDataSource<SectionView: BaseSectionView, Cell: BaseCe
 			&& _hasMore
 			&& currentPage > 0
 			&& (_lastLoadPageDate == nil || -(_lastLoadPageDate?.timeIntervalSinceNow ?? 0) > MinTimeBetweenPageLoads) {
-			log(.debug, "Loading next page")
+			selfLog(.debug, "Loading next page")
 			_lastLoadPageDate = Date()
 			loadPageClosure()
 		}

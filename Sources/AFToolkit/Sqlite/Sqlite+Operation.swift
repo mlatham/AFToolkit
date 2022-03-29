@@ -136,7 +136,7 @@ extension Sqlite {
 				_databaseLock.unlock()
 				databaseLockAcquired = false
 			} catch {
-				log(.error, "Database operation error: \(error)")
+				selfLog(.error, "Database operation error: \(error)")
 				
 				// Mark as failed.
 				resultError = error

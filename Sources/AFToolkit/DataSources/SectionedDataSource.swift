@@ -112,7 +112,7 @@ public class SectionedDataSource<SectionView: BaseSectionView, Cell: BaseCell, E
 		
 		sectionView.configure(with: section)
 		
-		log(.debug, "\(SectionView.self) height: \(sectionView.frame.size.height)")
+		selfLog(.debug, "\(SectionView.self) height: \(sectionView.frame.size.height)")
 		
 		return sectionView
 	}
@@ -131,8 +131,8 @@ public class SectionedDataSource<SectionView: BaseSectionView, Cell: BaseCell, E
 		
 		cell.configure(with: item)
 		
-		if debugLoggingEnabled {
-			log(.debug, "\(Cell.self) height: \(cell.frame.size.height)")
+		if selfLogEnabled {
+			selfLog(.debug, "\(Cell.self) height: \(cell.frame.size.height)")
 		}
 
 		return cell

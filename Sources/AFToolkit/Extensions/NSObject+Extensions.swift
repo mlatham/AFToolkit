@@ -1,19 +1,19 @@
 import Foundation
 
 fileprivate struct AssociatedKeys {
-	static var debugLoggingEnabled: UInt8 = 0
+	static var selfLogEnabled: UInt8 = 0
 }
 
 public extension NSObject {
 
 	// MARK: - Properties
 	
-	var debugLoggingEnabled: Bool {
-		get { return objc_getAssociatedObject(self, &AssociatedKeys.debugLoggingEnabled) as? Bool ?? false }
+	var selfLogEnabled: Bool {
+		get { return objc_getAssociatedObject(self, &AssociatedKeys.selfLogEnabled) as? Bool ?? false }
 		set {
 			objc_setAssociatedObject(
 				self,
-				&AssociatedKeys.debugLoggingEnabled,
+				&AssociatedKeys.selfLogEnabled,
 				newValue,
 				objc_AssociationPolicy.OBJC_ASSOCIATION_COPY)
 		}
@@ -22,8 +22,9 @@ public extension NSObject {
 
 	// MARK: - Functions
 
-	func log(_ level: LogLevel, _ messageFormat: @autoclosure @escaping () -> String, _ args: CVarArg...) {
-		if debugLoggingEnabled {
+	// Instance-level log statements.
+	func selfLog(_ level: LogLevel, _ messageFormat: @autoclosure @escaping () -> String, _ args: CVarArg...) {
+		if selfLogEnabled {
 			Logger.defaultLogger.log(level, messageFormat(), args)
 		}
 	}

@@ -106,7 +106,7 @@ public class HttpClient: NSObject {
 		completion: @escaping (AFDataResponse<ModelType>) -> Void) -> DataRequest? {
 		let urlString = url
 		guard let url = URL(string: url) else {
-			log(.error, "URL invalid: \(urlString)")
+			selfLog(.error, "URL invalid: \(urlString)")
 			completion(AFDataResponse(
 				request: nil,
 				response: nil,
@@ -130,7 +130,7 @@ public class HttpClient: NSObject {
 			.validate()
 			.responseDecodable(of: ModelType.self, decoder: decoder) { response in
 				#if DEBUG
-				self.log(.debug, "\(response.prettyDescription())")
+				self.selfLog(.debug, "\(response.prettyDescription())")
 				#endif
 				
 				completion(response)
@@ -148,7 +148,7 @@ public class HttpClient: NSObject {
 		completion: @escaping (AFDataResponse<Any>) -> Void) -> DataRequest? {
 		let urlString = url
 		guard let url = URL(string: url) else {
-			log(.error, "URL invalid: \(urlString)")
+			selfLog(.error, "URL invalid: \(urlString)")
 			completion(AFDataResponse(
 				request: nil,
 				response: nil,
@@ -169,7 +169,7 @@ public class HttpClient: NSObject {
 			.validate()
 			.responseJSON { response in
 				#if DEBUG
-				self.log(.debug, "\(response.prettyDescription())")
+				self.selfLog(.debug, "\(response.prettyDescription())")
 				#endif
 				
 				completion(response)

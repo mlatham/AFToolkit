@@ -103,8 +103,8 @@ class AsyncOperation: Operation {
 		
 		willChangeValue(forKey: #keyPath(AsyncOperation.isExecuting))
 		
-		if self.debugLoggingEnabled {
-			log(.debug, "\(self.description): Starting")
+		if self.selfLogEnabled {
+			selfLog(.debug, "\(self.description): Starting")
 		}
 		_isExecuting = true
 		_startTime = Date()
@@ -132,12 +132,12 @@ class AsyncOperation: Operation {
 		willChangeValue(forKey: #keyPath(AsyncOperation.isExecuting))
 		willChangeValue(forKey: #keyPath(AsyncOperation.isFinished))
 		
-		if debugLoggingEnabled {
+		if selfLogEnabled {
 			var errorString: String = ""
 			if let error = error {
 				errorString = "\n\tERROR: \(error)"
 			}
-			log(error != nil ? .error : .debug, "\(self.description): Cancelled\(errorString)")
+			selfLog(error != nil ? .error : .debug, "\(self.description): Cancelled\(errorString)")
 		}
 		_isCancelled = true
 		_isExecuting = false
@@ -185,12 +185,12 @@ class AsyncOperation: Operation {
 		willChangeValue(forKey: #keyPath(AsyncOperation.isExecuting))
 		willChangeValue(forKey: #keyPath(AsyncOperation.isFinished))
 		
-		if debugLoggingEnabled {
+		if selfLogEnabled {
 			var errorString: String = ""
 			if let error = error {
 				errorString = "\n\tERROR: \(error)"
 			}
-			log(error != nil ? .error : .debug, "\(self.description): Finished\(errorString)")
+			selfLog(error != nil ? .error : .debug, "\(self.description): Finished\(errorString)")
 		}
 		_isExecuting = false
 		_isFinished = true

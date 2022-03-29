@@ -80,12 +80,12 @@ extension Sqlite {
 			if (string != nil || allowNull) {
 				statement.bind(column: index, string: string)
 				
-				if debugLoggingEnabled {
-					log(.debug, "Bind column: \(column), value: \(string ?? ""), index: \(index)")
+				if selfLogEnabled {
+					selfLog(.debug, "Bind column: \(column), value: \(string ?? ""), index: \(index)")
 				}
 			// Otherwise, don't set the value.
-			} else if debugLoggingEnabled {
-				log(.debug, "Skipping null value: \(column), index: \(index)")
+			} else if selfLogEnabled {
+				selfLog(.debug, "Skipping null value: \(column), index: \(index)")
 			}
 		}
 		
@@ -95,12 +95,12 @@ extension Sqlite {
 			if (int != nil || allowNull) {
 				statement.bind(column: index, int: int)
 				
-				if debugLoggingEnabled {
-					log(.debug, "Bind column: \(column), value: \(int ?? 0), index: \(index)")
+				if selfLogEnabled {
+					selfLog(.debug, "Bind column: \(column), value: \(int ?? 0), index: \(index)")
 				}
 			// Otherwise, don't set the value.
-			} else if debugLoggingEnabled {
-				log(.debug, "Skipping null value: \(column), index: \(index)")
+			} else if selfLogEnabled {
+				selfLog(.debug, "Skipping null value: \(column), index: \(index)")
 			}
 		}
 		
@@ -124,7 +124,7 @@ extension Sqlite {
 				// TODO: Maybe a generic delete statement?
 				// Get or create the cached, prepared statement.
 				guard let statement = client.preparedStatement(query: query, cache: cache) else {
-					log(.error, "Failed to get prepared delete statement.")
+					selfLog(.error, "Failed to get prepared delete statement.")
 					// TODO: Throw
 					return
 				}
@@ -132,7 +132,7 @@ extension Sqlite {
 				// TODO: Should this be a single step?
 				if sqlite3_step(statement) != SQLITE_DONE {
 					// TODO: Throw?
-					log(.error, "Error while deleting. \(String(cString: sqlite3_errmsg(database)))")
+					selfLog(.error, "Error while deleting. \(String(cString: sqlite3_errmsg(database)))")
 				}
 				
 				if cache {
@@ -184,7 +184,7 @@ extension Sqlite {
 		private func _write(rows: [T]) {
 			// Get or create the cached, prepared statement.
 			guard let statement = client.preparedStatement(query: replaceStatement, cache: true) else {
-				log(.error, "Failed to get prepared replace statement.")
+				selfLog(.error, "Failed to get prepared replace statement.")
 				// TODO: Throw
 				return
 			}

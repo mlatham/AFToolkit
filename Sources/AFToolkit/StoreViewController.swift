@@ -34,7 +34,7 @@ open class StoreViewController<State: StateType>: UIViewController, StoreSubscri
 	public func setSubscribed(_ subscribed: Bool) {
 		guard isSubscribed != subscribed else { return }
 		guard let store = store else {
-			log(.debug, "Calling setSubscribed without a store.")
+			selfLog(.debug, "Calling setSubscribed without a store.")
 			return
 		}
 		

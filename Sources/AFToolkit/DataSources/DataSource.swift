@@ -106,7 +106,7 @@ public class DataSource<Cell: BaseCell, EmptyCell: BaseCell>: NSObject, TableVie
 		let cell = dequeueCellClosure(tableView, item)
 		cell.configure(with: item)
 
-		log(.debug, "\(Cell.self) height: \(cell.frame.size.height)")
+		selfLog(.debug, "\(Cell.self) height: \(cell.frame.size.height)")
 
 		return cell
 	}
