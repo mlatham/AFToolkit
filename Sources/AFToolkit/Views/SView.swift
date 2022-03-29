@@ -1,6 +1,7 @@
 import SwiftUI
 
 /// Generic swift view wrapper.
+@available(iOS 13.0, *)
 public struct SView<View: UIView>: UIViewRepresentable {
 	public let configuration: (View) -> Void
 	
