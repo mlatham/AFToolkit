@@ -12,11 +12,12 @@ public class Sqlite {
 	public typealias StatementClosure = (Database?, inout Error?) -> Void
 	public typealias StatementCompletion = (Error?) -> Void
 	
-	public enum DataType: String {
-		case integer = "INTEGER"
+	public enum TypeAffinity: String {
 		case text = "TEXT"
-		case real = "REAL"
 		case numeric = "NUMERIC"
+		case integer = "INTEGER"
+		case real = "REAL"
+		case blob = "BLOB"
 	}
 	
 	public enum Keyword: String {
