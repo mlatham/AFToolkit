@@ -1,7 +1,7 @@
 import Foundation
 import SQLite3
 
-extension Sqlite.Statement {
+public extension Sqlite.Statement {
 	func isNull(_ column: Int) -> Bool {
 		return sqlite3_column_type(self, Int32(column)) == SQLITE_NULL
 	}

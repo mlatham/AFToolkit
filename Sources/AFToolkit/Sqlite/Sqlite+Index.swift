@@ -1,21 +1,21 @@
 import Foundation
 
-extension Sqlite {
+public extension Sqlite {
 	struct Index: CustomStringConvertible {
-		let columns: [Column]
-		let name: String
+		public let columns: [Column]
+		public let name: String
 		// Unique keyword?
 		
-		var description: String {
+		public var description: String {
 			return name
 		}
 		
-		func createSql(tableName: String) -> String {
+		public func createSql(tableName: String) -> String {
 			let indexedColumns = columns.map { $0.name }.joined(separator: ", ")
 			return "CREATE INDEX IF NOT EXISTS \(name) ON \(tableName)(\(indexedColumns));"
 		}
 		
-		init(name: String, columns: [Column]) {
+		public init(name: String, columns: [Column]) {
 			self.name = name
 			self.columns = columns
 		}

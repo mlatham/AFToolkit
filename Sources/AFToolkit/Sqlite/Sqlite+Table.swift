@@ -1,26 +1,26 @@
 import Foundation
 import SQLite3
 
-extension Sqlite {
+public extension Sqlite {
 	class Table<T>: NSObject {
 	
 		// MARK: - Properties
 		
-		let client: Client
+		public let client: Client
 		
-		let name: String
-		let primaryKeys: [Column]
-		let columns: [Column]
-		let indices: [Index]
+		public let name: String
+		public let primaryKeys: [Column]
+		public let columns: [Column]
+		public let indices: [Index]
 		
 		// Table create statement.
-		let tableCreateStatement: String
+		public let tableCreateStatement: String
 		
 		// Replace statement which sets all columns.
-		let replaceStatement: String
+		public let replaceStatement: String
 		
 		// All columns on this table, in the order that they're expected for readRow.
-		let allColumnsString: String
+		public let allColumnsString: String
 		
 		// Caches indices for column name lookup.
 		private var _columnReadIndices: [String: Int] = [:]
@@ -29,7 +29,7 @@ extension Sqlite {
 		
 		// MARK: - Inits
 		
-		init(client: Client, name: String, primaryKeys: [Column], columns: [Column], indices: [Index]) {
+		public init(client: Client, name: String, primaryKeys: [Column], columns: [Column], indices: [Index]) {
 			self.client = client
 			self.name = name
 			self.primaryKeys = primaryKeys
@@ -65,15 +65,15 @@ extension Sqlite {
 		
 		// MARK: - Functions
 		
-		func replaceIndex(of column: Column) -> Int {
+		public func replaceIndex(of column: Column) -> Int {
 			return _columnReplaceIndices[column.name] ?? -1
 		}
 		
-		func readIndex(of column: Column) -> Int {
+		public func readIndex(of column: Column) -> Int {
 			return _columnReadIndices[column.name] ?? -1
 		}
 		
-		func bind(to statement: Statement, column: Column, string: String?, allowNull: Bool = false) {
+		public func bind(to statement: Statement, column: Column, string: String?, allowNull: Bool = false) {
 			let index = replaceIndex(of: column)
 	
 			// Set the value if present.
@@ -89,7 +89,7 @@ extension Sqlite {
 			}
 		}
 		
-		func bind(to statement: Statement, column: Column, int: Int?, allowNull: Bool = false) {
+		public func bind(to statement: Statement, column: Column, int: Int?, allowNull: Bool = false) {
 			let index = replaceIndex(of: column)
 			
 			if (int != nil || allowNull) {
@@ -105,7 +105,7 @@ extension Sqlite {
 		}
 		
 		// TODO: Is this necessary?
-		func count(where whereStatement: String?, cache: Bool) throws -> Int {
+		public func count(where whereStatement: String?, cache: Bool) throws -> Int {
 			var query = "SELECT COUNT(*) FROM \(name)"
 			if let whereStatement = whereStatement {
 				query.append(" WHERE \(whereStatement)")
@@ -114,7 +114,7 @@ extension Sqlite {
 			return client.count(query: query, cache: cache)
 		}
 		
-		func delete(where whereStatement: String?, cache: Bool) throws {
+		public func delete(where whereStatement: String?, cache: Bool) throws {
 			try client.execute { database, error in
 				var query = "DELETE FROM \(name)"
 				if let whereStatement = whereStatement {
@@ -145,37 +145,37 @@ extension Sqlite {
 			}
 		}
 		
-		func replace(row: T, preparedReplaceStatement: Statement) {
+		public func replace(row: T, preparedReplaceStatement: Statement) {
 			// Abstract.
 			fatalError(NotImplementedError)
 		}
 		
-		func readRow(_ statement: Statement) -> T? {
+		public func readRow(_ statement: Statement) -> T? {
 			// Abstract.
 			fatalError(NotImplementedError)
 		}
 		
-		func write(rows: [T], completion: @escaping StatementCompletion) {
+		public func write(rows: [T], completion: @escaping StatementCompletion) {
 			client.beginExecute(statement: { [weak self] database, error in
 				self?._write(rows: rows)
 			},
 			completion: completion)
 		}
 		
-		func write(rows: [T]) throws {
+		public func write(rows: [T]) throws {
 			try client.execute { [weak self] database, error in
 				self?._write(rows: rows)
 			}
 		}
 		
-		func write(row: T, completion: @escaping StatementCompletion) {
+		public func write(row: T, completion: @escaping StatementCompletion) {
 			client.beginExecute(statement: { [weak self] database, error in
 				self?._write(rows: [row])
 			},
 			completion: completion)
 		}
 		
-		func write(row: T) throws {
+		public func write(row: T) throws {
 			try client.execute { [weak self] database, error in
 				self?._write(rows: [row])
 			}

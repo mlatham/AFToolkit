@@ -1,16 +1,16 @@
 import Foundation
 
-extension Sqlite {
+public extension Sqlite {
 	class Column: CustomStringConvertible {
-		let name: String
-		let type: DataType
-		let options: [Keyword]
+		public let name: String
+		public let type: DataType
+		public let options: [Keyword]
 		
-		var description: String {
+		public var description: String {
 			return name
 		}
 		
-		init(name: String, type: DataType, options: [Keyword] = []) {
+		public init(name: String, type: DataType, options: [Keyword] = []) {
 			self.name = name
 			self.type = type
 			self.options = options

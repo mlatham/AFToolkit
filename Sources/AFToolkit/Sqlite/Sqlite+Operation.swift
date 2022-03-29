@@ -1,12 +1,12 @@
 import SQLite3
 import UIKit
 
-extension Sqlite {
+public extension Sqlite {
 	class Operation: AsyncOperation {
 
 		// MARK: - Enums
 		
-		enum Errors: Error {
+		public enum Errors: Error {
 			case databaseUnavailable
 			case cancelled
 			case unknown
@@ -27,7 +27,7 @@ extension Sqlite {
 
 		// MARK: - Inits
 		
-		init(
+		public init(
 			client: Client,
 			lock: NSRecursiveLock,
 			query: @escaping QueryClosure,
@@ -41,7 +41,7 @@ extension Sqlite {
 			super.init()
 		}
 		
-		init(
+		public init(
 			client: Client,
 			lock: NSRecursiveLock,
 			statement: @escaping StatementClosure,
@@ -58,7 +58,7 @@ extension Sqlite {
 		
 		// MARK: - Functions
 		
-		override func beginWork() {
+		public override func beginWork() {
 			var databaseLockAcquired = false
 			var databaseRollbackRequired = false
 			

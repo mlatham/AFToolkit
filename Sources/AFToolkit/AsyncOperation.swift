@@ -2,11 +2,11 @@ import UIKit
 
 
 /// An operation that is concurrent - its task runs asynchronously, not on the operation queue's thread.
-class AsyncOperation: Operation {
+public class AsyncOperation: Operation {
 	
 	// MARK: - Properties
 	
-	static let NeverTimeout: TimeInterval = -1
+	public static let NeverTimeout: TimeInterval = -1
 	
 	private var _backgroundTask = UIBackgroundTaskIdentifier.invalid
 	
@@ -23,17 +23,17 @@ class AsyncOperation: Operation {
 	/// If an operation is not yet cancelled or finished, it's valid for calls to start(), finish() or cancel().
 	/// Subclasses may use this property to determine whether or not to perform additional logic in finishWork() or
 	/// cancelWork(), prior to calling the base implementation.
-	var canStartFinishOrCancel: Bool {
+	public var canStartFinishOrCancel: Bool {
 		return !isCancelled && !isFinished
 	}
 	
-	let timeout: TimeInterval
+	public let timeout: TimeInterval
 	
 	/// Error when the async operation finishes.
-	var error: NSError?
+	public var error: NSError?
 	
 	/// Once an operation completes, returns the duration of time it took to execute.
-	var executionDuration: TimeInterval? {
+	public var executionDuration: TimeInterval? {
 		guard let startTime = _startTime, let finishTime = _finishTime else {
 			return nil
 		}
@@ -41,31 +41,31 @@ class AsyncOperation: Operation {
 	}
 	
 	/// Returns the duration of time from creation to finish, or the duration of time from creation to now, if running.
-	var totalDuration: TimeInterval? {
+	public var totalDuration: TimeInterval? {
 		guard let finishTime = _finishTime else {
 			return Date().timeIntervalSince(_createTime)
 		}
 		return finishTime.timeIntervalSince(_createTime)
 	}
 	
-	override var isAsynchronous: Bool {
+	public override var isAsynchronous: Bool {
 		return true
 	}
 	
-	override var isConcurrent: Bool {
+	public override var isConcurrent: Bool {
 		return false
 	}
 	
 	// These properties are overridden to control their KVO notifications. See NOTE: in finish(). It may be
 	// possible to get away from this technique, but it has worked well for years, so keep it unless you know
 	// what you're doing.
-	override var isExecuting: Bool {
+	public override var isExecuting: Bool {
 		return _isExecuting
 	}
-	override var isFinished: Bool {
+	public override var isFinished: Bool {
 		return _isFinished
 	}
-	override var isCancelled: Bool {
+	public override var isCancelled: Bool {
 		return _isCancelled
 	}
 	
@@ -73,7 +73,7 @@ class AsyncOperation: Operation {
 	// MARK: - Inits
 	
 	/// Initializes an async operation that doesn't use a runloop, and has no timeout.
-	override init() {
+	public override init() {
 		_timeoutError = ""
 		timeout = AsyncOperation.NeverTimeout
 		_createTime = Date()
@@ -84,7 +84,7 @@ class AsyncOperation: Operation {
 	}
 	
 	/// Initializes an async operation that uses a runloop, and has a timeout.
-	init(timeout: TimeInterval, timeoutError: String = "Operation timed out") {
+	public init(timeout: TimeInterval, timeoutError: String = "Operation timed out") {
 		_timeoutError = timeoutError
 		self.timeout = timeout
 		_createTime = Date()
@@ -98,7 +98,7 @@ class AsyncOperation: Operation {
 	// MARK: - Functions
 	
 	/// Never call super in start, because this is an asynchronous operation providing its own functionality there.
-	override func start() {
+	public override func start() {
 		guard canStartFinishOrCancel else { return }
 		
 		willChangeValue(forKey: #keyPath(AsyncOperation.isExecuting))
@@ -123,7 +123,7 @@ class AsyncOperation: Operation {
 		beginWork()
 	}
 	
-	override func cancel() {
+	public override func cancel() {
 		guard canStartFinishOrCancel else { return }
 	
 		super.cancel()
@@ -151,33 +151,33 @@ class AsyncOperation: Operation {
 		_endBackgroundTask()
 	}
 	
-	func beginWork() {
+	public func beginWork() {
 		// Kick off work that happens on a background thread, then call finishWork.
 		// This is a default implementation meant to be overridden - it just ends immediately.
 		finish()
 	}
 	
-	func finishWork(withError error: NSError?) {
+	public func finishWork(withError error: NSError?) {
 		guard canStartFinishOrCancel else { return }
 		self.error = error
 		finish()
 	}
 	
-	func finishWork(withError error: Error?) {
+	public func finishWork(withError error: Error?) {
 		finishWork(withError: error != nil ? NSError(error?.localizedDescription ?? "") : nil)
 	}
 	
-	func cancelWork(withError error: NSError?) {
+	public func cancelWork(withError error: NSError?) {
 		guard canStartFinishOrCancel else { return }
 		self.error = error
 		cancel()
 	}
 	
-	func cancelWork(withError error: Error?) {
+	public func cancelWork(withError error: Error?) {
 		cancelWork(withError: error != nil ? NSError(error?.localizedDescription ?? "") : nil)
 	}
 	
-	func finish() {
+	public func finish() {
 		guard canStartFinishOrCancel else { return }
 	
 		// Generates the KVO necessary for the queue to remove this operation. NOTE: This is necessary for the KVO to be

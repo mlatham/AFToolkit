@@ -1,25 +1,25 @@
 import Foundation
 
-class Sqlite {
-	typealias ErrorPointer = AutoreleasingUnsafeMutablePointer<NSError?>
-	typealias Statement = OpaquePointer
-	typealias Database = OpaquePointer
+public class Sqlite {
+	public typealias ErrorPointer = AutoreleasingUnsafeMutablePointer<NSError?>
+	public typealias Statement = OpaquePointer
+	public typealias Database = OpaquePointer
 
-	typealias QueryClosure = (Database?, inout Error?) -> Any?
-	typealias QueryCompletion = (Any?, Error?) -> Void
-	typealias CountCompletion = (Int32, Error?) -> Void
+	public typealias QueryClosure = (Database?, inout Error?) -> Any?
+	public typealias QueryCompletion = (Any?, Error?) -> Void
+	public typealias CountCompletion = (Int32, Error?) -> Void
+
+	public typealias StatementClosure = (Database?, inout Error?) -> Void
+	public typealias StatementCompletion = (Error?) -> Void
 	
-	typealias StatementClosure = (Database?, inout Error?) -> Void
-	typealias StatementCompletion = (Error?) -> Void
-	
-	enum DataType: String {
+	public enum DataType: String {
 		case integer = "INTEGER"
 		case text = "TEXT"
 		case real = "REAL"
 		case numeric = "NUMERIC"
 	}
 	
-	enum Keyword: String {
+	public enum Keyword: String {
 		case primaryKey = "PRIMARY KEY"
 		case autoincrement = "AUTOINCREMEMT"
 		case notNull = "NOT NULL"
