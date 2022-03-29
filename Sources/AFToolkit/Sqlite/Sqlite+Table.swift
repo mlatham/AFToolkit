@@ -99,12 +99,20 @@ extension Sqlite {
 			statement.bindInt(at: replaceIndex(of: column), number: number)
 		}
 		
+		public func bindInt(_ statement: ReplaceStatement, at column: Column, bool: Bool?) {
+			statement.bindInt(at: replaceIndex(of: column), bool: bool)
+		}
+		
 		public func int(_ statement: CursorStatement, at column: Column) -> Int? {
 			return statement.int(at: readIndex(of: column))
 		}
 		
 		public func intNumber(_ statement: CursorStatement, at column: Column) -> NSNumber? {
 			return statement.intNumber(at: readIndex(of: column))
+		}
+		
+		public func intBool(_ statement: CursorStatement, at column: Column) -> Bool? {
+			return statement.intBool(at: readIndex(of: column))
 		}
 		
 		public func bind(_ statement: ReplaceStatement, at column: Column, double: Double?) {
@@ -220,6 +228,11 @@ extension Sqlite {
 			
 			for row in rows {
 				replace(row: row, preparedReplaceStatement: statement)
+				
+				if sqlite3_step(statement) != SQLITE_DONE {
+					let errorMessage = String(cString: sqlite3_errmsg(client.database))
+					log(.error, "Error replacing row: \(errorMessage)")
+				}
 				
 				// Reset the statement.
 				sqlite3_reset(statement)

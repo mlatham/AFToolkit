@@ -59,6 +59,14 @@ public extension Sqlite.Statement {
 		}
 	}
 	
+	func bindInt(at columnIndex: Int, bool: Bool?) {
+		if let bool = bool {
+			sqlite3_bind_int(self, Int32(columnIndex), bool ? 1 : 0)
+		} else {
+			sqlite3_bind_null(self, Int32(columnIndex))
+		}
+	}
+	
 	func int(at columnIndex: Int) -> Int? {
 		if isNull(at: columnIndex) {
 			return nil
@@ -72,6 +80,14 @@ public extension Sqlite.Statement {
 			return nil
 		} else {
 			return NSNumber(value: sqlite3_column_int(self, Int32(columnIndex)))
+		}
+	}
+	
+	func intBool(at columnIndex: Int) -> Bool? {
+		if isNull(at: columnIndex) {
+			return nil
+		} else {
+			return sqlite3_column_int(self, Int32(columnIndex)) != 0
 		}
 	}
 	
