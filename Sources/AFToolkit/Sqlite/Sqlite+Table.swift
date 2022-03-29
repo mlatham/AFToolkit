@@ -122,15 +122,15 @@ extension Sqlite {
 			statement.bindTimeIntervalSinceReferenceDouble(at: replaceIndex(of: column), from: date)
 		}
 		
-		func double(_ statement: CursorStatement, at column: Column) -> Double? {
+		public func double(_ statement: CursorStatement, at column: Column) -> Double? {
 			return statement.double(at: readIndex(of: column))
 		}
 		
-		func doubleNumber(_ statement: CursorStatement, at column: Column) -> NSNumber? {
+		public func doubleNumber(_ statement: CursorStatement, at column: Column) -> NSNumber? {
 			return statement.doubleNumber(at: readIndex(of: column))
 		}
 		
-		func timeIntervalSinceReferenceDate(_ statement: CursorStatement, at column: Column) -> Date? {
+		public func timeIntervalSinceReferenceDate(_ statement: CursorStatement, at column: Column) -> Date? {
 			return statement.timeIntervalSinceReferenceDate(at: readIndex(of: column))
 		}
 		
