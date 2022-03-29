@@ -29,7 +29,7 @@ extension Sqlite {
 		
 		// MARK: - Inits
 		
-		init(client: Client, name: String, primaryKeys: [Column], columns: [Column], indices: [Index]) {
+		public init(client: Client, name: String, primaryKeys: [Column], columns: [Column], indices: [Index]) {
 			self.client = client
 			self.name = name
 			self.primaryKeys = primaryKeys
