@@ -2,8 +2,8 @@ import SQLite3
 import Foundation
 import UIKit
 
-public extension Sqlite {
-	class Client: NSObject {
+extension Sqlite {
+	public class Client: NSObject {
 	
 		// MARK: - Constants
 		

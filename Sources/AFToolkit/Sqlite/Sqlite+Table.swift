@@ -1,8 +1,8 @@
 import Foundation
 import SQLite3
 
-public extension Sqlite {
-	class Table<T>: NSObject {
+extension Sqlite {
+	open class Table<T>: NSObject {
 	
 		// MARK: - Properties
 		
@@ -29,7 +29,7 @@ public extension Sqlite {
 		
 		// MARK: - Inits
 		
-		public init(client: Client, name: String, primaryKeys: [Column], columns: [Column], indices: [Index]) {
+		init(client: Client, name: String, primaryKeys: [Column], columns: [Column], indices: [Index]) {
 			self.client = client
 			self.name = name
 			self.primaryKeys = primaryKeys
@@ -145,12 +145,12 @@ public extension Sqlite {
 			}
 		}
 		
-		public func replace(row: T, preparedReplaceStatement: Statement) {
+		open func replace(row: T, preparedReplaceStatement: Statement) {
 			// Abstract.
 			fatalError(NotImplementedError)
 		}
 		
-		public func readRow(_ statement: Statement) -> T? {
+		open func readRow(_ statement: Statement) -> T? {
 			// Abstract.
 			fatalError(NotImplementedError)
 		}

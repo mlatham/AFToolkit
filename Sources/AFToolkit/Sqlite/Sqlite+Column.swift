@@ -1,7 +1,7 @@
 import Foundation
 
-public extension Sqlite {
-	class Column: CustomStringConvertible {
+extension Sqlite {
+	public class Column: CustomStringConvertible {
 		public let name: String
 		public let type: TypeAffinity
 		public let options: [Keyword]

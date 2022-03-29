@@ -1,7 +1,7 @@
 import Foundation
 
-public extension Sqlite {
-	struct Index: CustomStringConvertible {
+extension Sqlite {
+	public struct Index: CustomStringConvertible {
 		public let columns: [Column]
 		public let name: String
 		// Unique keyword?

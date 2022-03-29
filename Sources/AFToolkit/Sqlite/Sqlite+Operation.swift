@@ -1,8 +1,8 @@
 import SQLite3
 import UIKit
 
-public extension Sqlite {
-	class Operation: AsyncOperation {
+extension Sqlite {
+	public class Operation: AsyncOperation {
 
 		// MARK: - Enums
 		

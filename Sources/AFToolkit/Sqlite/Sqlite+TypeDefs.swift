@@ -1,6 +1,6 @@
 import Foundation
 
-public class Sqlite {
+open class Sqlite {
 	public typealias ErrorPointer = AutoreleasingUnsafeMutablePointer<NSError?>
 	public typealias Statement = OpaquePointer
 	public typealias Database = OpaquePointer
