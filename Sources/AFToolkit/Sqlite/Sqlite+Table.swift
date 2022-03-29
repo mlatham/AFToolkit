@@ -73,35 +73,65 @@ extension Sqlite {
 			return _columnReadIndices[column.name] ?? -1
 		}
 		
-		public func bind(to statement: Statement, at column: Column, string: String?, allowNull: Bool = false) {
-			let index = replaceIndex(of: column)
-	
-			// Set the value if present.
-			if (string != nil || allowNull) {
-				statement.bind(at: index, string: string)
-				
-				if selfLogEnabled {
-					selfLog(.debug, "Bind column: \(column), value: \(string ?? ""), index: \(index)")
-				}
-			// Otherwise, don't set the value.
-			} else if selfLogEnabled {
-				selfLog(.debug, "Skipping null value: \(column), index: \(index)")
-			}
+		
+		// TODO: Type this as ReplaceStatement
+		public func bind(_ statement: ReplaceStatement, at column: Column, string: String?) {
+			statement.bind(at: replaceIndex(of: column), string: string)
 		}
 		
-		public func bind(to statement: Statement, at column: Column, int: Int?, allowNull: Bool = false) {
-			let index = replaceIndex(of: column)
-			
-			if (int != nil || allowNull) {
-				statement.bind(at: index, int: int)
-				
-				if selfLogEnabled {
-					selfLog(.debug, "Bind column: \(column), value: \(int ?? 0), index: \(index)")
-				}
-			// Otherwise, don't set the value.
-			} else if selfLogEnabled {
-				selfLog(.debug, "Skipping null value: \(column), index: \(index)")
-			}
+		public func bindIso8601String(_ statement: ReplaceStatement, at column: Column, from date: Date?) {
+			statement.bindIso8601String(at: replaceIndex(of: column), from: date)
+		}
+		
+		public func string(_ statement: CursorStatement, at column: Column) -> String? {
+			return statement.string(at: readIndex(of: column))
+		}
+		
+		public func iso8601StringDate(_ statement: CursorStatement, at column: Column) -> Date? {
+			return statement.iso8601StringDate(at: readIndex(of: column))
+		}
+		
+		public func bind(_ statement: ReplaceStatement, at column: Column, int: Int?) {
+			statement.bind(at: replaceIndex(of: column), int: int)
+		}
+		
+		public func bindInt(_ statement: ReplaceStatement, at column: Column, number: NSNumber?) {
+			statement.bindInt(at: replaceIndex(of: column), number: number)
+		}
+		
+		public func int(_ statement: CursorStatement, at column: Column) -> Int? {
+			return statement.int(at: readIndex(of: column))
+		}
+		
+		public func intNumber(_ statement: CursorStatement, at column: Column) -> NSNumber? {
+			return statement.intNumber(at: readIndex(of: column))
+		}
+		
+		public func bind(_ statement: ReplaceStatement, at column: Column, double: Double?) {
+			statement.bind(at: replaceIndex(of: column), double: double)
+		}
+		
+		public func bindDouble(_ statement: ReplaceStatement, at column: Column, number: NSNumber?) {
+			statement.bindDouble(at: replaceIndex(of: column), number: number)
+		}
+		
+		public func bindTimeIntervalSinceReferenceDouble(
+			_ statement: ReplaceStatement,
+			at column: Column,
+			from date: Date?) {
+			statement.bindTimeIntervalSinceReferenceDouble(at: replaceIndex(of: column), from: date)
+		}
+		
+		func double(_ statement: CursorStatement, at column: Column) -> Double? {
+			return statement.double(at: readIndex(of: column))
+		}
+		
+		func doubleNumber(_ statement: CursorStatement, at column: Column) -> NSNumber? {
+			return statement.doubleNumber(at: readIndex(of: column))
+		}
+		
+		func timeIntervalSinceReferenceDate(_ statement: CursorStatement, at column: Column) -> Date? {
+			return statement.timeIntervalSinceReferenceDate(at: readIndex(of: column))
 		}
 		
 		// TODO: Is this necessary?
@@ -129,9 +159,8 @@ extension Sqlite {
 					return
 				}
 				
-				// TODO: Should this be a single step?
 				if sqlite3_step(statement) != SQLITE_DONE {
-					// TODO: Throw?
+					// TODO: Throw
 					selfLog(.error, "Error while deleting. \(String(cString: sqlite3_errmsg(database)))")
 				}
 				
@@ -145,12 +174,12 @@ extension Sqlite {
 			}
 		}
 		
-		open func replace(row: T, preparedReplaceStatement: Statement) {
+		open func replace(row: T, preparedReplaceStatement: ReplaceStatement) {
 			// Abstract.
 			fatalError(NotImplementedError)
 		}
 		
-		open func readRow(_ statement: Statement) -> T? {
+		open func readRow(_ cursor: CursorStatement) -> T? {
 			// Abstract.
 			fatalError(NotImplementedError)
 		}
