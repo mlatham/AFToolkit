@@ -1,7 +1,7 @@
 import Foundation
 
 extension Sqlite {
-	public class Column: CustomStringConvertible {
+	public class Column<ColumnType>: CustomStringConvertible, SqliteColumnProtocol {
 		public let name: String
 		public let type: TypeAffinity
 		public let options: [Keyword]
@@ -19,7 +19,7 @@ extension Sqlite {
 			self.options = options
 		}
 		
-		public convenience init<ColumnType>(name: String, type: ColumnType.Type, options: [Keyword] = []) {
+		public convenience init(name: String, type: ColumnType.Type, options: [Keyword] = []) {
 			let typeAffinity: TypeAffinity
 			
 			switch type {

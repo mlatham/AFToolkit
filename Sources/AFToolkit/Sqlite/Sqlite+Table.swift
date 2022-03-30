@@ -9,8 +9,8 @@ extension Sqlite {
 		public let client: Client
 		
 		public let name: String
-		public let primaryKeys: [Column]
-		public let columns: [Column]
+		public let primaryKeys: [SqliteColumnProtocol]
+		public let columns: [SqliteColumnProtocol]
 		public let indices: [Index]
 		
 		// Table create statement.
@@ -29,7 +29,7 @@ extension Sqlite {
 		
 		// MARK: - Inits
 		
-		public init(client: Client, name: String, primaryKeys: [Column], columns: [Column], indices: [Index]) {
+		public init(client: Client, name: String, primaryKeys: [SqliteColumnProtocol], columns: [SqliteColumnProtocol], indices: [Index]) {
 			self.client = client
 			self.name = name
 			self.primaryKeys = primaryKeys
@@ -65,6 +65,7 @@ extension Sqlite {
 			
 			// Associate each column with this as its owning table.
 			for column in columns {
+				var column = column
 				column.table = self
 			}
 		}
@@ -72,80 +73,80 @@ extension Sqlite {
 		
 		// MARK: - Functions
 		
-		public func replaceIndex(of column: Column) -> Int {
+		public func replaceIndex(of column: SqliteColumnProtocol) -> Int {
 			return _columnReplaceIndices[column.name] ?? -1
 		}
 		
-		public func readIndex(of column: Column) -> Int {
+		public func readIndex(of column: SqliteColumnProtocol) -> Int {
 			return _columnReadIndices[column.name] ?? -1
 		}
 		
 		
 		// TODO: Type this as ReplaceStatement
-		public func bind(_ statement: ReplaceStatement, at column: Column, string: String?) {
+		public func bind(_ statement: ReplaceStatement, at column: SqliteColumnProtocol, string: String?) {
 			statement.bind(at: replaceIndex(of: column), string: string)
 		}
 		
-		public func bindIso8601String(_ statement: ReplaceStatement, at column: Column, from date: Date?) {
+		public func bindIso8601String(_ statement: ReplaceStatement, at column: SqliteColumnProtocol, from date: Date?) {
 			statement.bindIso8601String(at: replaceIndex(of: column), from: date)
 		}
 		
-		public func string(_ statement: CursorStatement, at column: Column) -> String? {
+		public func string(_ statement: CursorStatement, at column: SqliteColumnProtocol) -> String? {
 			return statement.string(at: readIndex(of: column))
 		}
 		
-		public func iso8601StringDate(_ statement: CursorStatement, at column: Column) -> Date? {
+		public func iso8601StringDate(_ statement: CursorStatement, at column: SqliteColumnProtocol) -> Date? {
 			return statement.iso8601StringDate(at: readIndex(of: column))
 		}
 		
-		public func bind(_ statement: ReplaceStatement, at column: Column, int: Int?) {
+		public func bind(_ statement: ReplaceStatement, at column: SqliteColumnProtocol, int: Int?) {
 			statement.bind(at: replaceIndex(of: column), int: int)
 		}
 		
-		public func bindInt(_ statement: ReplaceStatement, at column: Column, number: NSNumber?) {
+		public func bindInt(_ statement: ReplaceStatement, at column: SqliteColumnProtocol, number: NSNumber?) {
 			statement.bindInt(at: replaceIndex(of: column), number: number)
 		}
 		
-		public func bindInt(_ statement: ReplaceStatement, at column: Column, bool: Bool?) {
+		public func bindInt(_ statement: ReplaceStatement, at column: SqliteColumnProtocol, bool: Bool?) {
 			statement.bindInt(at: replaceIndex(of: column), bool: bool)
 		}
 		
-		public func int(_ statement: CursorStatement, at column: Column) -> Int? {
+		public func int(_ statement: CursorStatement, at column: SqliteColumnProtocol) -> Int? {
 			return statement.int(at: readIndex(of: column))
 		}
 		
-		public func intNumber(_ statement: CursorStatement, at column: Column) -> NSNumber? {
+		public func intNumber(_ statement: CursorStatement, at column: SqliteColumnProtocol) -> NSNumber? {
 			return statement.intNumber(at: readIndex(of: column))
 		}
 		
-		public func intBool(_ statement: CursorStatement, at column: Column) -> Bool? {
+		public func intBool(_ statement: CursorStatement, at column: SqliteColumnProtocol) -> Bool? {
 			return statement.intBool(at: readIndex(of: column))
 		}
 		
-		public func bind(_ statement: ReplaceStatement, at column: Column, double: Double?) {
+		public func bind(_ statement: ReplaceStatement, at column: SqliteColumnProtocol, double: Double?) {
 			statement.bind(at: replaceIndex(of: column), double: double)
 		}
 		
-		public func bindDouble(_ statement: ReplaceStatement, at column: Column, number: NSNumber?) {
+		public func bindDouble(_ statement: ReplaceStatement, at column: SqliteColumnProtocol, number: NSNumber?) {
 			statement.bindDouble(at: replaceIndex(of: column), number: number)
 		}
 		
 		public func bindTimeIntervalSinceReferenceDouble(
 			_ statement: ReplaceStatement,
-			at column: Column,
+			at column: SqliteColumnProtocol,
 			from date: Date?) {
 			statement.bindTimeIntervalSinceReferenceDouble(at: replaceIndex(of: column), from: date)
 		}
 		
-		public func double(_ statement: CursorStatement, at column: Column) -> Double? {
+		public func double(_ statement: CursorStatement, at column: SqliteColumnProtocol) -> Double? {
 			return statement.double(at: readIndex(of: column))
 		}
 		
-		public func doubleNumber(_ statement: CursorStatement, at column: Column) -> NSNumber? {
+		public func doubleNumber(_ statement: CursorStatement, at column: SqliteColumnProtocol) -> NSNumber? {
 			return statement.doubleNumber(at: readIndex(of: column))
 		}
 		
-		public func timeIntervalSinceReferenceDate(_ statement: CursorStatement, at column: Column) -> Date? {
+		public func timeIntervalSinceReferenceDate(_ statement: CursorStatement, at column: SqliteColumnProtocol) -> Date? {
 			return statement.timeIntervalSinceReferenceDate(at: readIndex(of: column))
 		}
 		

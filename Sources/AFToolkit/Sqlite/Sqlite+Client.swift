@@ -42,8 +42,8 @@ extension Sqlite {
 				return nil
 			}
 			
-			databaseUrl = databaseUrl
-			databaseName = databaseName
+			self.databaseUrl = databaseUrl
+			self.databaseName = databaseName
 			_asyncQueryQueue.maxConcurrentOperationCount = 1
 			
 			// Initialize the database, if it doesn't already exist.

@@ -2,7 +2,7 @@ import Foundation
 
 extension Sqlite {
 	public struct Index: CustomStringConvertible {
-		public let columns: [Column]
+		public let columns: [SqliteColumnProtocol]
 		public let name: String
 		// Unique keyword?
 		
@@ -15,7 +15,7 @@ extension Sqlite {
 			return "CREATE INDEX IF NOT EXISTS \(name) ON \(tableName)(\(indexedColumns));"
 		}
 		
-		public init(name: String, columns: [Column]) {
+		public init(name: String, columns: [SqliteColumnProtocol]) {
 			self.name = name
 			self.columns = columns
 		}
