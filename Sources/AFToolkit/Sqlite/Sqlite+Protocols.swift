@@ -7,7 +7,7 @@ public protocol SqliteTableProtocol {
 
 public protocol SqliteColumnProtocol {
 	var name: String { get }
-	var type: Sqlite.TypeAffinity { get }
+	var affinity: Sqlite.TypeAffinity { get }
 	var options: [Sqlite.Keyword] { get }
 	var table: SqliteTableProtocol? { get set }
 }

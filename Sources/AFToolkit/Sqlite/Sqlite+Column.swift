@@ -3,8 +3,9 @@ import Foundation
 extension Sqlite {
 	public class Column<ColumnType>: CustomStringConvertible, SqliteColumnProtocol {
 		public let name: String
-		public let type: TypeAffinity
+		public let affinity: TypeAffinity
 		public let options: [Keyword]
+		public let type: ColumnType.Type
 		
 		// Table that owns this column.
 		public var table: SqliteTableProtocol?
@@ -13,30 +14,31 @@ extension Sqlite {
 			return name
 		}
 		
-		public init(name: String, type: TypeAffinity, options: [Keyword] = []) {
+		public init(name: String, affinity: TypeAffinity, type: ColumnType.Type, options: [Keyword] = []) {
 			self.name = name
 			self.type = type
+			self.affinity = affinity
 			self.options = options
 		}
 		
 		public convenience init(name: String, type: ColumnType.Type, options: [Keyword] = []) {
-			let typeAffinity: TypeAffinity
+			let affinity: TypeAffinity
 			
 			switch type {
 			case is String.Type:
-				typeAffinity = .text
+				affinity = .text
 				
 			case is Int.Type, is Bool.Type:
-				typeAffinity = .integer
+				affinity = .integer
 				
 			case is Double.Type:
-				typeAffinity = .real
+				affinity = .real
 				
 			// Shouldn't happen.
 			default: fatalError("Invalid column type")
 			}
 			
-			self.init(name: name, type: typeAffinity, options: options)
+			self.init(name: name, affinity: affinity, type: type, options: options)
 		}
 	}
 }

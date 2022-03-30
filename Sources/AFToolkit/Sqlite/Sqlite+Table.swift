@@ -47,7 +47,7 @@ extension Sqlite {
 			
 			// Generate the create table statement.
 			let createColumnsString = columns
-				.map { "\($0.name) \($0.type) \($0.options.map { option in option.rawValue }.joined(separator: " "))" }
+				.map { "\($0.name) \($0.affinity) \($0.options.map { option in option.rawValue }.joined(separator: " "))" }
 				.joined(separator: ", ")
 			var tableCreateStatement = "CREATE TABLE \(name) (\(createColumnsString));"
 			
