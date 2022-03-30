@@ -20,15 +20,15 @@ extension Sqlite {
 		// MARK: - Properties
 		
 		private let _preparedStatements = NSMutableDictionary()
-
-		private var _databaseUrl: URL
-		private var _databaseName: String
+		
 		private var _databaseLock = NSRecursiveLock()
 		private var _asyncQueryQueue = OperationQueue()
 		private var _backgroundTask = UIBackgroundTaskIdentifier.invalid
 		
 		private(set) var connected = false
 		private(set) var database: Database?
+		private(set) var databaseUrl: URL
+		private(set) var databaseName: String
 		
 		
 		// MARK: - Inits
@@ -42,8 +42,8 @@ extension Sqlite {
 				return nil
 			}
 			
-			_databaseUrl = databaseUrl
-			_databaseName = databaseName
+			databaseUrl = databaseUrl
+			databaseName = databaseName
 			_asyncQueryQueue.maxConcurrentOperationCount = 1
 			
 			// Initialize the database, if it doesn't already exist.
@@ -79,9 +79,9 @@ extension Sqlite {
 			}
 		
 			// Create database connection.
-			let databasePathNSString = _databaseUrl.path as NSString
+			let databasePathNSString = databaseUrl.path as NSString
 			if (sqlite3_open(databasePathNSString.utf8String, &database) != SQLITE_OK) {
-				selfLog(.error, "Unable to connect to database '\(_databaseName)': \(String(cString: sqlite3_errmsg(database)))")
+				selfLog(.error, "Unable to connect to database '\(databaseName)': \(String(cString: sqlite3_errmsg(database)))")
 			}
 			
 			// Enable foreign key support.
@@ -202,9 +202,9 @@ extension Sqlite {
 			
 			// Delete the database file.
 			do {
-				try FileManager.default.removeItem(at: _databaseUrl)
+				try FileManager.default.removeItem(at: databaseUrl)
 			} catch {
-				selfLog(.error, "Failed to delete database at '\(_databaseUrl)': \(error)")
+				selfLog(.error, "Failed to delete database at '\(databaseUrl)': \(error)")
 			}
 		}
 		
