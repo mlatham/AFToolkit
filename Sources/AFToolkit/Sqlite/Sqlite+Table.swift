@@ -2,7 +2,7 @@ import Foundation
 import SQLite3
 
 extension Sqlite {
-	open class Table<T>: NSObject {
+	open class Table<T>: NSObject, SqliteTableProtocol {
 	
 		// MARK: - Properties
 		
@@ -60,6 +60,13 @@ extension Sqlite {
 			
 			// Format the replace statement.
 			replaceStatement = "INSERT OR REPLACE INTO \(name) (\(allColumnsString)) VALUES \(replaceValuesString)"
+			
+			super.init()
+			
+			// Associate each column with this as its owning table.
+			for column in columns {
+				column.table = self
+			}
 		}
 		
 		

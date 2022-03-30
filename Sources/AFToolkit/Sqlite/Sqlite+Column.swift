@@ -6,6 +6,9 @@ extension Sqlite {
 		public let type: TypeAffinity
 		public let options: [Keyword]
 		
+		// Table that owns this column.
+		public var table: SqliteTableProtocol?
+		
 		public var description: String {
 			return name
 		}
