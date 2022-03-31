@@ -9,7 +9,7 @@ extension Sqlite {
 		public let client: Client
 		
 		public let name: String
-		public let primaryKeys: [SqliteColumnProtocol]
+		public let primaryKey: [SqliteColumnProtocol]
 		public let columns: [SqliteColumnProtocol]
 		public let indices: [Index]
 		
@@ -29,10 +29,10 @@ extension Sqlite {
 		
 		// MARK: - Inits
 		
-		public init(client: Client, name: String, primaryKeys: [SqliteColumnProtocol], columns: [SqliteColumnProtocol], indices: [Index]) {
+		public init(client: Client, name: String, primaryKey: [SqliteColumnProtocol], columns: [SqliteColumnProtocol], indices: [Index]) {
 			self.client = client
 			self.name = name
-			self.primaryKeys = primaryKeys
+			self.primaryKey = primaryKey
 			self.columns = columns
 			self.indices = indices
 			
@@ -46,10 +46,13 @@ extension Sqlite {
 			let replaceValuesString = columns.map { _ in "?" }.joined(separator: ", ")
 			
 			// Generate the create table statement.
-			let createColumnsString = columns
+			var createColumnsString = columns
 				.map { "\($0.name) \($0.affinity) \($0.options.map { option in option.rawValue }.joined(separator: " "))" }
 				.joined(separator: ", ")
-			var tableCreateStatement = "CREATE TABLE \(name) (\(createColumnsString));"
+			if (!primaryKey.isEmpty) {
+				createColumnsString.append(", PRIMARY KEY (\(primaryKey.map { $0.name }.joined(separator: ", "))")
+			}
+			var tableCreateStatement = "CREATE TABLE IF NOT EXISTS \(name) (\(createColumnsString));"
 			
 			// Add a statement to create each index.
 			for index in indices {
