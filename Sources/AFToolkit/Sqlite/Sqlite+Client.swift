@@ -9,10 +9,10 @@ extension Sqlite {
 		
 		static let SQLITE_STATIC = unsafeBitCast(0, to: sqlite3_destructor_type.self)
 		static let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
-		static let SqliteExtension = "sqlite"
 		
 		public enum Errors: Error {
 			case databaseConnectionClosed
+			case connectionFailed(String)
 			case execFailed(String)
 		}
 		
@@ -28,30 +28,13 @@ extension Sqlite {
 		public private(set) var connected = false
 		public private(set) var database: Database?
 		public private(set) var databaseUrl: URL
-		public private(set) var databaseName: String
 		
 		
 		// MARK: - Inits
 		
-		public init?(databaseName: String) {
-			// Ensure database file is copied into documents folder.
-			let databaseFile = "\(databaseName).\(Client.SqliteExtension)"
-			guard let databaseUrl = FileManager.urlByAppending(
-				path: databaseFile,
-				for: .documentDirectory) else {
-				return nil
-			}
-			
+		public init(databaseUrl: URL) {
 			self.databaseUrl = databaseUrl
-			self.databaseName = databaseName
 			_asyncQueryQueue.maxConcurrentOperationCount = 1
-			
-			// Initialize the database, if it doesn't already exist.
-			if (!FileManager.fileExists(filename: databaseFile, for: .documentDirectory)) {
-				guard Client.initializeDatabase(name: databaseName, overwrite: false) else {
-					return nil
-				}
-			}
 			
 			super.init()
 			
@@ -81,7 +64,7 @@ extension Sqlite {
 			// Create database connection.
 			let databasePathNSString = databaseUrl.path as NSString
 			if (sqlite3_open(databasePathNSString.utf8String, &database) != SQLITE_OK) {
-				selfLog(.error, "Unable to connect to database '\(databaseName)': \(String(cString: sqlite3_errmsg(database)))")
+				selfLog(.error, "Unable to connect to database '\(databaseUrl)': \(String(cString: sqlite3_errmsg(database)))")
 			}
 			
 			// Enable foreign key support.
@@ -394,32 +377,6 @@ extension Sqlite {
 			}
 			
 			return statementPointer as? Statement
-		}
-		
-		public static func initializeDatabase(name: String, overwrite: Bool) -> Bool {
-			let databaseFile = "\(name).\(SqliteExtension)"
-
-			// Determine database target URL.
-			guard let databaseURL = FileManager.urlByAppending(path: databaseFile, for: .documentDirectory) else {
-				Logger.defaultLogger.log(.error, "Failed to get destination database URL \(databaseFile)")
-				return false
-			}
-
-			// Determine database source URL.
-			guard let databaseBundleURL = FileManager.mainBundleUrl(for: databaseFile) else {
-				Logger.defaultLogger.log(.error, "Failed to find source database at \(databaseFile)")
-				return false
-			}
-
-			// Copy database from bundle, if not yet created.
-			let copied = FileManager.copyFile(atURL: databaseBundleURL, toURL: databaseURL, overwrite: overwrite)
-				
-			// Log if copy failed.
-			if (!copied) {
-				Logger.defaultLogger.log(.error, "Failed to copy database to documents directory")
-			}
-			
-			return copied
 		}
 		
 		
