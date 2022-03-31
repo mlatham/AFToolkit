@@ -131,11 +131,11 @@ extension Sqlite {
 			statement.bindDouble(at: replaceIndex(of: column), number: number)
 		}
 		
-		public func bindTimeIntervalSinceReferenceDouble(
+		public func bindTimeIntervalSince1970Double(
 			_ statement: ReplaceStatement,
 			at column: SqliteColumnProtocol,
 			from date: Date?) {
-			statement.bindTimeIntervalSinceReferenceDouble(at: replaceIndex(of: column), from: date)
+			statement.bindTimeIntervalSince1970(at: replaceIndex(of: column), from: date)
 		}
 		
 		public func double(_ statement: CursorStatement, at column: SqliteColumnProtocol) -> Double? {
@@ -146,8 +146,8 @@ extension Sqlite {
 			return statement.doubleNumber(at: readIndex(of: column))
 		}
 		
-		public func timeIntervalSinceReferenceDate(_ statement: CursorStatement, at column: SqliteColumnProtocol) -> Date? {
-			return statement.timeIntervalSinceReferenceDate(at: readIndex(of: column))
+		public func timeIntervalSince1970Date(_ statement: CursorStatement, at column: SqliteColumnProtocol) -> Date? {
+			return statement.timeIntervalSince1970(at: readIndex(of: column))
 		}
 		
 		// TODO: Is this necessary?

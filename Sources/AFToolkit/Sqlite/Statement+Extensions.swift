@@ -108,8 +108,8 @@ public extension Sqlite.Statement {
 	}
 
 	// Uses GMT and en_us_POSIX locale. TODO: Provide locale?
-	func bindTimeIntervalSinceReferenceDouble(at columnIndex: Int, from date: Date?) {
-		if let timeInterval = date?.timeIntervalSinceReferenceDate {
+	func bindTimeIntervalSince1970(at columnIndex: Int, from date: Date?) {
+		if let timeInterval = date?.timeIntervalSince1970 {
 			sqlite3_bind_double(self, Int32(columnIndex), timeInterval)
 		} else {
 			sqlite3_bind_null(self, Int32(columnIndex))
@@ -132,12 +132,12 @@ public extension Sqlite.Statement {
 		}
 	}
 	
-	func timeIntervalSinceReferenceDate(at columnIndex: Int) -> Date? {
+	func timeIntervalSince1970(at columnIndex: Int) -> Date? {
 		if isNull(at: columnIndex) {
 			return nil
 		} else {
 			let timeInterval = TimeInterval(sqlite3_column_double(self, Int32(columnIndex)))
-			return Date(timeIntervalSinceReferenceDate: timeInterval)
+			return Date(timeIntervalSince1970: timeInterval)
 		}
 	}
 }
