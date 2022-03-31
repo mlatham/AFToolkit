@@ -25,10 +25,10 @@ extension Sqlite {
 		private var _asyncQueryQueue = OperationQueue()
 		private var _backgroundTask = UIBackgroundTaskIdentifier.invalid
 		
-		private(set) var connected = false
-		private(set) var database: Database?
-		private(set) var databaseUrl: URL
-		private(set) var databaseName: String
+		public private(set) var connected = false
+		public private(set) var database: Database?
+		public private(set) var databaseUrl: URL
+		public private(set) var databaseName: String
 		
 		
 		// MARK: - Inits
