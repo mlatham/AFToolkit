@@ -50,7 +50,7 @@ extension Sqlite {
 				.map { "\($0.name) \($0.affinity) \($0.options.map { option in option.rawValue }.joined(separator: " "))" }
 				.joined(separator: ", ")
 			if (!primaryKey.isEmpty) {
-				createColumnsString.append(", PRIMARY KEY (\(primaryKey.map { $0.name }.joined(separator: ", "))")
+				createColumnsString.append(", PRIMARY KEY (\(primaryKey.map { $0.name }.joined(separator: ", ")))")
 			}
 			var tableCreateStatement = "CREATE TABLE IF NOT EXISTS \(name) (\(createColumnsString));"
 			
