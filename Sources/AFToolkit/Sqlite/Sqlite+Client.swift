@@ -253,10 +253,12 @@ extension Sqlite {
 					}
 					var result = [T]()
 					
-					while sqlite3_step(statement) == SQLITE_ROW {
+					var code = sqlite3_step(statement)
+					while code == SQLITE_ROW {
 						if let row = table.readRow(statement) {
 							result.append(row)
 						}
+						code = sqlite3_step(statement)
 					}
 					
 					if cache {
