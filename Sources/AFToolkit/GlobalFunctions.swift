@@ -28,7 +28,7 @@ public func MapInit<Type, Result>(_ object: Type, _ customize: (Type) -> Result)
 }
 
 /// Global logging function.
-public func log(_ level: LogLevel, _ messageFormat: @autoclosure @escaping () -> String, _ args: CVarArg...) {
+public func afLog(_ level: Logger.Level, _ messageFormat: @autoclosure @escaping () -> String, _ args: CVarArg...) {
 	Logger.defaultLogger.log(level, messageFormat(), args)
 }
 

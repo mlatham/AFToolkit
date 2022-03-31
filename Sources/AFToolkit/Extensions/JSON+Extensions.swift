@@ -15,7 +15,7 @@ public extension Encodable {
 			return try jsonEncoder.encode(self)
 			
 		} catch let error {
-			log(.error, "\(error)")
+			afLog(.error, "\(error)")
 			return nil
 		}
 	}
@@ -54,7 +54,7 @@ public extension Decodable {
 		
 		do {
 			guard JSONSerialization.isValidJSONObject(jsonData) else {
-				log(.error, "Invalid JSON: \(jsonData)")
+				afLog(.error, "Invalid JSON: \(jsonData)")
 				return nil
 			}
 			let data = try JSONSerialization.data(withJSONObject: jsonData, options: [])
@@ -65,7 +65,7 @@ public extension Decodable {
 			return model
 			
 		} catch let error {
-			log(.error, "\(error)")
+			afLog(.error, "\(error)")
 			return nil
 		}
 	}
@@ -85,7 +85,7 @@ public extension Decodable {
 			return try jsonDecoder.decode(Self.self, from: data)
 			
 		} catch let error {
-			log(.error, "\(error)")
+			afLog(.error, "\(error)")
 			return nil
 		}
 	}

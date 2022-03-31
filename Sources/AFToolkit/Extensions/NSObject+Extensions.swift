@@ -23,7 +23,7 @@ public extension NSObject {
 	// MARK: - Functions
 
 	// Instance-level log statements.
-	func selfLog(_ level: LogLevel, _ messageFormat: @autoclosure @escaping () -> String, _ args: CVarArg...) {
+	func selfLog(_ level: Logger.Level, _ messageFormat: @autoclosure @escaping () -> String, _ args: CVarArg...) {
 		if selfLogEnabled {
 			Logger.defaultLogger.log(level, messageFormat(), args)
 		}

@@ -3,13 +3,16 @@ import Foundation
 
 // MARK: - Enums
 
-public enum LogLevel {
-	case debug
-	case error
-	case info
-}
-
 public class Logger {
+	
+	// MARK: - Enums
+	
+	public enum Level {
+		case debug
+		case error
+		case info
+	}
+
 
 	// MARK: - Properties
 
@@ -24,7 +27,7 @@ public class Logger {
 	
 	// MARK: - Functions
 
-	public func log(_ level: LogLevel, _ messageFormat: @autoclosure @escaping () -> String, _ args: CVarArg...) {
+	public func log(_ level: Level, _ messageFormat: @autoclosure @escaping () -> String, _ args: CVarArg...) {
 		// Skip logging, if disabled.
 		if debugLoggingEnabled {
 			// Use a nested function to present a "curried" function with only one

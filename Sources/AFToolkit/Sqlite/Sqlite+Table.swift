@@ -239,7 +239,7 @@ extension Sqlite {
 				
 				if sqlite3_step(statement) != SQLITE_DONE {
 					let errorMessage = String(cString: sqlite3_errmsg(client.database))
-					log(.error, "Error replacing row: \(errorMessage)")
+					selfLog(.error, "Error replacing row: \(errorMessage)")
 				}
 				
 				// Reset the statement.
