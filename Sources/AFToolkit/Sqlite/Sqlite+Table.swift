@@ -59,7 +59,7 @@ extension Sqlite {
 			self.tableCreateStatement = tableCreateStatement
 			
 			// Format the replace statement.
-			replaceStatement = "INSERT OR REPLACE INTO \(name) (\(allColumnsString)) VALUES \(replaceValuesString)"
+			replaceStatement = "INSERT OR REPLACE INTO \(name) (\(allColumnsString)) VALUES (\(replaceValuesString))"
 			
 			super.init()
 			
