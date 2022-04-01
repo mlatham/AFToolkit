@@ -236,7 +236,7 @@ extension Sqlite {
 			}
 		}
 		
-		public func query<T>(from table: Table<T>, _ query: String, cache: Bool) -> [T] {
+		public func query<T>(from table: TableBase<T>, _ query: String, cache: Bool) -> [T] {
 			var results: [T]?
 			
 			do {
@@ -319,7 +319,7 @@ extension Sqlite {
 		
 		@discardableResult
 		public func beginQuery<T>(
-			from table: Table<T>,
+			from table: TableBase<T>,
 			query: String,
 			cache: Bool,
 			completion: @escaping QueryCompletion) -> Operation? {
