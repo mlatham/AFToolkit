@@ -12,7 +12,7 @@ extension Sqlite {
 		// MARK: - Inits
 		
 		public init(client: Client, name: String, columns: [SqliteColumnProtocol], select: String) {
-			self.createViewStatement = "CREATE VIEW IF NOT EXISTS \(name) AS (\(select));"
+			self.createViewStatement = "CREATE VIEW IF NOT EXISTS \(name) AS \(select);"
 			
 			super.init(client: client, name: name, columns: columns)
 		}
