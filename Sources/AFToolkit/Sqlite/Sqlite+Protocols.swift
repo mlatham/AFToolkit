@@ -11,3 +11,13 @@ public protocol SqliteColumnProtocol {
 	var options: [Sqlite.Keyword] { get }
 	var table: SqliteTableProtocol? { get set }
 }
+
+public extension SqliteColumnProtocol {
+	var fullName: String {
+		if let table = table {
+			return "\(table.name).\(name)"
+		} else {
+			return name
+		}
+	}
+}
