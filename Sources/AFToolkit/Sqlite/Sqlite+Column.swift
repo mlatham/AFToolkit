@@ -10,6 +10,14 @@ extension Sqlite {
 		// Table that owns this column.
 		public var table: SqliteTableProtocol?
 		
+		public var fullName: String {
+			if let table = table {
+				return "\(table.name).\(name)"
+			} else {
+				return name
+			}
+		}
+		
 		public var description: String {
 			return name
 		}
