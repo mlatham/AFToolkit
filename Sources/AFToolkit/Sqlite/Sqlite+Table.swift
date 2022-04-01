@@ -2,47 +2,35 @@ import Foundation
 import SQLite3
 
 extension Sqlite {
-	open class Table<T>: NSObject, SqliteTableProtocol {
+	open class Table<T>: TableBase<T> {
 	
 		// MARK: - Properties
 		
-		public let client: Client
+		// Caches indices for column name lookup.
+		private var _columnReplaceIndices: [String: Int] = [:]
+		private var _columnReadIndices: [String: Int] = [:]
 		
-		public let name: String
 		public let primaryKey: [SqliteColumnProtocol]
 		public let columns: [SqliteColumnProtocol]
 		public let indices: [Index]
 		
-		// Table create statement.
-		public let tableCreateStatement: String
+		// Create table statement.
+		public let createTableStatement: String
 		
 		// Replace statement which sets all columns.
-		public let replaceStatement: String
-		
-		// All columns on this table, in the order that they're expected for readRow.
-		public let allColumnsString: String
-		
-		// Caches indices for column name lookup.
-		private var _columnReadIndices: [String: Int] = [:]
-		private var _columnReplaceIndices: [String: Int] = [:]
+		public let replaceIntoStatement: String
 		
 		
 		// MARK: - Inits
 		
 		public init(client: Client, name: String, primaryKey: [SqliteColumnProtocol], columns: [SqliteColumnProtocol], indices: [Index]) {
-			self.client = client
-			self.name = name
-			self.primaryKey = primaryKey
-			self.columns = columns
-			self.indices = indices
-			
 			// Cache column indices.
 			for (i, column) in columns.enumerated() {
 				_columnReadIndices[column.name] = i
 				_columnReplaceIndices[column.name] = i + 1
 			}
 			
-			allColumnsString = columns.map { $0.name }.joined(separator: ", ")
+			let allColumnsString = columns.map { $0.name }.joined(separator: ", ")
 			let replaceValuesString = columns.map { _ in "?" }.joined(separator: ", ")
 			
 			// Generate the create table statement.
@@ -52,19 +40,20 @@ extension Sqlite {
 			if (!primaryKey.isEmpty) {
 				createColumnsString.append(", PRIMARY KEY (\(primaryKey.map { $0.name }.joined(separator: ", ")))")
 			}
-			var tableCreateStatement = "CREATE TABLE IF NOT EXISTS \(name) (\(createColumnsString));"
+			var createTableStatement = "CREATE TABLE IF NOT EXISTS \(name) (\(createColumnsString));"
 			
 			// Add a statement to create each index.
 			for index in indices {
-				tableCreateStatement.append(index.createSql(tableName: name))
+				createTableStatement.append(index.createSql(tableName: name))
 			}
 			
-			self.tableCreateStatement = tableCreateStatement
+			self.createTableStatement = createTableStatement
+			self.replaceIntoStatement = "INSERT OR REPLACE INTO \(name) (\(allColumnsString)) VALUES (\(replaceValuesString))"
+			self.primaryKey = primaryKey
+			self.columns = columns
+			self.indices = indices
 			
-			// Format the replace statement.
-			replaceStatement = "INSERT OR REPLACE INTO \(name) (\(allColumnsString)) VALUES (\(replaceValuesString))"
-			
-			super.init()
+			super.init(client: client, name: name)
 			
 			// Associate each column with this as its owning table.
 			for column in columns {
@@ -84,8 +73,6 @@ extension Sqlite {
 			return _columnReadIndices[column.name] ?? -1
 		}
 		
-		
-		// TODO: Type this as ReplaceStatement
 		public func bind(_ statement: ReplaceStatement, at column: SqliteColumnProtocol, string: String?) {
 			statement.bind(at: replaceIndex(of: column), string: string)
 		}
@@ -153,16 +140,6 @@ extension Sqlite {
 			return statement.timeIntervalSince1970(at: readIndex(of: column))
 		}
 		
-		// TODO: Is this necessary?
-		public func count(where whereStatement: String?, cache: Bool) throws -> Int {
-			var query = "SELECT COUNT(*) FROM \(name)"
-			if let whereStatement = whereStatement {
-				query.append(" WHERE \(whereStatement)")
-			}
-			
-			return client.count(query: query, cache: cache)
-		}
-		
 		public func delete(where whereStatement: String?, cache: Bool) throws {
 			try client.execute { database, error in
 				var query = "DELETE FROM \(name)"
@@ -198,11 +175,6 @@ extension Sqlite {
 			fatalError(NotImplementedError)
 		}
 		
-		open func readRow(_ cursor: CursorStatement) -> T? {
-			// Abstract.
-			fatalError(NotImplementedError)
-		}
-		
 		public func write(rows: [T], completion: @escaping StatementCompletion) {
 			client.beginExecute(statement: { [weak self] database, error in
 				self?._write(rows: rows)
@@ -231,7 +203,7 @@ extension Sqlite {
 		
 		private func _write(rows: [T]) {
 			// Get or create the cached, prepared statement.
-			guard let statement = client.preparedStatement(query: replaceStatement, cache: true) else {
+			guard let statement = client.preparedStatement(query: replaceIntoStatement, cache: true) else {
 				selfLog(.error, "Failed to get prepared replace statement.")
 				// TODO: Throw
 				return
