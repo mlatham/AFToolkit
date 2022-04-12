@@ -30,11 +30,9 @@ extension Sqlite {
 			super.init()
 			
 			// Associate each column with this as its owning table.
-			for column in columns {
-				var column = column
-				column.table = self
+			for (index, _) in self.columns.enumerated() {
+				self.columns[index].table = self
 			}
-			self.columns = columns
 		}
 		
 		
