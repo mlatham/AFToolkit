@@ -50,6 +50,11 @@ extension Sqlite {
 			self.indices = indices
 			
 			super.init(client: client, name: name, columns: columns)
+			
+			for column in columns {
+				var column = column
+				column.table = self
+			}
 		}
 		
 		

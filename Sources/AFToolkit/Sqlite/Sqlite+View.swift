@@ -15,6 +15,8 @@ extension Sqlite {
 			self.createViewStatement = "CREATE VIEW IF NOT EXISTS \(name) AS \(select);"
 			
 			super.init(client: client, name: name, columns: columns)
+			
+			// NOTE: Leave columns qualified with their parent table.
 		}
 	}
 }

@@ -17,7 +17,6 @@ extension Sqlite {
 		
 		// MARK: - Inits
 		
-		// TODO: Once query building, move column to a struct.
 		public init(client: Client, name: String, columns: [SqliteColumnProtocol]) {
 			// Cache column indices.
 			for (i, column) in columns.enumerated() {
@@ -29,11 +28,6 @@ extension Sqlite {
 			self.columns = columns
 			
 			super.init()
-			
-			for column in columns {
-				var column = column
-				column.table = self
-			}
 		}
 		
 		
