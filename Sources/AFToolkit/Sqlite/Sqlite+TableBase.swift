@@ -31,6 +31,7 @@ extension Sqlite {
 			super.init()
 			
 			for column in columns {
+				var column = column
 				column.table = self
 			}
 		}

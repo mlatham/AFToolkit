@@ -16,10 +16,6 @@ extension Sqlite {
 			return name
 		}
 		
-		public init(column: Column<ColumnType>) {
-			self.init(name: column.name, affinity: column.affinity, type: column.type, options: column.type)
-		}
-		
 		public init(name: String, affinity: TypeAffinity, type: ColumnType.Type, options: [Keyword] = []) {
 			self.name = name
 			self.type = type
@@ -27,7 +23,11 @@ extension Sqlite {
 			self.options = options
 		}
 		
-		public init(name: String, type: ColumnType.Type, options: [Keyword] = []) {
+		public convenience init(column: Column<ColumnType>) {
+			self.init(name: column.name, affinity: column.affinity, type: column.type, options: column.options)
+		}
+		
+		public convenience init(name: String, type: ColumnType.Type, options: [Keyword] = []) {
 			let affinity: TypeAffinity
 			
 			switch type {
