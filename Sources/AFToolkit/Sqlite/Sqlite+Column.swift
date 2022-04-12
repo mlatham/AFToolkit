@@ -1,7 +1,9 @@
 import Foundation
 
 extension Sqlite {
-	public class Column<ColumnType>: CustomStringConvertible, SqliteColumnProtocol {
+	// Struct so that columns passed into views / tables are passed by value, not reference.
+	// This prevents one parent table overriding another.
+	public struct Column<ColumnType>: CustomStringConvertible, SqliteColumnProtocol {
 		public let name: String
 		public let affinity: TypeAffinity
 		public let options: [Keyword]
@@ -21,7 +23,7 @@ extension Sqlite {
 			self.options = options
 		}
 		
-		public convenience init(name: String, type: ColumnType.Type, options: [Keyword] = []) {
+		public init(name: String, type: ColumnType.Type, options: [Keyword] = []) {
 			let affinity: TypeAffinity
 			
 			switch type {
