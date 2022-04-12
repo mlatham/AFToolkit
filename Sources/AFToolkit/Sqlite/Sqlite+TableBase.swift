@@ -29,13 +29,9 @@ extension Sqlite {
 			
 			super.init()
 			
-			var copiedColumns = [SqliteColumnProtocol]()
 			for column in columns {
-				var copiedColumn = column
-				copiedColumn.table = self
-				copiedColumns.append(copiedColumn)
+				column.table = self
 			}
-			self.columns = copiedColumns
 		}
 		
 		
