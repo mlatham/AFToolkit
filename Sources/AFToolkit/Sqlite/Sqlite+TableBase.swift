@@ -29,10 +29,13 @@ extension Sqlite {
 			
 			super.init()
 			
-			// Associate each column with this as its owning table.
-			for (index, _) in self.columns.enumerated() {
-				self.columns[index].table = self
+			var copiedColumns = [SqliteColumnProtocol]()
+			for column in columns {
+				var copiedColumn = column
+				copiedColumn.table = self
+				copiedColumns.append(copiedColumn)
 			}
+			self.columns = copiedColumns
 		}
 		
 		
