@@ -12,7 +12,7 @@ extension Sqlite {
 		public let client: Client
 		
 		public let name: String
-		public let columns: [SqliteColumnProtocol]
+		public var columns: [SqliteColumnProtocol]
 		
 		
 		// MARK: - Inits
@@ -34,6 +34,7 @@ extension Sqlite {
 				var column = column
 				column.table = self
 			}
+			self.columns = columns
 		}
 		
 		
