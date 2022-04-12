@@ -23,7 +23,7 @@ extension Sqlite {
 			self.options = options
 		}
 		
-		public convenience init(column: Column<ColumnType>) {
+		public convenience init(_ column: Column<ColumnType>) {
 			self.init(name: column.name, affinity: column.affinity, type: column.type, options: column.options)
 		}
 		
