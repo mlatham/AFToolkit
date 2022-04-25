@@ -5,6 +5,27 @@ public extension Sqlite.Statement {
 	func isNull(at columnIndex: Int) -> Bool {
 		return sqlite3_column_type(self, Int32(columnIndex)) == SQLITE_NULL
 	}
+	
+
+	func bind(at columnIndex: Int, blob: Data?) {
+		if let blob = blob {
+			_ = blob.withUnsafeBytes({ bufferPointer -> Int32 in
+				sqlite3_bind_blob(self, Int32(columnIndex), bufferPointer.baseAddress, Int32(blob.count), Sqlite.Client.SQLITE_TRANSIENT)
+			})
+		} else {
+			sqlite3_bind_null(self, Int32(columnIndex))
+		}
+	}
+	
+	func blob(at columnIndex: Int) -> Data? {
+		if isNull(at: columnIndex) {
+			return nil
+		} else if let blobPointer = sqlite3_column_blob(self, Int32(columnIndex)) {
+			let bytesCount = sqlite3_column_bytes(self, Int32(columnIndex))
+			return Data(bytes: blobPointer, count: Int(bytesCount))
+		}
+		return nil
+	}
 
 	func bind(at columnIndex: Int, string: String?) {
 		if let string = string as NSString? {
