@@ -64,6 +64,10 @@ extension Sqlite {
 			return _columnReplaceIndices[column.name] ?? -1
 		}
 		
+		public func bind(_ statement: ReplaceStatement, at column: SqliteColumnProtocol, blob: Data?) {
+			statement.bind(at: replaceIndex(of: column), blob: blob)
+		}
+		
 		public func bind(_ statement: ReplaceStatement, at column: SqliteColumnProtocol, string: String?) {
 			statement.bind(at: replaceIndex(of: column), string: string)
 		}

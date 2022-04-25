@@ -40,6 +40,9 @@ extension Sqlite {
 			case is Double.Type:
 				affinity = .real
 				
+			case is Data.Type:
+				affinity = .blob
+				
 			// Shouldn't happen.
 			default: fatalError("Invalid column type")
 			}
