@@ -37,6 +37,10 @@ extension Sqlite {
 			return _columnReadIndices[column.name] ?? -1
 		}
 		
+		public func blob(_ statement: CursorStatement, at column: SqliteColumnProtocol) -> Data? {
+			return statement.blob(at: readIndex(of: column))
+		}
+		
 		public func string(_ statement: CursorStatement, at column: SqliteColumnProtocol) -> String? {
 			return statement.string(at: readIndex(of: column))
 		}
