@@ -1,7 +1,6 @@
 import Foundation
 
-
-class AFKVO: NSObject {
+class KVO: NSObject {
 
 	public enum Errors: Error {
 		case invalidKVO(String)
@@ -143,7 +142,7 @@ class AFKVO: NSObject {
 
 // MARK: - Helper Functions
 
-private extension AFKVO {
+private extension KVO {
 	private func _notify(_ binding: Binding,
 		change: [NSKeyValueChangeKey : Any]?,
 		observable: Any?) {
