@@ -1,6 +1,6 @@
 import Foundation
 
-class KVO: NSObject {
+public class KVO: NSObject {
 
 	public enum Errors: Error {
 		case invalidKVO(String)
@@ -32,7 +32,7 @@ class KVO: NSObject {
 	
 	// MARK: - Inits
 	
-	init(target: NSObject) {
+	public init(target: NSObject) {
 		_target = target
 	}
 	
@@ -46,7 +46,7 @@ class KVO: NSObject {
 	
 	// MARK: - Functions
 	
-	func startObserving(_ observable: NSObject,
+	public func startObserving(_ observable: NSObject,
 		forKeyPath keyPath: String,
 		options: NSKeyValueObservingOptions = [.new, .initial],
 		selector: Selector) throws {
@@ -80,7 +80,7 @@ class KVO: NSObject {
 			context: nil)
 	}
 	
-	func stopObserving(_ observable: NSObject, forKeyPath keyPath: String) {
+	public func stopObserving(_ observable: NSObject, forKeyPath keyPath: String) {
 		// Skip if keypath isn't mapped.
 		guard let context = _contextForObservable(observable),
 			context.keyPathBindings[keyPath] != nil else {
@@ -94,7 +94,7 @@ class KVO: NSObject {
 		context.keyPathBindings.removeValue(forKey: keyPath)
 	}
 	
-	func removeAllObservers() {
+	public func removeAllObservers() {
 		// Remove all remaining contexts.
 		for context in _contexts {
 			// Stop observing for all keypaths.
@@ -108,7 +108,7 @@ class KVO: NSObject {
 		_contexts.removeAll()
 	}
 	
-	override func observeValue(
+	public override func observeValue(
 		forKeyPath keyPath: String?,
 		of object: Any?,
 		change: [NSKeyValueChangeKey : Any]?,
