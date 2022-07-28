@@ -10,6 +10,8 @@ public class AsyncOperation: Operation {
 	
 	private var _backgroundTask = UIBackgroundTaskIdentifier.invalid
 	
+	private var _hasStarted = false
+	
 	private var _isCancelled = false
 	private var _isExecuting = false
 	private var _isFinished = false
@@ -99,7 +101,13 @@ public class AsyncOperation: Operation {
 	
 	/// Never call super in start, because this is an asynchronous operation providing its own functionality there.
 	public override func start() {
-		guard canStartFinishOrCancel else { return }
+		// Finishes cancelled operations. See NOTE in cancel().
+		if isCancelled {
+			finish()
+			return
+		}
+	
+		guard canStartFinishOrCancel else { return } // Shouldn't come up.
 		
 		willChangeValue(forKey: #keyPath(AsyncOperation.isExecuting))
 		
@@ -128,8 +136,23 @@ public class AsyncOperation: Operation {
 	
 		super.cancel()
 		
-		willChangeValue(forKey: #keyPath(AsyncOperation.isFinished))
 		willChangeValue(forKey: #keyPath(AsyncOperation.isCancelled))
+		_isCancelled = true
+		didChangeValue(forKey: #keyPath(AsyncOperation.isCancelled))
+		
+		// NOTE: Only finish here if already executing (start completed). If an operation is cancelled before
+		// start completes, it crashes with isFinished is set to true and the operation is deallocated.
+		if isExecuting {
+			finish()
+		}
+	}
+	
+	public func finish() {
+		guard canStartFinishOrCancel else { return }
+	
+		// Generates the KVO necessary for the queue to remove this operation. NOTE: This is necessary for the KVO to be
+		// atomic - at no point will there be notifications for one property before the other is also set.
+		willChangeValue(forKey: #keyPath(AsyncOperation.isFinished))
 		willChangeValue(forKey: #keyPath(AsyncOperation.isExecuting))
 		
 		if selfLogEnabled {
@@ -137,15 +160,15 @@ public class AsyncOperation: Operation {
 			if let error = error {
 				errorString = "\n\tERROR: \(error)"
 			}
-			selfLog(error != nil ? .error : .debug, "\(self.description): Cancelled\(errorString)")
+			let outcome = _isCancelled ? "Cancelled" : "Finished"
+			selfLog(error != nil ? .error : .debug, "\(self.description): \(outcome)\(errorString)")
 		}
-		_isCancelled = true
+		
 		_isExecuting = false
 		_isFinished = true
 		_finishTime = Date()
 		
 		didChangeValue(forKey: #keyPath(AsyncOperation.isExecuting))
-		didChangeValue(forKey: #keyPath(AsyncOperation.isCancelled))
 		didChangeValue(forKey: #keyPath(AsyncOperation.isFinished))
 		
 		_endBackgroundTask()
@@ -175,31 +198,6 @@ public class AsyncOperation: Operation {
 	
 	public func cancelWork(withError error: Error?) {
 		cancelWork(withError: error != nil ? NSError(error?.localizedDescription ?? "") : nil)
-	}
-	
-	public func finish() {
-		guard canStartFinishOrCancel else { return }
-	
-		// Generates the KVO necessary for the queue to remove this operation. NOTE: This is necessary for the KVO to be
-		// atomic - at no point will there be notifications for one property before the other is also set.
-		willChangeValue(forKey: #keyPath(AsyncOperation.isFinished))
-		willChangeValue(forKey: #keyPath(AsyncOperation.isExecuting))
-		
-		if selfLogEnabled {
-			var errorString: String = ""
-			if let error = error {
-				errorString = "\n\tERROR: \(error)"
-			}
-			selfLog(error != nil ? .error : .debug, "\(self.description): Finished\(errorString)")
-		}
-		_isExecuting = false
-		_isFinished = true
-		_finishTime = Date()
-		
-		didChangeValue(forKey: #keyPath(AsyncOperation.isExecuting))
-		didChangeValue(forKey: #keyPath(AsyncOperation.isFinished))
-		
-		_endBackgroundTask()
 	}
 }
 
