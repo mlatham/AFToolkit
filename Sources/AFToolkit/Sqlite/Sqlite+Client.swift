@@ -114,7 +114,7 @@ extension Sqlite {
 			
 			// Execute the query.
 			var error: Error? = nil
-			statement(database, &error)
+			try statement(database, &error)
 			
 			if let error = error {
 				throw error

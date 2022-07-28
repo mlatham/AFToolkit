@@ -4,6 +4,14 @@ import SQLite3
 extension Sqlite {
 	open class Table<T>: TableBase<T> {
 	
+		// MARK: - Constants
+	
+		public enum Errors: Error {
+			case prepareStatementFailed(String)
+			case executionFailed(String)
+		}
+		
+	
 		// MARK: - Properties
 		
 		// Caches indices for column name lookup.
@@ -113,14 +121,11 @@ extension Sqlite {
 				// TODO: Maybe a generic delete statement?
 				// Get or create the cached, prepared statement.
 				guard let statement = client.preparedStatement(query: query, cache: cache) else {
-					selfLog(.error, "Failed to get prepared delete statement.")
-					// TODO: Throw
-					return
+					throw Errors.prepareStatementFailed(query)
 				}
 				
 				if sqlite3_step(statement) != SQLITE_DONE {
-					// TODO: Throw
-					selfLog(.error, "Error while deleting. \(String(cString: sqlite3_errmsg(database)))")
+					throw Errors.executionFailed("Error deleting. \(String(cString: sqlite3_errmsg(database)))")
 				}
 				
 				if cache {
@@ -140,44 +145,53 @@ extension Sqlite {
 		
 		public func write(rows: [T], completion: @escaping StatementCompletion) {
 			client.beginExecute(statement: { [weak self] database, error in
-				self?._write(rows: rows)
+				try self?.client.beginTransaction()
+				do {
+					try self?._write(rows: rows)
+					try self?.client.commitTransaction()
+				} catch {
+					try self?.client.rollbackTransaction()
+				}
 			},
 			completion: completion)
 		}
 		
 		public func write(rows: [T]) throws {
 			try client.execute { [weak self] database, error in
-				self?._write(rows: rows)
+				try self?.client.beginTransaction()
+				do {
+					try self?._write(rows: rows)
+					try self?.client.commitTransaction()
+				} catch {
+					try self?.client.rollbackTransaction()
+				}
 			}
 		}
 		
 		public func write(row: T, completion: @escaping StatementCompletion) {
 			client.beginExecute(statement: { [weak self] database, error in
-				self?._write(rows: [row])
+				try self?._write(rows: [row])
 			},
 			completion: completion)
 		}
 		
 		public func write(row: T) throws {
 			try client.execute { [weak self] database, error in
-				self?._write(rows: [row])
+				try self?._write(rows: [row])
 			}
 		}
 		
-		private func _write(rows: [T]) {
+		private func _write(rows: [T]) throws {
 			// Get or create the cached, prepared statement.
 			guard let statement = client.preparedStatement(query: replaceIntoStatement, cache: true) else {
-				selfLog(.error, "Failed to get prepared replace statement.")
-				// TODO: Throw
-				return
+				throw Errors.prepareStatementFailed(replaceIntoStatement)
 			}
 			
 			for row in rows {
 				replace(row: row, preparedReplaceStatement: statement)
 				
 				if sqlite3_step(statement) != SQLITE_DONE {
-					let errorMessage = String(cString: sqlite3_errmsg(client.database))
-					selfLog(.error, "Error replacing row: \(errorMessage)")
+					throw Errors.executionFailed("Error replacing row. \(String(cString: sqlite3_errmsg(client.database)))")
 				}
 				
 				// Reset the statement.

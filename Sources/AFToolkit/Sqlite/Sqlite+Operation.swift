@@ -102,7 +102,11 @@ extension Sqlite {
 			if let query = _queryClosure {
 				result = query(database, &resultError)
 			} else if let statement = _statementClosure {
-				statement(database, &resultError)
+				do {
+					try statement(database, &resultError)
+				} catch {
+					resultError = error
+				}
 			}
 			
 			// Abort if cancelled.

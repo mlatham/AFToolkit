@@ -11,7 +11,7 @@ open class Sqlite {
 	public typealias QueryCompletion = (Any?, Error?) -> Void
 	public typealias CountCompletion = (Int32, Error?) -> Void
 
-	public typealias StatementClosure = (Database?, inout Error?) -> Void
+	public typealias StatementClosure = (Database?, inout Error?) throws -> Void
 	public typealias StatementCompletion = (Error?) -> Void
 	
 	public enum TypeAffinity: String {
