@@ -29,9 +29,9 @@ public extension NSObject {
 		}
 	}
 	
-	// Defers calling a selector on this object for 1 second to batch together tight
+	// Defers calling a selector on this object for a period of time to batch together tight
 	// bursts of function calls into periodic calls.
-	func performDeduped(_ selector: Selector) {
+	func performDeduped(_ selector: Selector, delay: TimeInterval = 0.5) {
 		// Cancel any previous request.
 		NSObject.cancelPreviousPerformRequests(
 			withTarget: self,
@@ -39,7 +39,7 @@ public extension NSObject {
 			object: nil)
 		
 		// Queue up a perform.
-		perform(selector, with: nil, afterDelay: 1)
+		perform(selector, with: nil, afterDelay: delay)
 	}
 	
 	// Synchronizes on this object, then calls the provided closure.
