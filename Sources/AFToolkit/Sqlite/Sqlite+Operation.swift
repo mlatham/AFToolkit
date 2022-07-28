@@ -60,7 +60,6 @@ extension Sqlite {
 		
 		public override func beginWork() {
 			var databaseLockAcquired = false
-			var databaseRollbackRequired = false
 			
 			var result: Any? = nil
 			var resultError: Error? = Errors.cancelled
@@ -71,11 +70,6 @@ extension Sqlite {
 			}
 			
 			defer {
-				// Rollback if required.
-				if (databaseRollbackRequired) {
-					try? _client.rollbackTransaction()
-				}
-				
 				if (databaseLockAcquired) {
 					_databaseLock.unlock()
 				}
@@ -94,53 +88,31 @@ extension Sqlite {
 					finishWork(withError: resultError)
 				}
 			}
+
+			_databaseLock.lock()
+			databaseLockAcquired = true
 			
-			do {
-				_databaseLock.lock()
-				databaseLockAcquired = true
-				
-				// Abort if cancelled.
-				if (self.isCancelled) {
-					return
-				}
-				
-				// Begin transaction.
-				try _client.beginTransaction()
-				databaseRollbackRequired = true
-				
-				// Abort if cancelled.
-				if (self.isCancelled) {
-					return
-				}
-				
-				// Perform task.
-				resultError = nil
-				if let query = _queryClosure {
-					result = query(database, &resultError)
-				} else if let statement = _statementClosure {
-					statement(database, &resultError)
-				}
-				
-				// Abort if cancelled.
-				if (self.isCancelled) {
-					return
-				}
-				
-				// Commit transaction on success.
-				if (resultError == nil) {
-					try _client.commitTransaction()
-					databaseRollbackRequired = false
-				}
-				
-				// Release database lock.
-				_databaseLock.unlock()
-				databaseLockAcquired = false
-			} catch {
-				selfLog(.error, "Database operation error: \(error)")
-				
-				// Mark as failed.
-				resultError = error
+			// Abort if cancelled.
+			if (self.isCancelled) {
+				return
 			}
+			
+			// Perform task.
+			resultError = nil
+			if let query = _queryClosure {
+				result = query(database, &resultError)
+			} else if let statement = _statementClosure {
+				statement(database, &resultError)
+			}
+			
+			// Abort if cancelled.
+			if (self.isCancelled) {
+				return
+			}
+			
+			// Release database lock.
+			_databaseLock.unlock()
+			databaseLockAcquired = false
 		}
 	}
 }

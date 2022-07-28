@@ -43,7 +43,7 @@ public extension NSObject {
 	}
 	
 	// Synchronizes on this object, then calls the provided closure.
-	func synchronized(_ closure: UNVoidClosure) {
+	func synchronized(_ closure: VoidClosure) {
 		objc_sync_enter(self)
 		closure()
 		objc_sync_exit(self)
