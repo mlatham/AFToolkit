@@ -22,11 +22,8 @@ public class AsyncOperation: Operation {
 	private var _startTime: Date?
 	private var _finishTime: Date?
 
-	/// If an operation is not yet cancelled or finished, it's valid for calls to start(), finish() or cancel().
-	/// Subclasses may use this property to determine whether or not to perform additional logic in finishWork() or
-	/// cancelWork(), prior to calling the base implementation.
-	public var canStartFinishOrCancel: Bool {
-		return !isCancelled && !isFinished
+	public var notFinishedOrCancelled: Bool {
+		return !isFinished && !isCancelled
 	}
 	
 	public let timeout: TimeInterval
@@ -107,7 +104,7 @@ public class AsyncOperation: Operation {
 			return
 		}
 	
-		guard canStartFinishOrCancel else { return } // Shouldn't come up.
+		guard !isFinished else { return } // Shouldn't come up.
 		
 		willChangeValue(forKey: #keyPath(AsyncOperation.isExecuting))
 		
@@ -122,7 +119,7 @@ public class AsyncOperation: Operation {
 		// Queue up a timeout that cancels the operation from the main thread.
 		if timeout > 0 {
 			DispatchQueue.main.asyncAfter(deadline: .now() + timeout) { [weak self] in
-				guard let strongSelf = self, strongSelf.canStartFinishOrCancel else { return }
+				guard let strongSelf = self, strongSelf.notFinishedOrCancelled else { return }
 				strongSelf.cancelWork(withError: NSError(self?._timeoutError ?? "", withCode: -1, log: false))
 			}
 		}
@@ -132,7 +129,7 @@ public class AsyncOperation: Operation {
 	}
 	
 	public override func cancel() {
-		guard canStartFinishOrCancel else { return }
+		guard notFinishedOrCancelled else { return }
 	
 		super.cancel()
 		
@@ -148,7 +145,8 @@ public class AsyncOperation: Operation {
 	}
 	
 	public func finish() {
-		guard canStartFinishOrCancel else { return }
+		// finish() is called after isCancelled is set.
+		guard !isFinished else { return }
 	
 		// Generates the KVO necessary for the queue to remove this operation. NOTE: This is necessary for the KVO to be
 		// atomic - at no point will there be notifications for one property before the other is also set.
@@ -181,7 +179,7 @@ public class AsyncOperation: Operation {
 	}
 	
 	public func finishWork(withError error: NSError?) {
-		guard canStartFinishOrCancel else { return }
+		guard notFinishedOrCancelled else { return }
 		self.error = error
 		finish()
 	}
@@ -191,7 +189,7 @@ public class AsyncOperation: Operation {
 	}
 	
 	public func cancelWork(withError error: NSError?) {
-		guard canStartFinishOrCancel else { return }
+		guard notFinishedOrCancelled else { return }
 		self.error = error
 		cancel()
 	}
