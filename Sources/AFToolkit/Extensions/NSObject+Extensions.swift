@@ -28,4 +28,24 @@ public extension NSObject {
 			Logger.defaultLogger.log(level, messageFormat(), args)
 		}
 	}
+	
+	// Defers calling a selector on this object for 1 second to batch together tight
+	// bursts of function calls into periodic calls.
+	func performDeduped(_ selector: Selector) {
+		// Cancel any previous request.
+		NSObject.cancelPreviousPerformRequests(
+			withTarget: self,
+			selector: selector,
+			object: nil)
+		
+		// Queue up a perform.
+		perform(selector, with: nil, afterDelay: 1)
+	}
+	
+	// Synchronizes on this object, then calls the provided closure.
+	func synchronized(_ closure: UNVoidClosure) {
+		objc_sync_enter(self)
+		closure()
+		objc_sync_exit(self)
+	}
 }

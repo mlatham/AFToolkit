@@ -106,6 +106,7 @@ extension Sqlite {
 				
 				// Begin transaction.
 				try _client.beginTransaction()
+				databaseRollbackRequired = true
 				
 				// Abort if cancelled.
 				if (self.isCancelled) {
@@ -127,9 +128,8 @@ extension Sqlite {
 				
 				// Commit transaction on success.
 				if (resultError == nil) {
-					databaseRollbackRequired = false
-					
 					try _client.commitTransaction()
+					databaseRollbackRequired = false
 				}
 				
 				// Release database lock.
