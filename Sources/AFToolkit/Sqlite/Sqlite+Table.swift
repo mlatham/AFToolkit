@@ -149,8 +149,9 @@ extension Sqlite {
 				do {
 					try self?._write(rows: rows)
 					try self?.client.commitTransaction()
-				} catch {
+				} catch let e {
 					try self?.client.rollbackTransaction()
+					throw e
 				}
 			},
 			completion: completion)
@@ -162,8 +163,9 @@ extension Sqlite {
 				do {
 					try self?._write(rows: rows)
 					try self?.client.commitTransaction()
-				} catch {
+				} catch let e {
 					try self?.client.rollbackTransaction()
+					throw e
 				}
 			}
 		}

@@ -104,8 +104,8 @@ extension Sqlite {
 			} else if let statement = _statementClosure {
 				do {
 					try statement(database, &resultError)
-				} catch {
-					resultError = error
+				} catch let e {
+					resultError = e
 				}
 			}
 			
