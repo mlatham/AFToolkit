@@ -128,9 +128,9 @@ public class AsyncOperation: Operation {
 	
 		super.cancel()
 		
+		willChangeValue(forKey: #keyPath(AsyncOperation.isFinished))
 		willChangeValue(forKey: #keyPath(AsyncOperation.isCancelled))
 		willChangeValue(forKey: #keyPath(AsyncOperation.isExecuting))
-		willChangeValue(forKey: #keyPath(AsyncOperation.isFinished))
 		
 		if selfLogEnabled {
 			var errorString: String = ""
@@ -144,9 +144,9 @@ public class AsyncOperation: Operation {
 		_isFinished = true
 		_finishTime = Date()
 		
-		didChangeValue(forKey: #keyPath(AsyncOperation.isFinished))
 		didChangeValue(forKey: #keyPath(AsyncOperation.isExecuting))
 		didChangeValue(forKey: #keyPath(AsyncOperation.isCancelled))
+		didChangeValue(forKey: #keyPath(AsyncOperation.isFinished))
 		
 		_endBackgroundTask()
 	}
@@ -182,8 +182,8 @@ public class AsyncOperation: Operation {
 	
 		// Generates the KVO necessary for the queue to remove this operation. NOTE: This is necessary for the KVO to be
 		// atomic - at no point will there be notifications for one property before the other is also set.
-		willChangeValue(forKey: #keyPath(AsyncOperation.isExecuting))
 		willChangeValue(forKey: #keyPath(AsyncOperation.isFinished))
+		willChangeValue(forKey: #keyPath(AsyncOperation.isExecuting))
 		
 		if selfLogEnabled {
 			var errorString: String = ""
@@ -196,8 +196,8 @@ public class AsyncOperation: Operation {
 		_isFinished = true
 		_finishTime = Date()
 		
-		didChangeValue(forKey: #keyPath(AsyncOperation.isFinished))
 		didChangeValue(forKey: #keyPath(AsyncOperation.isExecuting))
+		didChangeValue(forKey: #keyPath(AsyncOperation.isFinished))
 		
 		_endBackgroundTask()
 	}
