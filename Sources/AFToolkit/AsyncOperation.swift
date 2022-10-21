@@ -9,6 +9,7 @@ public class AsyncOperation: Operation {
 	public static let NeverTimeout: TimeInterval = -1
 	
 	private var _backgroundTask = UIBackgroundTaskIdentifier.invalid
+	private var _timeoutWorker: DispatchWorkItem?
 	
 	private var _hasStarted = false
 	
@@ -118,10 +119,18 @@ public class AsyncOperation: Operation {
 		
 		// Queue up a timeout that cancels the operation from the main thread.
 		if timeout > 0 {
-			DispatchQueue.main.asyncAfter(deadline: .now() + timeout) { [weak self] in
+			let timeoutWorker = DispatchWorkItem(block: { [weak self] in
 				guard let strongSelf = self, strongSelf.notFinishedOrCancelled else { return }
-				strongSelf.cancelWork(withError: NSError(self?._timeoutError ?? "", withCode: -1, log: false))
-			}
+				strongSelf.cancelWork(withError: NSError(strongSelf._timeoutError, withCode: -1, log: false))
+			})
+			_timeoutWorker = timeoutWorker
+			DispatchQueue.main.asyncAfter(deadline: .now() + timeout, execute: timeoutWorker)
+		}
+		
+		// Finishes cancelled operations. See NOTE in cancel().
+		if isCancelled {
+			finish()
+			return
 		}
 		
 		// Kick off the work.
@@ -147,6 +156,11 @@ public class AsyncOperation: Operation {
 	public func finish() {
 		// finish() is called after isCancelled is set.
 		guard !isFinished else { return }
+		
+		// Cancel the timeout task.
+		if _timeoutWorker?.isCancelled == false {
+			_timeoutWorker?.cancel()
+		}
 	
 		// Generates the KVO necessary for the queue to remove this operation. NOTE: This is necessary for the KVO to be
 		// atomic - at no point will there be notifications for one property before the other is also set.
