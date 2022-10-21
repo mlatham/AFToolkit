@@ -40,6 +40,20 @@ public extension UITableView {
 			return returningType.init(reuseIdentifier: identifier)
 		}
 	}
+	
+	func scrollToTop() {
+		// Guards against a crash if there are no sections in the tableview.
+		let countOfSections = numberOfSections
+		guard countOfSections > 0 else { return }
+	
+		// Guards against a crash if there are no rows in the tableview.
+		let countOfRows = numberOfRows(inSection: 0)
+		guard countOfRows > 0 && countOfRows != NSNotFound else { return }
+		
+		// Creates an invalid IndexPath that makes the tableview scroll to the top
+		let indexPath = IndexPath(row: NSNotFound, section: 0)
+		scrollToRow(at: indexPath, at: .top, animated: true)
+	}
 
 	func applyDynamicSizing(rowHeight: CGFloat? = nil, headerHeight: CGFloat? = nil, footerHeight: CGFloat? = nil) {
 		if let rowHeight = rowHeight {
@@ -53,6 +67,11 @@ public extension UITableView {
 		if let footerHeight = footerHeight {
 			estimatedSectionFooterHeight = footerHeight
 			sectionFooterHeight = UITableView.automaticDimension
+		}
+		
+		if #available(iOS 15.0, *) {
+			// Remove default top padding.
+			sectionHeaderTopPadding = 0
 		}
 	}
 	
