@@ -14,6 +14,8 @@ extension Sqlite {
 		public let name: String
 		public var columns: [SqliteColumnProtocol]
 		
+		// Returns a comma-separated list of column names.
+		public let allColumnsString: String
 		
 		// MARK: - Inits
 		
@@ -26,6 +28,7 @@ extension Sqlite {
 			self.client = client
 			self.name = name
 			self.columns = columns
+			self.allColumnsString = columns.map { "\(name).\($0.name)" }.joined(separator: ", ")
 			
 			super.init()
 		}
@@ -73,8 +76,34 @@ extension Sqlite {
 			return statement.timeIntervalSince1970(at: readIndex(of: column))
 		}
 		
-		// TODO: Drop this.
-		public func count(where whereStatement: String?, cache: Bool) throws -> Int {
+		public func query(
+			where whereStatement: String? = nil,
+			orderBy: String? = nil,
+			limit: Int? = nil,
+			offset: Int? = nil,
+			cache: Bool) -> [T] {
+			var query = "SELECT \(allColumnsString) FROM \(name)"
+			if let whereStatement = whereStatement {
+				query += " WHERE \(whereStatement)"
+			}
+
+			if let orderBy = orderBy {
+				query += " ORDER BY \(orderBy)"
+			}
+
+			if let limit = limit {
+				query += " LIMIT \(limit)"
+			}
+
+			if let offset = offset {
+				query += " OFFSET \(offset)"
+			}
+
+			query += ";"
+			return client.query(from: self, query, cache: cache)
+		}
+		
+		public func count(where whereStatement: String?, cache: Bool) -> Int {
 			var query = "SELECT COUNT(*) FROM \(name)"
 			if let whereStatement = whereStatement {
 				query.append(" WHERE \(whereStatement)")

@@ -17,14 +17,14 @@ extension Sqlite {
 		// Caches indices for column name lookup.
 		private var _columnReplaceIndices: [String: Int] = [:]
 		
+		// Replace statement which sets all columns.
+		private var _replaceIntoStatement: String = ""
+		
 		public let primaryKey: [SqliteColumnProtocol]
 		public let indices: [Index]
 		
 		// Create table statement.
 		public let createTableStatement: String
-		
-		// Replace statement which sets all columns.
-		public let replaceIntoStatement: String
 		
 		
 		// MARK: - Inits
@@ -34,8 +34,7 @@ extension Sqlite {
 			for (i, column) in columns.enumerated() {
 				_columnReplaceIndices[column.name] = i + 1
 			}
-			
-			let allColumnsString = columns.map { $0.name }.joined(separator: ", ")
+
 			let replaceValuesString = columns.map { _ in "?" }.joined(separator: ", ")
 			
 			// Generate the create table statement.
@@ -53,11 +52,13 @@ extension Sqlite {
 			}
 			
 			self.createTableStatement = createTableStatement
-			self.replaceIntoStatement = "INSERT OR REPLACE INTO \(name) (\(allColumnsString)) VALUES (\(replaceValuesString))"
 			self.primaryKey = primaryKey
 			self.indices = indices
 			
 			super.init(client: client, name: name, columns: columns)
+			
+			// Initialize after allColumnString is set in TableBase.
+			_replaceIntoStatement = "INSERT OR REPLACE INTO \(name) (\(allColumnsString)) VALUES (\(replaceValuesString))"
 			
 			for column in columns {
 				var column = column
@@ -185,8 +186,8 @@ extension Sqlite {
 		
 		private func _write(rows: [T]) throws {
 			// Get or create the cached, prepared statement.
-			guard let statement = client.preparedStatement(query: replaceIntoStatement, cache: true) else {
-				throw Errors.prepareStatementFailed(replaceIntoStatement)
+			guard let statement = client.preparedStatement(query: _replaceIntoStatement, cache: true) else {
+				throw Errors.prepareStatementFailed(_replaceIntoStatement)
 			}
 			
 			for row in rows {

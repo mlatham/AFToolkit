@@ -104,7 +104,7 @@ public class AsyncOperation: Operation {
 			finish()
 			return
 		}
-	
+
 		guard !isFinished else { return } // Shouldn't come up.
 		
 		willChangeValue(forKey: #keyPath(AsyncOperation.isExecuting))
