@@ -28,7 +28,7 @@ extension Sqlite {
 			self.client = client
 			self.name = name
 			self.columns = columns
-			self.allColumnsString = columns.map { "\(name).\($0.name)" }.joined(separator: ", ")
+			self.allColumnsString = columns.map { "\($0.fullName)" }.joined(separator: ", ")
 			
 			super.init()
 		}
