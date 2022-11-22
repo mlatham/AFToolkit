@@ -20,6 +20,10 @@ extension Sqlite {
 		// Returns a comma-separated list of full column names (eg: "table.column").
 		public private(set) var allFullColumnsString: String = ""
 		
+		public override var description: String {
+			return name
+		}
+		
 		
 		// MARK: - Inits
 		
