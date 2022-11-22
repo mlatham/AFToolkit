@@ -1,8 +1,9 @@
-//
-//  File.swift
-//  
-//
-//  Created by Matt Latham on 2022-11-22.
-//
-
 import Foundation
+
+extension Collection {
+	// Returns `nil` if the collection is empty.
+	var nonEmpty: Self? {
+		guard !isEmpty else { return nil }
+		return self
+	}
+}
