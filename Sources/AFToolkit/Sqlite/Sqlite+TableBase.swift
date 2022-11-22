@@ -83,11 +83,11 @@ extension Sqlite {
 			offset: Int? = nil,
 			cache: Bool) -> [T] {
 			var query = "SELECT \(allColumnsString) FROM \(name)"
-			if let whereStatement = whereStatement {
+			if let whereStatement = whereStatement?.nonEmpty {
 				query += " WHERE \(whereStatement)"
 			}
 
-			if let orderBy = orderBy {
+			if let orderBy = orderBy?.nonEmpty {
 				query += " ORDER BY \(orderBy)"
 			}
 
@@ -105,7 +105,7 @@ extension Sqlite {
 		
 		public func count(where whereStatement: String?, cache: Bool) -> Int {
 			var query = "SELECT COUNT(*) FROM \(name)"
-			if let whereStatement = whereStatement {
+			if let whereStatement = whereStatement?.nonEmpty {
 				query.append(" WHERE \(whereStatement)")
 			}
 			

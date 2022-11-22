@@ -115,7 +115,7 @@ extension Sqlite {
 		public func delete(where whereStatement: String?, cache: Bool) throws {
 			try client.execute { database, error in
 				var query = "DELETE FROM \(name)"
-				if let whereStatement = whereStatement {
+				if let whereStatement = whereStatement?.nonEmpty {
 					query.append(" WHERE \(whereStatement)")
 				}
 				
