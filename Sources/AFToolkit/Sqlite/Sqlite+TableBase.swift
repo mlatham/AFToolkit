@@ -103,11 +103,13 @@ extension Sqlite {
 				query += " ORDER BY \(orderBy)"
 			}
 
-			if let limit = limit {
-				query += " LIMIT \(limit)"
-			}
-
 			if let offset = offset {
+				if let limit = limit {
+					query += " LIMIT \(limit)"
+				} else {
+					query += " LIMIT 1"
+				}
+			
 				query += " OFFSET \(offset)"
 			}
 
