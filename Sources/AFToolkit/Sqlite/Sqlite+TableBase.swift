@@ -15,7 +15,7 @@ extension Sqlite {
 		public var columns: [SqliteColumnProtocol]
 		
 		// Returns a comma-separated list of column names.
-		private(set) var allColumnsString: String = ""
+		public private(set) var allColumnsString: String = ""
 		
 		
 		// MARK: - Inits
