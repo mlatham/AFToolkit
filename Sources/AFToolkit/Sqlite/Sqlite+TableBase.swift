@@ -15,7 +15,8 @@ extension Sqlite {
 		public var columns: [SqliteColumnProtocol]
 		
 		// Returns a comma-separated list of column names.
-		public let allColumnsString: String
+		private(set) var allColumnsString: String = ""
+		
 		
 		// MARK: - Inits
 		
@@ -28,9 +29,16 @@ extension Sqlite {
 			self.client = client
 			self.name = name
 			self.columns = columns
-			self.allColumnsString = columns.map { "\($0.fullName)" }.joined(separator: ", ")
 			
 			super.init()
+			
+			for column in columns {
+				var column = column
+				column.table = self
+			}
+			
+			// Initialize the allColumnsString,
+			self.allColumnsString = columns.map { "\($0.fullName)" }.joined(separator: ", ")
 		}
 		
 		

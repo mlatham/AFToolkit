@@ -13,7 +13,7 @@ extension Sqlite {
 		public var table: SqliteTableProtocol?
 		
 		public var description: String {
-			return name
+			return fullName
 		}
 		
 		public init(name: String, affinity: TypeAffinity, type: ColumnType.Type, options: [Keyword] = []) {

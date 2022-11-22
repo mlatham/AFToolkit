@@ -59,11 +59,6 @@ extension Sqlite {
 			
 			// Initialize after allColumnString is set in TableBase.
 			_replaceIntoStatement = "INSERT OR REPLACE INTO \(name) (\(allColumnsString)) VALUES (\(replaceValuesString))"
-			
-			for column in columns {
-				var column = column
-				column.table = self
-			}
 		}
 		
 		
