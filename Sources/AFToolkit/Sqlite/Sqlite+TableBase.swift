@@ -92,12 +92,58 @@ extension Sqlite {
 			return statement.timeIntervalSince1970(at: readIndex(of: column))
 		}
 		
+		public func beginQuery(
+			where whereStatement: String? = nil,
+			orderBy: String? = nil,
+			limit: Int? = nil,
+			offset: Int? = nil,
+			cache: Bool,
+			completion: @escaping Sqlite.QueryCompletion) -> Sqlite.Operation? {
+			let query = _query(
+				where: whereStatement,
+				orderBy: orderBy,
+				limit: limit,
+				offset: offset)
+			return client.beginQuery(
+				from: self,
+				query: query,
+				cache: cache,
+				completion: completion)
+		}
+		
 		public func query(
 			where whereStatement: String? = nil,
 			orderBy: String? = nil,
 			limit: Int? = nil,
 			offset: Int? = nil,
 			cache: Bool) -> [T] {
+			let query = _query(
+				where: whereStatement,
+				orderBy: orderBy,
+				limit: limit,
+				offset: offset)
+			return client.query(from: self, query, cache: cache)
+		}
+		
+		public func count(where whereStatement: String?, cache: Bool) -> Int {
+			var query = "SELECT COUNT(*) FROM \(name)"
+			if let whereStatement = whereStatement?.nonEmpty {
+				query.append(" WHERE \(whereStatement)")
+			}
+			
+			return client.count(query: query, cache: cache)
+		}
+		
+		open func readRow(_ cursor: CursorStatement) -> T? {
+			// Abstract.
+			fatalError(NotImplementedError)
+		}
+		
+		private func _query(
+			where whereStatement: String? = nil,
+			orderBy: String? = nil,
+			limit: Int? = nil,
+			offset: Int? = nil) -> String {
 			var query = "SELECT \(allColumnsString) FROM \(name)"
 			if let whereStatement = whereStatement?.nonEmpty {
 				query += " WHERE \(whereStatement)"
@@ -118,21 +164,7 @@ extension Sqlite {
 			}
 
 			query += ";"
-			return client.query(from: self, query, cache: cache)
-		}
-		
-		public func count(where whereStatement: String?, cache: Bool) -> Int {
-			var query = "SELECT COUNT(*) FROM \(name)"
-			if let whereStatement = whereStatement?.nonEmpty {
-				query.append(" WHERE \(whereStatement)")
-			}
-			
-			return client.count(query: query, cache: cache)
-		}
-		
-		open func readRow(_ cursor: CursorStatement) -> T? {
-			// Abstract.
-			fatalError(NotImplementedError)
+			return query
 		}
 	}
 }
