@@ -70,6 +70,10 @@ extension Sqlite {
 			}
 			
 			defer {
+				if (databaseLockAcquired) {
+					_databaseLock.unlock()
+				}
+
 				// Raise completed and finish work.
 				if (!self.isCancelled) {
 					// Call back with the results on the main thread.
@@ -82,10 +86,6 @@ extension Sqlite {
 					}
 					
 					finishWork(withError: resultError)
-				}
-				
-				if (databaseLockAcquired) {
-					_databaseLock.unlock()
 				}
 			}
 
