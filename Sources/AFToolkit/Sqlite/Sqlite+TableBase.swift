@@ -92,6 +92,7 @@ extension Sqlite {
 			return statement.timeIntervalSince1970(at: readIndex(of: column))
 		}
 		
+		@discardableResult
 		public func beginQuery(
 			where whereStatement: String? = nil,
 			orderBy: String? = nil,
