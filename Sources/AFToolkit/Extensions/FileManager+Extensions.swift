@@ -3,10 +3,9 @@ import Foundation
 public extension FileManager {
 
 	static func mainBundleUrl(for filename: String) -> URL? {
-		let filenameNSString: NSString = filename as NSString
-		let lastPathComponentNString = filenameNSString.lastPathComponent as NSString
-		let fileBasename = lastPathComponentNString.deletingLastPathComponent
-		let fileExtension = filenameNSString.pathExtension
+		let filenameURL = URL(string: filename)
+		let fileBasename = filenameURL?.deletingPathExtension().lastPathComponent
+		let fileExtension = (filenameURL?.lastPathComponent as? NSString)?.pathExtension
 		return Bundle.main.url(forResource: fileBasename, withExtension: fileExtension)
 	}
 
