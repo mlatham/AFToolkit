@@ -3,7 +3,7 @@ import Foundation
 extension Sqlite {
 	// Struct so that columns passed into views / tables are passed by value, not reference.
 	// This prevents one parent table overriding another.
-	public class Column<ColumnType>: CustomStringConvertible, SqliteColumnProtocol {
+	public class Column<ColumnType>: CustomStringConvertible, SqliteColumnProtocol, NSCopying {
 		public let name: String
 		public let affinity: TypeAffinity
 		public let options: [Keyword]
@@ -48,6 +48,11 @@ extension Sqlite {
 			}
 			
 			self.init(name: name, affinity: affinity, type: type, options: options)
+		}
+		
+		public func copy(with zone: NSZone? = nil) -> Any {
+			let copy = Column(name: name, affinity: affinity, type: type, options: options)
+			return copy
 		}
 	}
 }
