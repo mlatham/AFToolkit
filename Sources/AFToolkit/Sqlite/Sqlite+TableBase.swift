@@ -154,13 +154,17 @@ extension Sqlite {
 				query += " ORDER BY \(orderBy)"
 			}
 
+			var hasLimit = false
+			if let limit = limit {
+				query += " LIMIT \(limit)"
+				hasLimit = true
+			}
+			
 			if let offset = offset {
-				if let limit = limit {
-					query += " LIMIT \(limit)"
-				} else {
+				if !hasLimit {
 					query += " LIMIT 1"
 				}
-			
+
 				query += " OFFSET \(offset)"
 			}
 
