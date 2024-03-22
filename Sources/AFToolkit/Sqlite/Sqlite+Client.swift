@@ -64,12 +64,12 @@ extension Sqlite {
 			// Create database connection.
 			let databasePathNSString = databaseUrl.path as NSString
 			if (sqlite3_open(databasePathNSString.utf8String, &database) != SQLITE_OK) {
-				selfLog(.error, "Unable to connect to database '\(databaseUrl)': \(String(cString: sqlite3_errmsg(database)))")
+				selfLog(.error, "Unable to connect to database '\(self.databaseUrl)': \(String(cString: sqlite3_errmsg(self.database)))")
 			}
 			
 			// Enable foreign key support.
 			if (sqlite3_exec(database, "PRAGMA foreign_keys = ON", nil, nil, nil) != SQLITE_OK) {
-				selfLog(.error, "Unable to activate database foreign key support: \(String(cString: sqlite3_errmsg(database)))")
+				selfLog(.error, "Unable to activate database foreign key support: \(String(cString: sqlite3_errmsg(self.database)))")
 			}
 			
 			// Register for notifications.
@@ -187,7 +187,7 @@ extension Sqlite {
 			do {
 				try FileManager.default.removeItem(at: databaseUrl)
 			} catch {
-				selfLog(.error, "Failed to delete database at '\(databaseUrl)': \(error)")
+				selfLog(.error, "Failed to delete database at '\(self.databaseUrl)': \(error)")
 			}
 		}
 		
